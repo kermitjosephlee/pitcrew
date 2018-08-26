@@ -23,7 +23,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000/"
+  "proxy": "http://localhost:5000/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kermitjosephlee/pitcrew.git"

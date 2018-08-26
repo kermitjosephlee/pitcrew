@@ -17,13 +17,13 @@ class App extends Component {
         login: false,
         type: ""
       },
-      users: ""
+      users: []
     };
   }
 
   componentDidMount() {
     this.getUsers()
-      .then(res => this.setState({ users: res.express }))
+      .then(res => this.setState({ users: res.activeUsers }))
       .catch(err => console.log(err));
   }
 
@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   getUsers = async () => {
-    const response = await fetch("/api/hello");
+    const response = await fetch("/api/users");
     const body = await response.json();
 
     return body;
