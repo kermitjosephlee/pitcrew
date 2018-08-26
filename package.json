@@ -1,16 +1,35 @@
 {
-  "name": "react-test",
-  "version": "0.1.0",
+  "name": "pitcrew",
   "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "dependencies": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "body-parser": "^1.18.3",
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kermitjosephlee/pitcrew.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kermitjosephlee/pitcrew/issues"
+  },
+  "homepage": "https://github.com/kermitjosephlee/pitcrew#readme"
 }
