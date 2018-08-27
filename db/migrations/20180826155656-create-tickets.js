@@ -28,17 +28,20 @@ module.exports = {
       contact: {
         type: Sequelize.STRING
       },
-      location: {
+      lat: {
+        type: Sequelize.STRING
+      },
+      long: {
         type: Sequelize.STRING
       },
       type: {
         type: Sequelize.STRING
       },
       startTime: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       endTime: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       description: {
         type: Sequelize.STRING

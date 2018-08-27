@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const tickets = sequelize.define('tickets', {
     rider: DataTypes.STRING,
     contact: DataTypes.STRING,
-    location: DataTypes.GEOGRAPHY,
+    lat: DataTypes.STRING,
+    long: DataTypes.STRING,
     type: {
       type: Sequelize.ENUM,
       values: ['mechanical', 'medical', 'sweep']

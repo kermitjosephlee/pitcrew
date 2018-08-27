@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import db from "/Users/Mike/lighthouse/pitcrew/db/db.js";
 
 class Register extends Component {
   handleRegistration(e) {
@@ -12,7 +13,7 @@ class Register extends Component {
   render() {
     return (
       <form onSubmit={this.handleRegistration.bind(this)}>
-        <h3>Sign in</h3>
+        <h3> Sign in </h3>{" "}
         <input type="text" ref="username" placeholder="enter you username" />
         <input type="password" ref="password" placeholder="enter password" />
         <input type="submit" value="Register" />

@@ -3,10 +3,12 @@ module.exports = (sequelize, DataTypes) => {
   const rides = sequelize.define('rides', {
     name: DataTypes.STRING,
     date: DataTypes.DATEONLY,
-    raceStart: DataTypes.TIME,
-    raceEnd: DataTypes.TIME,
-    locationStart: DataTypes.STRING,
-    locationEnd: DataTypes.STRING,
+    timeStart: DataTypes.TIME,
+    timeEnd: DataTypes.TIME,
+    latStart: DataTypes.STRING,
+    longStart: DataTypes.STRING,
+    latEnd: DataTypes.STRING,
+    longEnd: DataTypes.STRING,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
   }, {

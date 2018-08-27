@@ -19,18 +19,24 @@ module.exports = {
         type: Sequelize.STRING
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
-      raceStart: {
+      timeStart: {
+        type: Sequelize.TIME
+      },
+      timeEnd: {
+        type: Sequelize.TIME
+      },
+      latStart: {
         type: Sequelize.STRING
       },
-      raceEnd: {
+      longStart: {
         type: Sequelize.STRING
       },
-      locationStart: {
+      latEnd: {
         type: Sequelize.STRING
       },
-      locationEnd: {
+      longEnd: {
         type: Sequelize.STRING
       },
       createdAt: {

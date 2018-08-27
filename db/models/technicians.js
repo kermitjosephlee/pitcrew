@@ -1,11 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const technicians = sequelize.define('technicians', {
-    userName: DataTypes.STRING,
+    username: DataTypes.STRING,
     name: DataTypes.STRING,
     password: DataTypes.STRING,
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   }, {
     timestamps: true
   });
