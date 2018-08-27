@@ -7,8 +7,8 @@ class Rider extends Component {
   }
 
   render() {
-    if (!this.state.user.login) {
-      return <Redirect to="/login" />;
+    if (!this.props.user.login) {
+      return <Redirect from="/rider" to="/login" />;
     }
     return (
       <div>
