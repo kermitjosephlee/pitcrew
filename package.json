@@ -23,7 +23,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
+<<<<<<< HEAD
   "proxy": "http://localhost:5000/",
+=======
+  "proxy": "http://localhost:8080/",
+>>>>>>> feature/react-express-communicate
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kermitjosephlee/pitcrew.git"

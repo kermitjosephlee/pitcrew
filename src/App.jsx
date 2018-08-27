@@ -18,14 +18,18 @@ class App extends Component {
         login: false,
         type: ""
       },
+<<<<<<< HEAD
       users: "",
       test: "testing react -> express"
+=======
+      users: []
+>>>>>>> feature/react-express-communicate
     };
   }
 
   componentDidMount() {
     this.getUsers()
-      .then(res => this.setState({ users: res.express }))
+      .then(res => this.setState({ users: res.activeUsers }))
       .catch(err => console.log(err));
   }
 
@@ -47,16 +51,19 @@ class App extends Component {
   }
 
   getUsers = async () => {
-    const response = await fetch("/api/hello");
+    const response = await fetch("/api/users");
     const body = await response.json();
-
     return body;
   };
 
   handleClick = () => {
     console.log("this is:", this);
     $.ajax({
+<<<<<<< HEAD
       url: "http://localhost:5000/post_test",
+=======
+      url: "http://localhost:8080/post_test",
+>>>>>>> feature/react-express-communicate
       type: "POST",
       data: { id: "test" }
     });
