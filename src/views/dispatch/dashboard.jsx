@@ -1,14 +1,38 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import {
+  withGoogleMap,
+  GoogleMap,
+  withScriptjs,
+  Marker
+} from "react-google-maps";
+
+let myPosition = {};
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      myPosition: {}
+    };
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(position => {
+      myPosition = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      this.setState({ myPosition });
+      console.log("location:", myPosition);
+    });
+  }
+
   render() {
     const GoogleMapExample = withGoogleMap(props => (
-      <GoogleMap
-        defaultCenter={{ lat: 43.6444, lng: -79.3951 }}
-        defaultZoom={12}
-      />
+      <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={12}>
+        <Marker position={this.state.myPosition} />
+      </GoogleMap>
     ));
 
     return (

@@ -8,7 +8,7 @@ import TopNav from "./navbar";
 import Login from "./login";
 import Rider from "./rider";
 import Register from "./register";
-import Dashboard from "./dashboard";
+import Dashboard from "./views/dispatch/dashboard";
 
 class App extends Component {
   constructor(props) {
