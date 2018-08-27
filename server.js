@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 8080;
 
 //****************************************
 //
-// app.use(bodyParser.urlencoded({ extended: true }));
-//
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // app.use(express.static(path.join(__dirname, "build")));
 
 //****************************************
@@ -40,6 +40,10 @@ app.get("/api/users", (req, res) => {
   res.send({ activeUsers });
 });
 
+app.post("/post_test", (req, res) => {
+  let getId = req.body.id;
+  console.log("getId:", getId);
+});
 //****************************************
 
 app.listen(PORT, () => {

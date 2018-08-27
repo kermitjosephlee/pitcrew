@@ -1,5 +1,6 @@
 #dependencies
 /node_modules
+/sandbox
 
 # misc
 .DS_Store

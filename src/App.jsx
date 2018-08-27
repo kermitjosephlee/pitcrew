@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import $ from "jquery";
 import "./App.css";
 
 import Main from "./main";
@@ -47,8 +48,16 @@ class App extends Component {
   getUsers = async () => {
     const response = await fetch("/api/users");
     const body = await response.json();
-
     return body;
+  };
+
+  handleClick = () => {
+    console.log("this is:", this);
+    $.ajax({
+      url: "http://localhost:8080/post_test",
+      type: "POST",
+      data: { id: "test" }
+    });
   };
 
   render() {
@@ -71,6 +80,7 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
           <h1 className="App-title">PitCrew</h1>
+          <button onClick={this.handleClick}>Test</button>
         </header>
         <Switch>
           <Route path="/" exact component={Main} />
