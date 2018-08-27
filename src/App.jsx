@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import $ from "jquery";
 import "./App.css";
 
 import Main from "./main";
@@ -17,7 +18,8 @@ class App extends Component {
         login: false,
         type: ""
       },
-      users: ""
+      users: "",
+      test: "testing react -> express"
     };
   }
 
@@ -51,6 +53,15 @@ class App extends Component {
     return body;
   };
 
+  handleClick = () => {
+    console.log("this is:", this);
+    $.ajax({
+      url: "http://localhost:5000/post_test",
+      type: "POST",
+      data: { id: "test" }
+    });
+  };
+
   render() {
     // if (this.state.user && this.state.user.login) {
     //   return (
@@ -71,6 +82,7 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
           <h1 className="App-title">PitCrew</h1>
+          <button onClick={this.handleClick}>Test</button>
         </header>
         <Switch>
           <Route path="/" exact component={Main} />
