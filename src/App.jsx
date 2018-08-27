@@ -8,6 +8,7 @@ import TopNav from "./navbar";
 import Login from "./login";
 import Rider from "./rider";
 import Register from "./register";
+import Dashboard from "./dashboard";
 
 class App extends Component {
   constructor(props) {
@@ -105,6 +106,7 @@ class App extends Component {
             path="/register"
             component={() => <Register onRegister={this.register.bind(this)} />}
           />
+          <Route path="/dashboard" exact component={Dashboard} />
         </Switch>
       </div>
     );
