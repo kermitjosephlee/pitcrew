@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 
 const TopNav = props => (
   <div>
-    <Link to="/">Home</Link>
-    <p> | </p>
-    <Link to="/login">Log In</Link>
+    <button>
+      <Link to="/">Home</Link>
+    </button>
+    <button>
+      <Link to="/login">Log In</Link>
+    </button>
   </div>
 );
 

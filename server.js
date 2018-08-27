@@ -44,6 +44,18 @@ app.post("/post_test", (req, res) => {
   let getId = req.body.id;
   console.log("getId:", getId);
 });
+
+app.post("/register", (req, res) => {
+  let data = req.body;
+  console.log("user registered:", data);
+  activeUsers.push({
+    username: req.body.username,
+    password: req.body.password,
+    type: "rider"
+  });
+  console.log(activeUsers);
+});
+
 //****************************************
 
 app.listen(PORT, () => {

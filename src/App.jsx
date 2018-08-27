@@ -7,6 +7,7 @@ import Main from "./main";
 import TopNav from "./navbar";
 import Login from "./login";
 import Rider from "./rider";
+import Register from "./register";
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class App extends Component {
         login: false,
         type: ""
       },
-      users: []
+      users: "",
+      test: "testing react -> express"
     };
   }
 
@@ -28,6 +30,15 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  register(username, password) {
+    $.ajax({
+      url: "http://localhost:8080/register",
+      type: "POST",
+      data: { username: username, password: password }
+    });
+  }
+
+  //
   signIn(username, password, login, type) {
     // calling setState will re-render the entire app
     this.setState({
@@ -40,17 +51,20 @@ class App extends Component {
     });
   }
 
+  //
   signOut() {
     // clear out user from state
     this.setState({ user: null });
   }
 
+  // From express => react
   getUsers = async () => {
     const response = await fetch("/api/users");
     const body = await response.json();
     return body;
   };
 
+  // From react => express
   handleClick = () => {
     console.log("this is:", this);
     $.ajax({
@@ -91,6 +105,10 @@ class App extends Component {
           <Route
             path="/rider"
             component={() => <Rider onSignOut={this.signOut.bind(this)} />}
+          />
+          <Route
+            path="/register"
+            component={() => <Register onRegister={this.register.bind(this)} />}
           />
         </Switch>
       </div>
