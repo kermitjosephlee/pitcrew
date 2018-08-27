@@ -10,7 +10,7 @@ class Login extends Component {
   }
 
   render() {
-    if (this.state.user.login) {
+    if (this.props.user.login) {
       return <Redirect from="/login" to="/rider" />;
     }
     return (

@@ -24,12 +24,6 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getUsers()
-      .then(res => this.setState({ users: res.activeUsers }))
-      .catch(err => console.log(err));
-  }
-
   register(username, password) {
     $.ajax({
       url: "http://localhost:8080/register",
@@ -40,13 +34,28 @@ class App extends Component {
 
   //
   signIn(username, password, login, type) {
-    // calling setState will re-render the entire app
-    this.setState({
-      user: {
-        username,
-        password,
-        login,
-        type
+    var user_exists = false;
+    // Check if user exists
+    $.ajax({
+      url: "http://localhost:8080/login_user",
+      type: "POST",
+      data: { username: username, password: password },
+      success: response => {
+        if (response) {
+          this.setState({
+            user: {
+              username,
+              password,
+              login,
+              type
+            }
+          });
+        } else {
+          alert("Username or Password does not exist");
+        }
+      },
+      error: function(response) {
+        console.log("fail");
       }
     });
   }
@@ -56,13 +65,6 @@ class App extends Component {
     // clear out user from state
     this.setState({ user: null });
   }
-
-  // From express => react
-  getUsers = async () => {
-    const response = await fetch("/api/users");
-    const body = await response.json();
-    return body;
-  };
 
   // From react => express
   handleClick = () => {
@@ -75,20 +77,6 @@ class App extends Component {
   };
 
   render() {
-    // if (this.state.user && this.state.user.login) {
-    //   return (
-    //     <div className="App">
-    //       <header className="App-header">
-    //         <h1 className="App-title">PitCrew</h1>
-    //       </header>
-    //       <Switch>
-    //         <Redirect from="/login" to="/rider" />
-    //         <Route path="/rider" component={Rider} />
-    //       </Switch>
-    //     </div>
-    //   );
-    // }
-
     return (
       <div className="App">
         <header className="App-header">
@@ -100,11 +88,18 @@ class App extends Component {
           <Route path="/" exact component={Main} />
           <Route
             path="/login"
-            component={() => <Login onSignIn={this.signIn.bind(this)} />}
+            component={() => (
+              <Login user={this.state.user} onSignIn={this.signIn.bind(this)} />
+            )}
           />
           <Route
             path="/rider"
-            component={() => <Rider onSignOut={this.signOut.bind(this)} />}
+            component={() => (
+              <Rider
+                user={this.state.user}
+                onSignOut={this.signOut.bind(this)}
+              />
+            )}
           />
           <Route
             path="/register"
