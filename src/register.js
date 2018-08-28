@@ -12,7 +12,7 @@ class Register extends Component {
   render() {
     return (
       <form onSubmit={this.handleRegistration.bind(this)}>
-        <h3>Sign in</h3>
+        <h3> Sign in </h3>{" "}
         <input type="text" ref="username" placeholder="enter you username" />
         <input type="password" ref="password" placeholder="enter password" />
         <input type="submit" value="Register" />
