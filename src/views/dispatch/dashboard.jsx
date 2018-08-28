@@ -7,6 +7,7 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
+import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import $ from "jquery";
 
 let myPosition = {};
@@ -80,7 +81,7 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    this._reloadTickets();
+    // this._reloadTickets();
 
     navigator.geolocation.getCurrentPosition(position => {
       myPosition = {
@@ -95,10 +96,14 @@ class Dashboard extends Component {
   render() {
     const GoogleMapExample = withGoogleMap(props => (
       <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={9}>
-        <Marker position={this.state.myPosition} />
+        <Marker label="HQ" position={this.state.myPosition} />
         {this.state.tickets.map(marker => {
           return (
             <Marker
+              label="Taha"
+              icon={{
+                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+              }}
               position={{ lat: marker.location.lat, lng: marker.location.lng }}
             />
           );
