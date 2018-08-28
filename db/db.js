@@ -1,7 +1,54 @@
-const techniciansCreator = require('./models/technicians');
+const Technician = require('../models').Technician;
+const Dispatch = require('../models').Dispatch;
+const Ride = require('../models').Ride;
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('pitcrew', 'labber', 'labber', {
+
+let db = {
+    registerTech: function (data) {
+        Ride.find({
+            where: {
+                name: "John Doe"
+            }
+        }).then((ride) => {
+            console.log(ride.id)
+            Technician.create({
+                username: data.username,
+                name: data.name,
+                password: data.password,
+                RideId: ride.id
+                // created_at: new Date()
+            }).then(() => {
+                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
+            }).catch(error => {
+                console.log(`ERROR ${error}`)
+            })
+        })
+
+    },
+    registerDispatch: function (data) {
+        Dispatch.create({
+            username: data.username,
+            password: data.password
+        }).save().then(() => {
+            console.log('REGISTERED DISPATCH, SUCCESS') //will be switched to show success of registration
+        }).save().catch(error => {
+            console.log(`ERROR ${error}`)
+        })
+    }
+}
+
+let data = {
+    username: 'WORKDAMNIT',
+    name: 'WORK!!!',
+    password: 'pass'
+}
+
+db.registerTech(data)
+
+// const techniciansCreator = require('./models/technicians');
+
+/* const sequelize = new Sequelize('pitcrew', 'labber', 'labber', {
     host: 'localhost',
     dialect: 'postgres',
     operatorsAliases: false,
@@ -23,54 +70,14 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
-const technicians = techniciansCreator(sequelize, Sequelize);
+const technicians = techniciansCreator(sequelize, Sequelize); */
 
-// var db = {
-//     registerTech: function (data) {
-//         const technician = technicians.build({
-//             username: data.username,
-//             name: data.name,
-//             password: data.password,
-//             createdAt: new Date(),
-//             updatedAt: new Date()
-//         })
-//         technician.save().then(() => {
-//             console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
-//         })
-//         technician.save().catch(error => {
-//             console.log(`ERROR ${error}`)
-//         })
-//     },
-//     registerDispatch: function (data) {
-//         const technician = technicians.build({
-//             username: data.username,
-//             password: data.password,
-//             createdAt: new Date(),
-//             updatedAt: new Date()
-//         })
-//         technician.save().then(() => {
-//             console.log('REGISTERED DISPATCH, SUCCESS') //will be switched to show success of registration
-//         })
-//         technician.save().catch(error => {
-//             console.log(`ERROR ${error}`)
-//         })
-//     }
-// }
-
-let data = {
-    username: 'WORKDAMNIT',
-    name: 'WORK!!!',
-    password: 'pass'
-}
-sequelize.sync()
-    .then(() => technicians.create({
-        username: 'WORKDAMNIT',
-        name: 'WORK!!!',
-        password: 'pass',
-    }))
-    .then(jane => {
-        console.log(jane.toJSON());
-    });
-
-
-// db.registerTech(data)
+// sequelize.sync()
+//     .then(() => technicians.create({
+//         username: 'WORKDAMNIT',
+//         name: 'WORK!!!',
+//         password: 'pass',
+//     }))
+//     .then(jane => {
+//         console.log(jane.toJSON());
+//     });

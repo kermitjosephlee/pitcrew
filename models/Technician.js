@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const technicians = sequelize.define('technicians', {
+  const technician = sequelize.define('Technician', {
     username: DataTypes.STRING,
     name: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -9,13 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: true
   });
-  technicians.associate = function (models) {
-    technicians.hasMany(tickets, {
-      as: 'ticket'
+  technician.associate = function (models) {
+    technician.hasMany(models.Ticket, {
+      as: 'tix'
     })
-    technicians.belongsTo(rides, {
-      foreignKey: 'ride_id'
-    });
+    technician.belongsTo(models.Ride);
   };
-  return technicians
+  return technician
 };

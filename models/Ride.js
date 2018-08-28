@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const rides = sequelize.define('rides', {
+  const ride = sequelize.define('Ride', {
     name: DataTypes.STRING,
     date: DataTypes.DATEONLY,
     timeStart: DataTypes.TIME,
@@ -9,22 +9,19 @@ module.exports = (sequelize, DataTypes) => {
     longStart: DataTypes.STRING,
     latEnd: DataTypes.STRING,
     longEnd: DataTypes.STRING,
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   }, {
-    underscored: true,
     timestamps: true
   });
-  rides.associate = function (models) {
-    rides.hasMany(technicians, {
+  ride.associate = function (models) {
+    ride.hasMany(models.Technician, {
       as: 'tech'
     })
-    rides.hasMany(tickets, {
-      as: 'ticket'
+    ride.hasMany(models.Ticket, {
+      as: 'tix'
     })
-    rides.belongsTo(dispatchers, {
-      foreignKey: 'dispatcher_id'
-    });
+    ride.belongsTo(models.Dispatch);
   };
-  return rides
+  return ride
 };
