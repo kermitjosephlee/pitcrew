@@ -4,10 +4,21 @@ import {
   withGoogleMap,
   GoogleMap,
   withScriptjs,
-  Marker
+  Marker,
+  InfoWindow
 } from "react-google-maps";
 
 let myPosition = {};
+
+let testPositions = [
+  { lat: 43.639701, lng: -79.459055 },
+  { lat: 43.629326, lng: -79.489001 },
+  { lat: 43.622554, lng: -79.519995 },
+  { lat: 43.599622, lng: -79.579561 },
+  { lat: 43.554703, lng: -79.629769 },
+  { lat: 43.531559, lng: -79.691996 },
+  { lat: 43.511207, lng: -79.728131 }
+];
 
 class Dashboard extends Component {
   constructor(props) {
@@ -30,7 +41,7 @@ class Dashboard extends Component {
 
   render() {
     const GoogleMapExample = withGoogleMap(props => (
-      <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={12}>
+      <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={9}>
         <Marker position={this.state.myPosition} />
       </GoogleMap>
     ));
