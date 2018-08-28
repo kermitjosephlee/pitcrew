@@ -1,92 +1,114 @@
-const Technician = require('./models').Technician;
-const Ride = require('./models').Ride;
-const Dispatch = require('./models').Dispatch;
-const Ticket = require('./models').Ticket;
+const Technician = require("./models").Technician;
+const Ride = require("./models").Ride;
+const Dispatch = require("./models").Dispatch;
+const Ticket = require("./models").Ticket;
 
 module.exports = {
-    registerDispatch: function (data) {
-        Dispatch.create({
-            username: data.username,
-            password: data.password
-        }).save().then(() => {
-            console.log('REGISTERED DISPATCH, SUCCESS') //will be switched to show success of registration
-        }).save().catch(error => {
-            console.log(`ERROR ${error}`)
+  getTickets: function(data) {
+    Ticket.find({
+      where: {
+        status: "pending"
+      }
+    }).then(data => {
+      console.log(data);
+    });
+  },
+
+  registerDispatch: function(data) {
+    Dispatch.create({
+      username: data.username,
+      password: data.password
+    })
+      .save()
+      .then(() => {
+        console.log("REGISTERED DISPATCH, SUCCESS"); //will be switched to show success of registration
+      })
+      .save()
+      .catch(error => {
+        console.log(`ERROR ${error}`);
+      });
+  },
+  registerTech: function(data) {
+    Ride.find({
+      where: {
+        name: "John Doe"
+      }
+    }).then(ride => {
+      console.log(ride);
+      Technician.create({
+        username: data.username,
+        name: data.name,
+        password: data.password,
+        RideId: ride.id
+      })
+        .then(() => {
+          console.log("REGISTERED TECH, SUCCESS"); //will be switched to show success of registration
         })
-    },
-    registerTech: function (data) {
-        Ride.find({
-            where: {
-                name: "John Doe"
-            }
-        }).then((ride) => {
-            console.log(ride)
-            Technician.create({
-                username: data.username,
-                name: data.name,
-                password: data.password,
-                RideId: ride.id
-            }).then(() => {
-                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
-            }).catch(error => {
-                console.log(`ERROR ${error}`)
-            })
+        .catch(error => {
+          console.log(`ERROR ${error}`);
+        });
+    });
+  },
+  registerRide: function(data) {
+    Dispatch.find({
+      where: {
+        name: "John Doe"
+      }
+    }).then(dispatch => {
+      Ride.create({
+        DispatchId: dispatch.id,
+        name: data.name,
+        date: data.date,
+        timeStart: data.timeStart,
+        timeEnd: data.timeEnd,
+        latStart: data.latStart,
+        longStart: data.longStart,
+        latEnd: data.latEnd,
+        longEnd: data.longEnd
+      })
+        .then(() => {
+          console.log("REGISTERED TECH, SUCCESS"); //will be switched to show success of registration
         })
-    },
-    registerRide: function (data) {
-        Dispatch.find({
-            where: {
-                name: "John Doe"
-            }
-        }).then(dispatch => {
-            Ride.create({
-                DispatchId: dispatch.id,
-                name: data.name,
-                date: data.date,
-                timeStart: data.timeStart,
-                timeEnd: data.timeEnd,
-                latStart: data.latStart,
-                longStart: data.longStart,
-                latEnd: data.latEnd,
-                longEnd: data.longEnd
-            }).then(() => {
-                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
-            }).catch(error => {
-                console.log(`ERROR ${error}`)
-            })
+        .catch(error => {
+          console.log(`ERROR ${error}`);
+        });
+    });
+  },
+  openTicket: function(data) {
+    Ride.find({
+      where: {
+        name: "John Doe"
+      }
+    }).then(() => {
+      Ticket.create({
+        rider: data.rider,
+        contact: data.contact,
+        lat: data.lat,
+        long: data.long,
+        type: data.type,
+        values: data.value,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        description: data.description,
+        status: data.status
+      })
+        .then(() => {
+          console.log("REGISTERED TECH, SUCCESS"); //will be switched to show success of registration
         })
-    },
-    openTicket: function (data) {
-        Ride.find({
-            where: {
-                name: "John Doe"
-            }
-        }).then(() => {
-            Ticket.create({
-                rider: data.rider,
-                contact: data.contact,
-                lat: data.lat,
-                long: data.long,
-                type: data.type,
-                values: data.value,
-                startTime: data.startTime,
-                endTime: data.endTime,
-                description: data.description,
-                status: data.status
-            }).then(() => {
-                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
-            }).catch(error => {
-                console.log(`ERROR ${error}`)
-            })
-        })
-    },
-}
+        .catch(error => {
+          console.log(`ERROR ${error}`);
+        });
+    });
+  }
+};
 
 let data = {
-    username: 'WORKDAMNIT',
-    name: 'WORK!!!',
-    password: 'pass'
-}
+  username: "WORKDAMNIT",
+  name: "WORK!!!",
+  password: "pass"
+};
+
+//  DB AS SERVER (below)
 
 // db.registerTech(data)
 

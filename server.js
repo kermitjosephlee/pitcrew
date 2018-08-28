@@ -3,15 +3,17 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
-const db = require('./db')
+const db = require("./db");
 
 //****************************************
 //
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -28,7 +30,8 @@ const dispatchUsers = {};
 
 const techUsers = {};
 
-let activeUsers = [{
+let activeUsers = [
+  {
     username: "alice",
     password: "qwe",
     encryptedPassword: "",
@@ -44,6 +47,11 @@ let activeUsers = [{
 let tickets = [];
 
 //****************************************
+
+app.get("/", (req, res) => {
+  db.getTickets();
+  res.send("frontpage");
+});
 
 app.get("/api/hello", (req, res) => {
   res.send({
