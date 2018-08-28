@@ -1,8 +1,9 @@
-const Technician = require('../models').Technician;
-const Ride = require('../models').Ride;
-const Dispatch = require('../models').Dispatch;
+const Technician = require('./models').Technician;
+const Ride = require('./models').Ride;
+const Dispatch = require('./models').Dispatch;
+const Ticket = require('./models').Ticket;
 
-let db = {
+module.exports = {
     registerDispatch: function (data) {
         Dispatch.create({
             username: data.username,
@@ -37,8 +38,9 @@ let db = {
             where: {
                 name: "John Doe"
             }
-        }).then(() => {
+        }).then(dispatch => {
             Ride.create({
+                DispatchId: dispatch.id,
                 name: data.name,
                 date: data.date,
                 timeStart: data.timeStart,
@@ -55,17 +57,27 @@ let db = {
         })
     },
     openTicket: function (data) {
-        Ticket.create({
-            rider: data.rider,
-            contact: data.contact,
-            lat: data.lat,
-            long: data.long,
-            type: data.type,
-            values: data.value,
-            startTime: data.startTime,
-            endTime: data.endTime,
-            description: data.description,
-            status: data.status
+        Ride.find({
+            where: {
+                name: "John Doe"
+            }
+        }).then(() => {
+            Ticket.create({
+                rider: data.rider,
+                contact: data.contact,
+                lat: data.lat,
+                long: data.long,
+                type: data.type,
+                values: data.value,
+                startTime: data.startTime,
+                endTime: data.endTime,
+                description: data.description,
+                status: data.status
+            }).then(() => {
+                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
+            }).catch(error => {
+                console.log(`ERROR ${error}`)
+            })
         })
     },
 }
@@ -76,7 +88,7 @@ let data = {
     password: 'pass'
 }
 
-db.registerTech(data)
+// db.registerTech(data)
 
 // const Sequelize = require('sequelize');
 // const techniciansCreator = require('./models/technicians');

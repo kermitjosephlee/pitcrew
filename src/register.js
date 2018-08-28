@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import db from "/Users/Mike/lighthouse/pitcrew/db/db.js";
 
 class Register extends Component {
   handleRegistration(e) {
