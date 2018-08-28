@@ -1,21 +1,21 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('technicians', {
+    return queryInterface.createTable('Technicians', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ride_id: {
+      RideId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'rides',
+          model: 'Rides',
           key: 'id'
         }
       },
-      userName: {
+      username: {
         type: Sequelize.STRING
       },
       name: {
@@ -35,6 +35,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('technicians')
+    return queryInterface.dropTable('Technicians')
   }
 };

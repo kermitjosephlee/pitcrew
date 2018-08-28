@@ -3,12 +3,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
+const db = require('./db')
 
 //****************************************
 //
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -25,8 +28,7 @@ const dispatchUsers = {};
 
 const techUsers = {};
 
-let activeUsers = [
-  {
+let activeUsers = [{
     username: "alice",
     password: "qwe",
     encryptedPassword: "",
@@ -44,11 +46,15 @@ let tickets = [];
 //****************************************
 
 app.get("/api/hello", (req, res) => {
-  res.send({ express: "Hello From Express - PitCrew" });
+  res.send({
+    express: "Hello From Express - PitCrew"
+  });
 });
 
 app.get("/api/users", (req, res) => {
-  res.send({ activeUsers });
+  res.send({
+    activeUsers
+  });
 });
 
 app.post("/post_test", (req, res) => {
@@ -82,13 +88,13 @@ app.post("/register/rider", (req, res) => {
 
 app.post("/register/dispatch", (req, res) => {
   let data = req.body;
-  registerDispatch(data);
+  db.registerDispatch(data);
 });
 
 app.post("/register/tech", (req, res) => {
   let data = req.body;
   console.log("Register Tech:", data);
-  registerTech(data);
+  db.registerTech(data);
 });
 
 app.post("/newTicket", (req, res) => {
@@ -102,7 +108,9 @@ app.post("/newTicket", (req, res) => {
 });
 
 app.get("/fetchTickets", (req, res) => {
-  res.send({ tickets });
+  res.send({
+    tickets
+  });
 });
 
 //****************************************

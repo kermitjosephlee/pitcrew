@@ -1,32 +1,29 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const tickets = sequelize.define('tickets', {
+  const ticket = sequelize.define('Ticket', {
     rider: DataTypes.STRING,
     contact: DataTypes.STRING,
-    location: DataTypes.GEOGRAPHY,
+    lat: DataTypes.STRING,
+    long: DataTypes.STRING,
     type: {
-      type: Sequelize.ENUM,
+      type: DataTypes.ENUM,
       values: ['mechanical', 'medical', 'sweep']
     },
     startTime: DataTypes.DATE,
     endTime: DataTypes.DATE,
     description: DataTypes.STRING,
     status: {
-      type: Sequelize.ENUM,
+      type: DataTypes.ENUM,
       values: ['active', 'pending', 'completed', 'cancelled']
     },
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   }, {
     timestamps: true
   });
-  tickets.associate = function (models) {
-    tickets.belongsTo(rides, {
-      foreignKey: 'ride_id'
-    })
-    tickets.belongsTo(technicians, {
-      foreignKey: 'technician_id'
-    });
+  ticket.associate = function (models) {
+    ticket.belongsTo(models.Ride)
+    ticket.belongsTo(models.Technician);
   };
-  return tickets
+  return ticket
 };

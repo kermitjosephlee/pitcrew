@@ -4,9 +4,9 @@ sandbox/
 
 # misc
 .DS_Store
+package-lock.json
 
 .env
 .env.example
 *.log
 *.sqlite3
-package-lock.json
