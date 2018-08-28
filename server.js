@@ -39,6 +39,8 @@ let activeUsers = [
   }
 ];
 
+let tickets = [];
+
 //****************************************
 
 app.get("/api/hello", (req, res) => {
@@ -51,6 +53,7 @@ app.get("/api/users", (req, res) => {
 
 app.post("/post_test", (req, res) => {
   let getId = req.body.id;
+
   console.log("getId:", getId);
 });
 
@@ -76,6 +79,20 @@ app.post("/register", (req, res) => {
     type: "rider"
   });
   console.log(activeUsers);
+});
+
+app.post("/newTicket", (req, res) => {
+  let data = req.body;
+  tickets.push({
+    username: req.body.username,
+    location: req.body.location,
+    type: "rider"
+  });
+  console.log("Tickets:", tickets);
+});
+
+app.get("/fetchTickets", (req, res) => {
+  res.send({ tickets });
 });
 
 //****************************************

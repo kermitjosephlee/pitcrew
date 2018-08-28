@@ -10,6 +10,8 @@ import Rider from "./rider";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 
+let myPosition = {};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -67,6 +69,20 @@ class App extends Component {
     this.setState({ user: null });
   }
 
+  addTicket() {
+    navigator.geolocation.getCurrentPosition(position => {
+      myPosition = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      console.log("myPosition:", myPosition);
+      $.ajax({
+        url: "http://localhost:8080/newTicket",
+        type: "POST",
+        data: { username: "Tom", location: myPosition }
+      });
+    });
+  }
   // From react => express
   handleClick = () => {
     console.log("this is:", this);
@@ -83,7 +99,7 @@ class App extends Component {
         <header className="App-header">
           <TopNav />
           <h1 className="App-title">PitCrew</h1>
-          <button onClick={this.handleClick}>Test</button>
+          <button onClick={this.addTicket}>Test</button>
         </header>
         <Switch>
           <Route path="/" exact component={Main} />
