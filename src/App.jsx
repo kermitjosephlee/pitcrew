@@ -27,9 +27,27 @@ class App extends Component {
     };
   }
 
-  register(username, password) {
+  // RIDER registration
+  registerRider(username, password) {
     $.ajax({
-      url: "http://localhost:8080/register",
+      url: "http://localhost:8080/register/rider",
+      type: "POST",
+      data: { username: username, password: password }
+    });
+  }
+
+  // TECH & DISPATCH registration
+  registerDispatch(username, password) {
+    $.ajax({
+      url: "http://localhost:8080/register/dispatch",
+      type: "POST",
+      data: { username: username, password: password }
+    });
+  }
+
+  registerTech(username, password) {
+    $.ajax({
+      url: "http://localhost:8080/register/tech",
       type: "POST",
       data: { username: username, password: password }
     });
@@ -120,7 +138,9 @@ class App extends Component {
           />
           <Route
             path="/register"
-            component={() => <Register onRegister={this.register.bind(this)} />}
+            component={() => (
+              <Register onRegister={this.registerTech.bind(this)} />
+            )}
           />
           <Route path="/dashboard" exact component={Dashboard} />
         </Switch>

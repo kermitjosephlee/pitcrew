@@ -70,15 +70,25 @@ app.post("/login_user", (req, res) => {
   res.send(exists);
 });
 
-app.post("/register", (req, res) => {
+app.post("/register/rider", (req, res) => {
   let data = req.body;
-  console.log("user registered:", data);
   activeUsers.push({
     username: req.body.username,
     password: req.body.password,
     type: "rider"
   });
   console.log(activeUsers);
+});
+
+app.post("/register/dispatch", (req, res) => {
+  let data = req.body;
+  registerDispatch(data);
+});
+
+app.post("/register/tech", (req, res) => {
+  let data = req.body;
+  console.log("Register Tech:", data);
+  registerTech(data);
 });
 
 app.post("/newTicket", (req, res) => {
