@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 
 class Rider extends Component {
   onSignOut(e) {
@@ -17,6 +17,9 @@ class Rider extends Component {
         <a href="javascript:;" onClick={this.onSignOut.bind(this)}>
           Sign out
         </a>
+        <button>
+          <Link to="/login">Log In</Link>
+        </button>
       </div>
     );
   }

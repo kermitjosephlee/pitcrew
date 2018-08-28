@@ -15,7 +15,39 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       myPosition: {},
-      tickets: []
+      // dummie positions for testing
+      tickets: [
+        {
+          location: {
+            lat: 43.639701,
+            lng: -79.459055
+          }
+        },
+        {
+          location: {
+            lat: 43.679701,
+            lng: -79.469055
+          }
+        },
+        {
+          location: {
+            lat: 43.638701,
+            lng: -79.458055
+          }
+        },
+        {
+          location: {
+            lat: 43.620701,
+            lng: -79.456055
+          }
+        },
+        {
+          location: {
+            lat: 43.636701,
+            lng: -79.459055
+          }
+        }
+      ]
     };
   }
 
@@ -23,15 +55,21 @@ class Dashboard extends Component {
     const url = "/fetchTickets";
     fetch(url)
       .then(results => results.json())
-      .then(tickets => {
-        this.setState({ tickets });
-        console.log("tickets:", tickets);
+      .then(data => {
+        this.setState({ tickets: data.tickets });
+        console.log(this.state.tickets);
       })
       .catch(err => console.error("ERROR:", err));
   };
 
+  _reloadTickets = () => {
+    setInterval(() => {
+      this._fetchTickets();
+    }, 5000);
+  };
+
   componentDidMount() {
-    this._fetchTickets();
+    this._reloadTickets();
 
     navigator.geolocation.getCurrentPosition(position => {
       myPosition = {
@@ -47,6 +85,13 @@ class Dashboard extends Component {
     const GoogleMapExample = withGoogleMap(props => (
       <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={12}>
         <Marker position={this.state.myPosition} />
+        {this.state.tickets.map(marker => {
+          return (
+            <Marker
+              position={{ lat: marker.location.lat, lng: marker.location.lng }}
+            />
+          );
+        })}
       </GoogleMap>
     ));
 
