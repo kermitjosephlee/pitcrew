@@ -1,31 +1,8 @@
 const Technician = require('../models').Technician;
-const Dispatch = require('../models').Dispatch;
 const Ride = require('../models').Ride;
-
-const Sequelize = require('sequelize');
+const Dispatch = require('../models').Dispatch;
 
 let db = {
-    registerTech: function (data) {
-        Ride.find({
-            where: {
-                name: "John Doe"
-            }
-        }).then((ride) => {
-            console.log(ride.id)
-            Technician.create({
-                username: data.username,
-                name: data.name,
-                password: data.password,
-                RideId: ride.id
-                // created_at: new Date()
-            }).then(() => {
-                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
-            }).catch(error => {
-                console.log(`ERROR ${error}`)
-            })
-        })
-
-    },
     registerDispatch: function (data) {
         Dispatch.create({
             username: data.username,
@@ -35,7 +12,62 @@ let db = {
         }).save().catch(error => {
             console.log(`ERROR ${error}`)
         })
-    }
+    },
+    registerTech: function (data) {
+        Ride.find({
+            where: {
+                name: "John Doe"
+            }
+        }).then((ride) => {
+            console.log(ride)
+            Technician.create({
+                username: data.username,
+                name: data.name,
+                password: data.password,
+                RideId: ride.id
+            }).then(() => {
+                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
+            }).catch(error => {
+                console.log(`ERROR ${error}`)
+            })
+        })
+    },
+    registerRide: function (data) {
+        Dispatch.find({
+            where: {
+                name: "John Doe"
+            }
+        }).then(() => {
+            Ride.create({
+                name: data.name,
+                date: data.date,
+                timeStart: data.timeStart,
+                timeEnd: data.timeEnd,
+                latStart: data.latStart,
+                longStart: data.longStart,
+                latEnd: data.latEnd,
+                longEnd: data.longEnd
+            }).then(() => {
+                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
+            }).catch(error => {
+                console.log(`ERROR ${error}`)
+            })
+        })
+    },
+    openTicket: function (data) {
+        Ticket.create({
+            rider: data.rider,
+            contact: data.contact,
+            lat: data.lat,
+            long: data.long,
+            type: data.type,
+            values: data.value,
+            startTime: data.startTime,
+            endTime: data.endTime,
+            description: data.description,
+            status: data.status
+        })
+    },
 }
 
 let data = {
@@ -46,6 +78,7 @@ let data = {
 
 db.registerTech(data)
 
+// const Sequelize = require('sequelize');
 // const techniciansCreator = require('./models/technicians');
 
 /* const sequelize = new Sequelize('pitcrew', 'labber', 'labber', {
