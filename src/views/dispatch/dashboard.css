@@ -1,0 +1,50 @@
+ /* {
+  root: {
+    position: "absolute";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: "hidden";
+  }
+  sidebar: {
+    zindex: 2;
+    position: "absolute";
+    top: 0;
+    bottom: 0;
+    backgroundcolor: "honeydew";
+    opacity: 1;
+    transition: "transform .3s ease-out";
+    webkittransition: "-webkit-transform .3s ease-out";
+    willchange: "transform";
+    overflowy: "auto";
+  }
+  content: {
+    position: "absolute";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflowy: "auto";
+    webkitoverflowscrolling: "touch";
+    transition: "left .3s ease-out; right .3s ease-out";
+  }
+  overlay: {
+    zindex: 1;
+    position: "fixed";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    visibility: "hidden";
+    transition: "opacity .3s ease-out; visibility .3s ease-out";
+    backgroundcolor: "rgba(0;0;0;.3)";
+  }
+  draghandle: {
+    zindex: 1;
+    position: "fixed";
+    top: 0;
+    bottom: 0;
+  }
+} */

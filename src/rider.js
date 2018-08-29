@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import $ from "jquery";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 
 class Rider extends Component {
   onSignOut(e) {

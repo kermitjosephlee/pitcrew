@@ -1,7 +1,7 @@
-const Technician = require('./models').Technician;
-const Ride = require('./models').Ride;
-const Dispatch = require('./models').Dispatch;
-const Ticket = require('./models').Ticket;
+const Technician = require("./models").Technician;
+const Ride = require("./models").Ride;
+const Dispatch = require("./models").Dispatch;
+const Ticket = require("./models").Ticket;
 
 
 module.exports = {
@@ -110,10 +110,18 @@ module.exports = {
             }).catch(error => {
                 console.log(`ERROR ${error}`)
             })
-        })
-    },
-}
+        },
+  getTickets: function(data) {
+    Ticket.find({
+      where: {
+        status: "pending"
+      }
+    }).then(data => {
+      console.log(data);
+    });
+};
 
+//  DB AS SERVER (below)
 // db.registerTech(data)
 
 // const Sequelize = require('sequelize');

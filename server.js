@@ -3,15 +3,17 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
-const db = require('./db')
+const db = require("./db");
 
 //****************************************
 //
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -40,16 +42,50 @@ const techUsers = {};
 //   }
 // }
 
-let activeUsers = [{
-  username: "alice",
-  password: "qwe",
-  encryptedPassword: "",
-  type: "rider"
-}];
-
-let tickets = [];
+let tickets = [
+  {
+    id: 1,
+    location: {
+      lat: 43.639701,
+      lng: -79.459055
+    }
+  },
+  {
+    id: 2,
+    location: {
+      lat: 43.6476611,
+      lng: -79.3959029
+    }
+  },
+  {
+    id: 3,
+    location: {
+      lat: 43.6447046,
+      lng: -79.3906215
+    }
+  },
+  {
+    id: 4,
+    location: {
+      lat: 43.6402511,
+      lng: -79.411626
+    }
+  },
+  {
+    id: 5,
+    location: {
+      lat: 43.6443754,
+      lng: -79.3823521
+    }
+  }
+];
 
 //****************************************
+
+app.get("/", (req, res) => {
+  db.getTickets();
+  res.send("frontpage");
+});
 
 app.get("/api/hello", (req, res) => {
   res.send({
@@ -110,9 +146,12 @@ app.post("/register", (req, res) => {
 app.post("/newTicket", (req, res) => {
   let data = req.body;
   tickets.push({
-    username: req.body.username,
-    location: req.body.location,
-    type: "rider"
+    id: parseFloat(req.body.id),
+    location: {
+      lat: parseFloat(req.body.location.lat),
+      lng: parseFloat(req.body.location.lng)
+    }
+    // type: "rider"
   });
   console.log("Tickets:", tickets);
 });

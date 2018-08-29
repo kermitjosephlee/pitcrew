@@ -72,10 +72,17 @@ class App extends Component {
         lng: position.coords.longitude
       };
       console.log("myPosition:", myPosition);
+
       $.ajax({
         url: "http://localhost:8080/newTicket",
         type: "POST",
-        data: { username: "Tom", location: myPosition }
+        data: {
+          id: 3,
+          location: {
+            lat: 43.6633446,
+            lng: -79.3940748
+          }
+        }
       });
     });
   }
