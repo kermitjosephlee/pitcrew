@@ -30,19 +30,17 @@ const dispatchUsers = {};
 
 const techUsers = {};
 
-let activeUsers = [
-  {
-    username: "alice",
-    password: "qwe",
-    encryptedPassword: "",
-    type: "rider"
-  },
-  {
-    username: "bob",
-    password: "qwe",
-    type: "tech"
-  }
-];
+// const checkUser = async (data) => {
+//   console.log('Verifying User')
+//   try {
+//     await db.checkUser(data)
+//     console.log('CHEECK')
+//     return true
+//   } catch (err) {
+//     console.log("ERROR2", err)
+//     throw err
+//   }
+// }
 
 let tickets = [
   {
@@ -101,44 +99,48 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+app.get("/dashboard", (req, res) => {
+  res.render({
+    activeUsers
+  });
+});
+
 app.post("/post_test", (req, res) => {
   let getId = req.body.id;
 
   console.log("getId:", getId);
 });
 
-app.post("/login_user", (req, res) => {
-  var exists = false;
-  for (user in activeUsers) {
-    if (activeUsers[user].username == req.body.username && exists == false) {
-      console.log(req.body.username);
-      console.log(activeUsers[user].username);
-      exists = true;
-    }
-  }
-  console.log(exists);
-  res.send(exists);
+app.post("/login", (req, res) => {
+  const data = req.body;
+  db.checkUser(data).then(() => {
+    console.log(`USER EXISTS`)
+    res.send(data)
+  }).catch(error => {
+    console.log(`ERROR ${error}`)
+  })
 });
 
 app.post("/register/rider", (req, res) => {
   let data = req.body;
   activeUsers.push({
-    username: req.body.username,
-    password: req.body.password,
+    username: data.username,
+    password: data.password,
     type: "rider"
   });
   console.log(activeUsers);
 });
 
-app.post("/register/dispatch", (req, res) => {
-  let data = req.body;
-  db.registerDispatch(data);
-});
-
-app.post("/register/tech", (req, res) => {
-  let data = req.body;
-  console.log("Register Tech:", data);
-  db.registerTech(data);
+app.post("/register", (req, res) => {
+  const data = req.body;
+  db.checkRegister(data).then(() => {
+    if (data.type === 'Dispatch')
+      db.registerDispatch(data)
+    else
+      db.registerTechnician(data)
+  }).catch(error => {
+    console.log(`ERROR ${error}`)
+  })
 });
 
 app.post("/newTicket", (req, res) => {
