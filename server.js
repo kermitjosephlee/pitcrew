@@ -44,7 +44,43 @@ let activeUsers = [
   }
 ];
 
-let tickets = [];
+let tickets = [
+  {
+    id: 1,
+    location: {
+      lat: 43.639701,
+      lng: -79.459055
+    }
+  },
+  {
+    id: 2,
+    location: {
+      lat: 43.6476611,
+      lng: -79.3959029
+    }
+  },
+  {
+    id: 3,
+    location: {
+      lat: 43.6447046,
+      lng: -79.3906215
+    }
+  },
+  {
+    id: 4,
+    location: {
+      lat: 43.6402511,
+      lng: -79.411626
+    }
+  },
+  {
+    id: 5,
+    location: {
+      lat: 43.6443754,
+      lng: -79.3823521
+    }
+  }
+];
 
 //****************************************
 
@@ -108,9 +144,12 @@ app.post("/register/tech", (req, res) => {
 app.post("/newTicket", (req, res) => {
   let data = req.body;
   tickets.push({
-    username: req.body.username,
-    location: req.body.location,
-    type: "rider"
+    id: parseFloat(req.body.id),
+    location: {
+      lat: parseFloat(req.body.location.lat),
+      lng: parseFloat(req.body.location.lng)
+    }
+    // type: "rider"
   });
   console.log("Tickets:", tickets);
 });

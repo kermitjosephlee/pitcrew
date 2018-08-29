@@ -7,26 +7,16 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
+import MapMarker from "./map-markers.js";
 import $ from "jquery";
-
-let myPosition = {};
-
-let testPositions = [
-  { lat: 43.639701, lng: -79.459055 },
-  { lat: 43.629326, lng: -79.489001 },
-  { lat: 43.622554, lng: -79.519995 },
-  { lat: 43.599622, lng: -79.579561 },
-  { lat: 43.554703, lng: -79.629769 },
-  { lat: 43.531559, lng: -79.691996 },
-  { lat: 43.511207, lng: -79.728131 }
-];
+import { compose, withProps } from "recompose";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeMarker: null,
-      myPosition: {},
+      myPosition: undefined,
       // dummie positions for testing
       tickets: [
         {
@@ -39,29 +29,29 @@ class Dashboard extends Component {
         {
           id: 2,
           location: {
-            lat: 43.679701,
-            lng: -79.469055
+            lat: 43.6476611,
+            lng: -79.3959029
           }
         },
         {
           id: 3,
           location: {
-            lat: 43.638701,
-            lng: -79.458055
+            lat: 43.6447046,
+            lng: -79.3906215
           }
         },
         {
           id: 4,
           location: {
-            lat: 43.620701,
-            lng: -79.456055
+            lat: 43.6402511,
+            lng: -79.411626
           }
         },
         {
           id: 5,
           location: {
-            lat: 43.636701,
-            lng: -79.459055
+            lat: 43.6443754,
+            lng: -79.3823521
           }
         }
       ]
@@ -89,18 +79,13 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
-    }, 5000);
+    }, 1000);
   };
 
-  //**************************************************
-
-  //**************************************************
-
   componentDidMount() {
-    // this._reloadTickets();
-
+    this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
-      myPosition = {
+      const myPosition = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
@@ -109,39 +94,44 @@ class Dashboard extends Component {
     });
   }
 
-  render() {
-    const GoogleMapExample = withGoogleMap(props => (
-      <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={9}>
-        <Marker position={this.state.myPosition} />
-        {this.state.tickets.map(marker => {
-          return (
-            <Marker
-              onClick={() => this.handleToggleOpen(marker.id)}
-              icon={{
-                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-              }}
-              position={{ lat: marker.location.lat, lng: marker.location.lng }}
-            >
-              {this.state.activeMarker === marker.id && (
-                <InfoWindow>
-                  <h4>id: {marker.id}</h4>
-                </InfoWindow>
-              )}
-            </Marker>
-          );
-        })}
-      </GoogleMap>
-    ));
+  fetchLocation() {
+    const CurrentPosition = {};
+    navigator.geolocation.getCurrentPosition(position => {
+      const CurrentPosition = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+    });
+    return CurrentPosition;
+  }
 
-    return (
-      <div id="menu">
-        <GoogleMapExample
-          containerElement={<div style={{ height: "500px", width: "500px" }} />}
-          mapElement={<div style={{ height: "100%" }} />}
-        />
-      </div>
-    );
+  render() {
+    if (this.state.myPosition) {
+      return (
+        <GoogleMap
+          center={{
+            lat: this.state.myPosition.lat,
+            lng: this.state.myPosition.lng
+          }}
+          defaultZoom={9}
+        >
+          <MapMarker tickets={this.state.tickets} />
+        </GoogleMap>
+      );
+    } else {
+      return <div />;
+    }
   }
 }
 
-export default Dashboard;
+export default compose(
+  withProps({
+    googleMapURL:
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
+    loadingElement: <div style={{ height: "100%" }} />,
+    containerElement: <div style={{ height: "500px", width: "500px" }} />,
+    mapElement: <div style={{ height: "100%" }} />
+  }),
+  withScriptjs,
+  withGoogleMap
+)(Dashboard);
