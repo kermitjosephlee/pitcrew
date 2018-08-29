@@ -28,18 +28,22 @@ const dispatchUsers = {};
 
 const techUsers = {};
 
-let activeUsers = [{
-    username: "alice",
-    password: "qwe",
-    encryptedPassword: "",
-    type: "rider"
-  },
-  {
-    username: "bob",
-    password: "qwe",
-    type: "tech"
+const checkUser = async (data) => {
+  console.log('Verifying User')
+  try {
+    const check = await db.checkUser(data)
+    console.log('CHEECK', check)
+  } catch (err) {
+    console.log("ERROR", err)
   }
-];
+}
+
+let activeUsers = [{
+  username: "alice",
+  password: "qwe",
+  encryptedPassword: "",
+  type: "rider"
+}];
 
 let tickets = [];
 
@@ -93,8 +97,9 @@ app.post("/register/dispatch", (req, res) => {
 
 app.post("/register/tech", (req, res) => {
   let data = req.body;
-  console.log("Register Tech:", data);
-  db.registerTech(data);
+  checkUser(data)
+  // console.log("Register Tech:", data);
+  // db.registerTech(data);
 });
 
 app.post("/newTicket", (req, res) => {

@@ -4,6 +4,22 @@ const Dispatch = require('./models').Dispatch;
 const Ticket = require('./models').Ticket;
 
 module.exports = {
+    checkUser: (data) => {
+        // const user = data.user
+        console.log('dbbbbb', data)
+        return Technician.find({
+            where: {
+                username: data.username,
+                password: data.password
+            }
+        }).then(user => {
+            if (user)
+                return true
+            else {
+                throw false
+            }
+        })
+    },
     registerDispatch: function (data) {
         Dispatch.create({
             username: data.username,
@@ -17,7 +33,7 @@ module.exports = {
     registerTech: function (data) {
         Ride.find({
             where: {
-                name: "John Doe"
+                name: data.ride
             }
         }).then((ride) => {
             console.log(ride)
@@ -36,7 +52,7 @@ module.exports = {
     registerRide: function (data) {
         Dispatch.find({
             where: {
-                name: "John Doe"
+                name: data.dispatch
             }
         }).then(dispatch => {
             Ride.create({
@@ -59,7 +75,7 @@ module.exports = {
     openTicket: function (data) {
         Ride.find({
             where: {
-                name: "John Doe"
+                name: data.ride
             }
         }).then(() => {
             Ticket.create({
@@ -80,12 +96,6 @@ module.exports = {
             })
         })
     },
-}
-
-let data = {
-    username: 'WORKDAMNIT',
-    name: 'WORK!!!',
-    password: 'pass'
 }
 
 // db.registerTech(data)
