@@ -110,15 +110,17 @@ module.exports = {
             }).catch(error => {
                 console.log(`ERROR ${error}`)
             })
-        },
-  getTickets: function(data) {
-    Ticket.find({
-      where: {
-        status: "pending"
-      }
-    }).then(data => {
-      console.log(data);
-    });
+        })
+    },
+    getTickets: function (data) {
+        Ticket.find({
+            where: {
+                status: "pending"
+            }
+        }).then(data => {
+            console.log(data);
+        })
+    }
 };
 
 //  DB AS SERVER (below)

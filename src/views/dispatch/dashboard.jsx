@@ -50,8 +50,6 @@ class Dashboard extends Component {
   componentDidMount() {
     this._fetchTickets();
     mql.addListener(this.mediaQueryChanged);
-
-  componentDidMount() {
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       const myPosition = {
@@ -90,6 +88,7 @@ class Dashboard extends Component {
     } else {
       return <div />;
     }
+  }
   componentWillUnmount() {
     mql.removeListener(this.mediaQueryChanged);
   }
@@ -110,10 +109,10 @@ class Dashboard extends Component {
     ));
 
     const sidebarStyles = {
-      sidebar:{
-        backgroundColor: "honeydew",
+      sidebar: {
+        backgroundColor: "honeydew"
       }
-    }
+    };
 
     return (
       <div id="menu">
@@ -129,9 +128,7 @@ class Dashboard extends Component {
           docked={this.state.sidebarDocked}
           onSetOpen={this.onSetSidebarOpen}
         >
-          <button onClick={() => this.onSetSidebarOpen(true)}>
-            Menu
-          </button>
+          <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
           <b>Main content</b>
         </Sidebar>
       </div>
