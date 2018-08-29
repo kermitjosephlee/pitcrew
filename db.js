@@ -3,20 +3,21 @@ const Ride = require('./models').Ride;
 const Dispatch = require('./models').Dispatch;
 const Ticket = require('./models').Ticket;
 
+
 module.exports = {
     checkUser: (data) => {
-        // const user = data.user
+        const Model = (data.type === 'Technician' ? Technician : Dispatch);
         console.log('dbbbbb', data)
-        return Technician.find({
+        return Model.find({
             where: {
                 username: data.username,
                 password: data.password
             }
         }).then(user => {
             if (user)
-                return true
+                throw 'USER EXISTS'
             else {
-                throw false
+                return false
             }
         })
     },
@@ -30,13 +31,13 @@ module.exports = {
             console.log(`ERROR ${error}`)
         })
     },
-    registerTech: function (data) {
+    registerTechnician: function (data) {
         Ride.find({
             where: {
-                name: data.ride
+                name: "John Doe"
             }
         }).then((ride) => {
-            console.log(ride)
+            console.log('regggTech', ride)
             Technician.create({
                 username: data.username,
                 name: data.name,

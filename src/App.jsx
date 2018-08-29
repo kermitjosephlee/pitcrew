@@ -27,59 +27,49 @@ class App extends Component {
     };
   }
 
-  // RIDER registration
-  registerRider(username, password) {
+  registerTech(data) {
     $.ajax({
-      url: "http://localhost:8080/register/rider",
+      url: "http://localhost:8080/register",
       type: "POST",
-      data: { username: username, password: password }
+      data
     });
   }
 
-  // TECH & DISPATCH registration
-  registerDispatch(username, password) {
-    $.ajax({
-      url: "http://localhost:8080/register/dispatch",
-      type: "POST",
-      data: { username: username, password: password }
-    });
-  }
-
-  registerTech(username, password) {
-    $.ajax({
-      url: "http://localhost:8080/register/tech",
-      type: "POST",
-      data: { username: username, password: password }
-    });
-  }
-
-  //
-  signIn(username, password, login, type) {
+  signIn(data) {
     var user_exists = false;
-    // Check if user exists
+
     $.ajax({
       url: "http://localhost:8080/login_user",
       type: "POST",
-      data: { username: username, password: password },
-      success: response => {
-        if (response) {
-          this.setState({
-            user: {
-              username,
-              password,
-              login,
-              type
-            }
-          });
-        } else {
-          alert("Username or Password does not exist");
-        }
-      },
-      error: function(response) {
-        console.log("fail");
-      }
+      data
     });
   }
+  // signIn(username, password, login, type) {
+  //   var user_exists = false;
+  //   // Check if user exists
+  //   $.ajax({
+  //     url: "http://localhost:8080/login_user",
+  //     type: "POST",
+  //     data: { username: username, password: password },
+  //     success: response => {
+  //       if (response) {
+  //         this.setState({
+  //           user: {
+  //             username,
+  //             password,
+  //             login,
+  //             type
+  //           }
+  //         });
+  //       } else {
+  //         alert("Username or Password does not exist");
+  //       }
+  //     },
+  //     error: function(response) {
+  //       console.log("fail");
+  //     }
+  //   });
+  // }
 
   //
   signOut() {

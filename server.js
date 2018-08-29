@@ -28,15 +28,17 @@ const dispatchUsers = {};
 
 const techUsers = {};
 
-const checkUser = async (data) => {
-  console.log('Verifying User')
-  try {
-    const check = await db.checkUser(data)
-    console.log('CHEECK', check)
-  } catch (err) {
-    console.log("ERROR", err)
-  }
-}
+// const checkUser = async (data) => {
+//   console.log('Verifying User')
+//   try {
+//     await db.checkUser(data)
+//     console.log('CHEECK')
+//     return true
+//   } catch (err) {
+//     console.log("ERROR2", err)
+//     throw err
+//   }
+// }
 
 let activeUsers = [{
   username: "alice",
@@ -83,23 +85,23 @@ app.post("/login_user", (req, res) => {
 app.post("/register/rider", (req, res) => {
   let data = req.body;
   activeUsers.push({
-    username: req.body.username,
-    password: req.body.password,
+    username: data.username,
+    password: data.password,
     type: "rider"
   });
   console.log(activeUsers);
 });
 
-app.post("/register/dispatch", (req, res) => {
+app.post("/register", (req, res) => {
   let data = req.body;
-  db.registerDispatch(data);
-});
-
-app.post("/register/tech", (req, res) => {
-  let data = req.body;
-  checkUser(data)
-  // console.log("Register Tech:", data);
-  // db.registerTech(data);
+  db.checkUser(data).then(() => {
+    if (data.user === 'Dispatch')
+      db.registerDispatch(data)
+    else
+      db.registerTechnician(data)
+  }).catch(error => {
+    console.log(`ERROR ${error}`)
+  })
 });
 
 app.post("/newTicket", (req, res) => {

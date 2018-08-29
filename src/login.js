@@ -4,9 +4,11 @@ import { Route, Switch, Redirect } from "react-router-dom";
 class Login extends Component {
   handleSignIn(e) {
     e.preventDefault();
-    let username = this.refs.username.value;
-    let password = this.refs.password.value;
-    this.props.onSignIn(username, password, true, "rider");
+    const data = {
+      username = this.refs.username.value,
+      password = this.refs.password.value
+    }
+    this.props.onSignIn(data);
   }
 
   render() {
