@@ -21,24 +21,6 @@ let testPositions = [
   { lat: 43.511207, lng: -79.728131 }
 ];
 
-// let contentString =
-//   '<div id="content">' +
-//   '<div id="siteNotice">' +
-//   "</div>" +
-//   '<h1 id="firstHeading" class="firstHeading">' +
-//   riderName +
-//   "</h1>" +
-//   '<div id="bodyContent">' +
-//   "<p>" +
-//   riderName +
-//   "</p>" +
-//   "<p>tech name: " +
-//   techName +
-//   "</p>" +
-//   "<p> Status: Pending </p>" +
-//   "</div>" +
-//   "</div>";
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -142,7 +124,7 @@ class Dashboard extends Component {
             >
               {this.state.activeMarker === marker.id && (
                 <InfoWindow>
-                  <h4>{marker.id}</h4>
+                  <h4>id: {marker.id}</h4>
                 </InfoWindow>
               )}
             </Marker>
