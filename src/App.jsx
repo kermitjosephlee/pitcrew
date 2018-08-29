@@ -36,7 +36,7 @@ class App extends Component {
     });
   }
 
-  // TECH & DISPATCH registration
+  // DISPATCH registration
   registerDispatch(username, password) {
     $.ajax({
       url: "http://localhost:8080/register/dispatch",
@@ -44,7 +44,7 @@ class App extends Component {
       data: { username: username, password: password }
     });
   }
-
+  // TECH registration
   registerTech(username, password) {
     $.ajax({
       url: "http://localhost:8080/register/tech",
@@ -147,6 +147,12 @@ class App extends Component {
             path="/register"
             component={() => (
               <Register onRegister={this.registerTech.bind(this)} />
+            )}
+          />
+          <Route
+            path="/register"
+            component={() => (
+              <Register onRegister={this.registerDispatch.bind(this)} />
             )}
           />
           <Route path="/dashboard" exact component={Dashboard} />

@@ -15,47 +15,13 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeMarker: null,
-      myPosition: undefined,
-      // dummie positions for testing
-      tickets: [
-        {
-          id: 1,
-          location: {
-            lat: 43.639701,
-            lng: -79.459055
-          }
-        },
-        {
-          id: 2,
-          location: {
-            lat: 43.6476611,
-            lng: -79.3959029
-          }
-        },
-        {
-          id: 3,
-          location: {
-            lat: 43.6447046,
-            lng: -79.3906215
-          }
-        },
-        {
-          id: 4,
-          location: {
-            lat: 43.6402511,
-            lng: -79.411626
-          }
-        },
-        {
-          id: 5,
-          location: {
-            lat: 43.6443754,
-            lng: -79.3823521
-          }
-        }
-      ]
+      myPosition: {},
+      tickets: [],
+      sidebarDocked: mql.matches,
+      sidebarOpen: true
     };
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
   handleToggleOpen = id => {
@@ -81,6 +47,9 @@ class Dashboard extends Component {
       this._fetchTickets();
     }, 1000);
   };
+  componentDidMount() {
+    this._fetchTickets();
+    mql.addListener(this.mediaQueryChanged);
 
   componentDidMount() {
     this._reloadTickets();
@@ -121,6 +90,52 @@ class Dashboard extends Component {
     } else {
       return <div />;
     }
+  componentWillUnmount() {
+    mql.removeListener(this.mediaQueryChanged);
+  }
+
+  onSetSidebarOpen(open) {
+    this.setState({ sidebarOpen: open });
+  }
+
+  mediaQueryChanged() {
+    this.setState({ sidebarDocked: mql.matches, sidebarOpen: false });
+  }
+
+  render() {
+    const GoogleMapExample = withGoogleMap(props => (
+      <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={12}>
+        <Marker position={this.state.myPosition} />
+      </GoogleMap>
+    ));
+
+    const sidebarStyles = {
+      sidebar:{
+        backgroundColor: "honeydew",
+      }
+    }
+
+    return (
+      <div id="menu">
+        <GoogleMapExample
+          containerElement={<div style={{ height: "500px", width: "500px" }} />}
+          mapElement={<div style={{ height: "100%" }} />}
+        />
+
+        <Sidebar
+          sidebar={<em>PitCrew Dashboard</em>}
+          styles={sidebarStyles}
+          open={this.state.sidebarOpen}
+          docked={this.state.sidebarDocked}
+          onSetOpen={this.onSetSidebarOpen}
+        >
+          <button onClick={() => this.onSetSidebarOpen(true)}>
+            Menu
+          </button>
+          <b>Main content</b>
+        </Sidebar>
+      </div>
+    );
   }
 }
 

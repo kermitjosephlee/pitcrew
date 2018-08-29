@@ -17,7 +17,11 @@
     "react-google-maps": "^9.4.5",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
+<<<<<<< HEAD
     "recompose": "^0.29.0",
+=======
+    "react-sidebar": "^3.0.2",
+>>>>>>> feature/toggleMenu
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1"
   },
