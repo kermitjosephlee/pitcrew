@@ -133,6 +133,7 @@ class Dashboard extends Component {
             Menu
           </button>
           <b>Main content</b>
+          <p className="ticketBox">ticket box</p>
         </Sidebar>
       </div>
     );
