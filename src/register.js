@@ -7,7 +7,7 @@ class Register extends Component {
     const data = {
       username: this.refs.username.value,
       password: this.refs.password.value,
-      type: this.refs.user.value
+      type: this.refs.type.value
     };
     this.props.onRegister(data);
   }
@@ -16,7 +16,7 @@ class Register extends Component {
     return (
       <form onSubmit={this.handleRegistration.bind(this)}>
         <h3> Register </h3>{" "}
-        <select ref="user" placeholder="Enter User">
+        <select ref="type" placeholder="Enter User">
           <option value="Dispatch">Dispatch</option>
           <option value="Technician">Technician</option>
         </select>

@@ -36,42 +36,30 @@ class App extends Component {
   }
 
   signIn(data) {
-    var user_exists = false;
-
     $.ajax({
-      url: "http://localhost:8080/login_user",
+      url: "http://localhost:8080/login",
       type: "POST",
-      data
+      data,
+      success: data => {
+        if (data) {
+          this.setState({
+            user: {
+              username: data.username,
+              password: data.password,
+              login: true,
+              type: data.type
+            }
+          });
+        } else {
+          alert("Username or Password does not exist");
+        }
+      },
+      error: function(data) {
+        console.log("fail");
+      }
     });
   }
-  // signIn(username, password, login, type) {
-  //   var user_exists = false;
-  //   // Check if user exists
-  //   $.ajax({
-  //     url: "http://localhost:8080/login_user",
-  //     type: "POST",
-  //     data: { username: username, password: password },
-  //     success: response => {
-  //       if (response) {
-  //         this.setState({
-  //           user: {
-  //             username,
-  //             password,
-  //             login,
-  //             type
-  //           }
-  //         });
-  //       } else {
-  //         alert("Username or Password does not exist");
-  //       }
-  //     },
-  //     error: function(response) {
-  //       console.log("fail");
-  //     }
-  //   });
-  // }
 
-  //
   signOut() {
     // clear out user from state
     this.setState({ user: null });
@@ -132,7 +120,7 @@ class App extends Component {
               <Register onRegister={this.registerTech.bind(this)} />
             )}
           />
-          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/dispatch" exact component={Dashboard} />
         </Switch>
       </div>
     );

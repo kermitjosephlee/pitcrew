@@ -7,7 +7,7 @@ const Ticket = require('./models').Ticket;
 module.exports = {
     checkUser: (data) => {
         const Model = (data.type === 'Technician' ? Technician : Dispatch);
-        console.log('dbbbbb', data)
+        console.log('CHECKING USER', data)
         return Model.find({
             where: {
                 username: data.username,
@@ -15,9 +15,24 @@ module.exports = {
             }
         }).then(user => {
             if (user)
+                return true
+            else {
+                throw 'USER DOES NOT EXISTS'
+            }
+        })
+    },
+    checkRegister: (data) => {
+        const Model = (data.type === 'Technician' ? Technician : Dispatch);
+        console.log('CHECKING REGISTER', data)
+        return Model.find({
+            where: {
+                username: data.username
+            }
+        }).then(user => {
+            if (user)
                 throw 'USER EXISTS'
             else {
-                return false
+                return user
             }
         })
     },
@@ -25,9 +40,9 @@ module.exports = {
         Dispatch.create({
             username: data.username,
             password: data.password
-        }).save().then(() => {
+        }).then(() => {
             console.log('REGISTERED DISPATCH, SUCCESS') //will be switched to show success of registration
-        }).save().catch(error => {
+        }).catch(error => {
             console.log(`ERROR ${error}`)
         })
     },

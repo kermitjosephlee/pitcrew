@@ -63,23 +63,26 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+app.get("/dashboard", (req, res) => {
+  res.render({
+    activeUsers
+  });
+});
+
 app.post("/post_test", (req, res) => {
   let getId = req.body.id;
 
   console.log("getId:", getId);
 });
 
-app.post("/login_user", (req, res) => {
-  var exists = false;
-  for (user in activeUsers) {
-    if (activeUsers[user].username == req.body.username && exists == false) {
-      console.log(req.body.username);
-      console.log(activeUsers[user].username);
-      exists = true;
-    }
-  }
-  console.log(exists);
-  res.send(exists);
+app.post("/login", (req, res) => {
+  const data = req.body;
+  db.checkUser(data).then(() => {
+    console.log(`USER EXISTS`)
+    res.send(data)
+  }).catch(error => {
+    console.log(`ERROR ${error}`)
+  })
 });
 
 app.post("/register/rider", (req, res) => {
@@ -93,9 +96,9 @@ app.post("/register/rider", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  let data = req.body;
-  db.checkUser(data).then(() => {
-    if (data.user === 'Dispatch')
+  const data = req.body;
+  db.checkRegister(data).then(() => {
+    if (data.type === 'Dispatch')
       db.registerDispatch(data)
     else
       db.registerTechnician(data)
