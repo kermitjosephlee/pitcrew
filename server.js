@@ -26,9 +26,7 @@ app.use(function (req, res, next) {
 
 //****************************************
 
-const dispatchUsers = {};
-
-const techUsers = {};
+const user = [];
 
 // const checkUser = async (data) => {
 //   console.log('Verifying User')
@@ -42,36 +40,37 @@ const techUsers = {};
 //   }
 // }
 
-let tickets = [{
-    id: 1,
-    rider: "Bob",
-    lat: 43.639701,
-    lng: -79.459055,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "A",
-    status: "pending"
-  },
-  {
-    id: 2,
-    rider: "Sally",
-    lat: 43.6476611,
-    lng: -79.459055,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "B",
-    status: "pending"
-  },
-  {
-    id: 3,
-    rider: "Edward",
-    lat: 43.6447046,
-    lng: -79.3906215,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "C",
-    status: "pending"
-  }
+let tickets = [
+  // {
+  //   id: 1,
+  //   rider: "Bob",
+  //   lat: 43.639701,
+  //   lng: -79.459055,
+  //   type: "mechanic",
+  //   startTime: "2018-08-30T16:10:28.638Z",
+  //   description: "A",
+  //   status: "pending"
+  // },
+  // {
+  //   id: 2,
+  //   rider: "Sally",
+  //   lat: 43.6476611,
+  //   lng: -79.459055,
+  //   type: "mechanic",
+  //   startTime: "2018-08-30T16:10:28.638Z",
+  //   description: "B",
+  //   status: "pending"
+  // },
+  // {
+  //   id: 3,
+  //   rider: "Edward",
+  //   lat: 43.6447046,
+  //   lng: -79.3906215,
+  //   type: "mechanic",
+  //   startTime: "2018-08-30T16:10:28.638Z",
+  //   description: "C",
+  //   status: "pending"
+  // }
   // {
   //   id: 4,
   //   location: {
@@ -123,24 +122,28 @@ app.post("/login", (req, res) => {
   })
 });
 
-app.post("/register/rider", (req, res) => {
-  let data = req.body;
-  db.openTicket(data)
-  // activeUsers.push({
-  //   username: data.username,
-  //   password: data.password,
-  //   type: "rider"
-  // });
-  // console.log(activeUsers);
-});
+// app.post("/register/rider", (req, res) => {
+//   let data = req.body;
+//   activeUsers.push({
+//     username: data.username,
+//     contact: data.contact,
+//   });
+//   console.log(activeUsers);
+// });
 
 app.post("/register", (req, res) => {
   const data = req.body;
   db.checkRegister(data).then(() => {
     if (data.type === 'Dispatch')
       db.registerDispatch(data)
-    else
+    else if (data.type === 'Technician')
       db.registerTechnician(data)
+    else if (data.type === 'Rider')
+      activeUsers.push({
+        username: data.username,
+        contact: data.contact,
+      });
+    console.log(activeUsers);
   }).catch(error => {
     console.log(`ERROR ${error}`)
   })
@@ -148,24 +151,17 @@ app.post("/register", (req, res) => {
 
 app.post("/newTicket", (req, res) => {
   let data = req.body;
-  tickets.push({
-    id: 1,
-    rider: data.rider,
-    lat: data,
-    lng: -79.459055,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "A",
-    status: "pending"
-  });
-  tickets.push({
-    id: parseFloat(data.id),
-    location: {
-      lat: parseFloat(data.location.lat),
-      lng: parseFloat(data.location.lng)
-    }
-    // type: "rider"
-  });
+  console.log('NEW TICKET', data)
+  db.openTicket(data)
+  // tickets.push(data)
+  // tickets.push({
+  //   id: parseFloat(data.id),
+  //   location: {
+  //     lat: parseFloat(data.location.lat),
+  //     lng: parseFloat(data.location.lng)
+  //   }
+  //   // type: "rider"
+  // });
   console.log("Tickets:", tickets);
 });
 
