@@ -27,7 +27,7 @@ class Rider extends Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
-      const rider = this.state.rate;
+      const rider = this.state.rider;
       rider.lat = position.coords.latitude;
       rider.lng = position.coords.longitude;
 
