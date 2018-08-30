@@ -127,7 +127,7 @@ class App extends Component {
               <Register onRegister={this.registerTech.bind(this)} />
             )}
           />
-          <Route path="/dispatch" exact component={Dashboard} />
+        <Route path="/dashboard" exact component={Dashboard} />
         </Switch>
       </div>
     );
