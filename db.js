@@ -98,7 +98,7 @@ module.exports = {
                 rider: data.rider,
                 contact: data.contact,
                 lat: data.lat,
-                long: data.long,
+                lng: data.lng,
                 type: data.type,
                 startTime: data.startTime,
                 description: data.description,

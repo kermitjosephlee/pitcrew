@@ -9,6 +9,7 @@ import Login from "./login";
 import Rider from "./views/rider/rider";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
+import Technician from "./views/technician/technician";
 
 let myPosition = {};
 
@@ -68,17 +69,11 @@ class App extends Component {
   }
 
   //
-  addTicket(location) {
+  newTicket(data) {
     $.ajax({
       url: "http://localhost:8080/newTicket",
       type: "POST",
-      data: {
-        id: 6,
-        location: {
-          lat: location.lat,
-          lng: location.lng
-        }
-      }
+      data
     });
   }
 
@@ -103,7 +98,7 @@ class App extends Component {
             component={() => (
               <Rider
                 user={this.state.user}
-                newTicket={this.addTicket.bind(this)}
+                handleTicket={this.newTicket.bind(this)}
               />
             )}
           />
@@ -113,7 +108,8 @@ class App extends Component {
               <Register onRegister={this.registerTech.bind(this)} />
             )}
           />
-        <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/technician" exact component={Technician} />
         </Switch>
       </div>
     );
