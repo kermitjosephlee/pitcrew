@@ -10,7 +10,7 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
-import Sidebar from "react-sidebar"
+import Sidebar from "react-sidebar";
 
 const mql = window.matchMedia(`(min-width: 250px)`);
 
@@ -51,8 +51,7 @@ class Dashboard extends Component {
     }, 1000);
   };
   componentDidMount() {
-    // this._fetchTickets();
-    // mql.addListener(this.mediaQueryChanged);
+    mql.addListener(this.mediaQueryChanged);
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       const myPosition = {
@@ -74,24 +73,6 @@ class Dashboard extends Component {
     });
     return CurrentPosition;
   }
-
-  render() {
-    if (this.state.myPosition) {
-      return (
-        <GoogleMap
-          center={{
-            lat: this.state.myPosition.lat,
-            lng: this.state.myPosition.lng
-          }}
-          defaultZoom={9}
-        >
-          <MapMarker tickets={this.state.tickets} />
-        </GoogleMap>
-      );
-    } else {
-      return <div />;
-    }
-  }
   componentWillUnmount() {
     mql.removeListener(this.mediaQueryChanged);
   }
@@ -105,15 +86,14 @@ class Dashboard extends Component {
   }
 
   render() {
-
     const sidebarStyles = {
       sidebar: {
         backgroundColor: "honeydew"
       }
     };
 
-      if (this.state.myPosition) {
-        return (
+    if (this.state.myPosition) {
+      return (
         <div id="menu">
           <GoogleMap
             center={{
@@ -136,9 +116,10 @@ class Dashboard extends Component {
             <p className="ticketBox">ticket box</p>
           </Sidebar>
         </div>
-        );
-      } else {
-        return <div id="menu">
+      );
+    } else {
+      return (
+        <div id="menu">
           <Sidebar
             sidebar={<em>PitCrew Dashboard</em>}
             styles={sidebarStyles}
@@ -150,10 +131,10 @@ class Dashboard extends Component {
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
-        </div>;
-      }
+        </div>
+      );
     }
-
+  }
 }
 
 export default compose(
