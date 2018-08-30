@@ -18,10 +18,12 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myPosition: {},
-      tickets: [],
       sidebarDocked: mql.matches,
-      sidebarOpen: false
+      sidebarOpen: false,
+      activeMarker: null,
+      myPosition: undefined,
+      // dummie positions for testing
+      tickets: []
     };
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -48,7 +50,7 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
-    }, 1000);
+    }, 2500);
   };
   componentDidMount() {
     mql.addListener(this.mediaQueryChanged);
@@ -105,11 +107,10 @@ class Dashboard extends Component {
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
-
         </div>
-        );
-      } else {
-        return (
+      );
+    } else {
+      return (
         <div id="menu">
           <Sidebar
             sidebar={<em>PitCrew Dashboard</em>}
@@ -122,10 +123,8 @@ class Dashboard extends Component {
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
-
         </div>
       );
-      }
     }
   }
 }
