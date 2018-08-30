@@ -21,7 +21,7 @@ class Dashboard extends Component {
       myPosition: {},
       tickets: [],
       sidebarDocked: mql.matches,
-      sidebarOpen: true
+      sidebarOpen: false
     };
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -64,23 +64,6 @@ class Dashboard extends Component {
     });
   }
 
-  render() {
-    if (this.state.myPosition) {
-      return (
-        <GoogleMap
-          center={{
-            lat: this.state.myPosition.lat,
-            lng: this.state.myPosition.lng
-          }}
-          defaultZoom={9}
-        >
-          <MapMarker tickets={this.state.tickets} />
-        </GoogleMap>
-      );
-    } else {
-      return <div />;
-    }
-  }
   componentWillUnmount() {
     mql.removeListener(this.mediaQueryChanged);
   }
@@ -120,14 +103,16 @@ class Dashboard extends Component {
             docked={this.state.sidebarDocked}
             onSetOpen={this.onSetSidebarOpen}
           >
-            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
+            <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
+
         </div>
         );
       } else {
-        return <div id="menu">
+        return (
+        <div id="menu">
           <Sidebar
             sidebar={<em>PitCrew Dashboard</em>}
             styles={sidebarStyles}
@@ -139,7 +124,9 @@ class Dashboard extends Component {
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
-        </div>;
+
+        </div>
+      );
       }
     }
 
