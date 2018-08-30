@@ -51,8 +51,8 @@ class Dashboard extends Component {
     }, 1000);
   };
   componentDidMount() {
-    this._fetchTickets();
-    mql.addListener(this.mediaQueryChanged);
+    // this._fetchTickets();
+    // mql.addListener(this.mediaQueryChanged);
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       const myPosition = {
@@ -105,11 +105,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    const GoogleMapExample = withGoogleMap(props => (
-      <GoogleMap defaultCenter={this.state.myPosition} defaultZoom={12}>
-        <Marker position={this.state.myPosition} />
-      </GoogleMap>
-    ));
 
     const sidebarStyles = {
       sidebar: {
@@ -117,27 +112,48 @@ class Dashboard extends Component {
       }
     };
 
-    return (
-      <div id="menu">
-        <GoogleMapExample
-          containerElement={<div style={{ height: "500px", width: "500px" }} />}
-          mapElement={<div style={{ height: "100%" }} />}
-        />
+      if (this.state.myPosition) {
+        return (
+        <div id="menu">
+          <GoogleMap
+            center={{
+              lat: this.state.myPosition.lat,
+              lng: this.state.myPosition.lng
+            }}
+            defaultZoom={9}
+          >
+            <MapMarker tickets={this.state.tickets} />
+          </GoogleMap>
+          <Sidebar
+            sidebar={<em>PitCrew Dashboard</em>}
+            styles={sidebarStyles}
+            open={this.state.sidebarOpen}
+            docked={this.state.sidebarDocked}
+            onSetOpen={this.onSetSidebarOpen}
+          >
+            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
+            <b>Main content</b>
+            <p className="ticketBox">ticket box</p>
+          </Sidebar>
+        </div>
+        );
+      } else {
+        return <div id="menu">
+          <Sidebar
+            sidebar={<em>PitCrew Dashboard</em>}
+            styles={sidebarStyles}
+            open={this.state.sidebarOpen}
+            docked={this.state.sidebarDocked}
+            onSetOpen={this.onSetSidebarOpen}
+          >
+            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
+            <b>Main content</b>
+            <p className="ticketBox">ticket box</p>
+          </Sidebar>
+        </div>;
+      }
+    }
 
-        <Sidebar
-          sidebar={<em>PitCrew Dashboard</em>}
-          styles={sidebarStyles}
-          open={this.state.sidebarOpen}
-          docked={this.state.sidebarDocked}
-          onSetOpen={this.onSetSidebarOpen}
-        >
-          <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
-          <b>Main content</b>
-          <p className="ticketBox">ticket box</p>
-        </Sidebar>
-      </div>
-    );
-  }
 }
 
 export default compose(
