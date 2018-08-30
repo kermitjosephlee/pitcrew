@@ -106,16 +106,33 @@ module.exports = {
                 description: data.description,
                 status: data.status
             }).then(() => {
-                console.log('REGISTERED TECH, SUCCESS') //will be switched to show success of registration
+                console.log('CREATED TICKET, SUCCESS') //will be switched to show success of registration
             }).catch(error => {
                 console.log(`ERROR ${error}`)
             })
         })
     },
+    assignTech: data => {
+        Technician.find({
+            where: {
+                username: data.id
+            }
+        }).then(query => {
+            Ticket.update({
+                technicianId: query.id,
+                status: 'active'
+            }, {
+                where: data.id
+            })
+        })
+    },
+    updateTicket: data => {
+
+    },
     getTickets: function (data) {
         Ticket.find({
             where: {
-                status: "pending"
+                status: data.status
             }
         }).then(data => {
             console.log(data);

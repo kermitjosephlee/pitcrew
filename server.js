@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -42,8 +42,7 @@ const techUsers = {};
 //   }
 // }
 
-let tickets = [
-  {
+let tickets = [{
     id: 1,
     location: {
       lat: 43.639701,
@@ -103,12 +102,6 @@ app.get("/dashboard", (req, res) => {
   res.render({
     activeUsers
   });
-});
-
-app.post("/post_test", (req, res) => {
-  let getId = req.body.id;
-
-  console.log("getId:", getId);
 });
 
 app.post("/login", (req, res) => {
