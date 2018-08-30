@@ -18,43 +18,7 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-      tickets: [
-        {
-          id: 1,
-          location: {
-            lat: 43.639701,
-            lng: -79.459055
-          }
-        },
-        {
-          id: 2,
-          location: {
-            lat: 43.6476611,
-            lng: -79.3959029
-          }
-        },
-        {
-          id: 3,
-          location: {
-            lat: 43.6447046,
-            lng: -79.3906215
-          }
-        },
-        {
-          id: 4,
-          location: {
-            lat: 43.6402511,
-            lng: -79.411626
-          }
-        },
-        {
-          id: 5,
-          location: {
-            lat: 43.6443754,
-            lng: -79.3823521
-          }
-        }
-      ]
+      tickets: []
     };
   }
 
@@ -79,7 +43,7 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
-    }, 1000);
+    }, 2500);
   };
 
   componentDidMount() {
@@ -92,17 +56,6 @@ class Dashboard extends Component {
       this.setState({ myPosition });
       console.log("Dashboard location:", myPosition);
     });
-  }
-
-  fetchLocation() {
-    const CurrentPosition = {};
-    navigator.geolocation.getCurrentPosition(position => {
-      const CurrentPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-    });
-    return CurrentPosition;
   }
 
   render() {

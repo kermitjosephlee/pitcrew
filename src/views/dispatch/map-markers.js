@@ -29,7 +29,7 @@ class MapMarker extends Component {
           icon={{
             url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
           }}
-          position={{ lat: marker.location.lat, lng: marker.location.lng }}
+          position={{ lat: marker.lat, lng: marker.lng }}
         />
       );
     });
