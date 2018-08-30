@@ -31,7 +31,7 @@ module.exports = {
       lat: {
         type: Sequelize.STRING
       },
-      long: {
+      lng: {
         type: Sequelize.STRING
       },
       type: {

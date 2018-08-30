@@ -6,7 +6,7 @@ import "./App.css";
 import Main from "./main";
 import TopNav from "./navbar";
 import Login from "./login";
-import Rider from "./rider";
+import Rider from "./views/rider/rider";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 import Technician from "./views/technician/technician";
@@ -23,8 +23,10 @@ class App extends Component {
         login: false,
         type: ""
       },
-      users: "",
-      test: "testing react -> express"
+      rider: {
+        name: "",
+        phone: undefined
+      }
     };
   }
 
@@ -66,36 +68,20 @@ class App extends Component {
     this.setState({ user: null });
   }
 
-  addTicket() {
-    navigator.geolocation.getCurrentPosition(position => {
-      myPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      console.log("myPosition:", myPosition);
-
-      $.ajax({
-        url: "http://localhost:8080/newTicket",
-        type: "POST",
-        data: {
-          id: 3,
-          location: {
-            lat: 43.6633446,
-            lng: -79.3940748
-          }
+  //
+  addTicket(location) {
+    $.ajax({
+      url: "http://localhost:8080/newTicket",
+      type: "POST",
+      data: {
+        id: 6,
+        location: {
+          lat: location.lat,
+          lng: location.lng
         }
-      });
+      }
     });
   }
-  // From react => express
-  handleClick = () => {
-    console.log("this is:", this);
-    $.ajax({
-      url: "http://localhost:8080/post_test",
-      type: "POST",
-      data: { id: "test" }
-    });
-  };
 
   render() {
     return (
@@ -118,7 +104,7 @@ class App extends Component {
             component={() => (
               <Rider
                 user={this.state.user}
-                onSignOut={this.signOut.bind(this)}
+                newTicket={this.addTicket.bind(this)}
               />
             )}
           />
