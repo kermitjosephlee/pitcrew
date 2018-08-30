@@ -9,6 +9,7 @@ import Login from "./login";
 import Rider from "./rider";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
+import Technician from "./views/technician/technician";
 
 let myPosition = {};
 
@@ -127,7 +128,8 @@ class App extends Component {
               <Register onRegister={this.registerTech.bind(this)} />
             )}
           />
-        <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/technician" exact component={Technician} />
         </Switch>
       </div>
     );
