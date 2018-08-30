@@ -8,7 +8,7 @@ module.exports = {
       rider: 'Jerry',
       contact: '555-555-5555',
       lat: '43.6532',
-      long: '-79.3832',
+      lng: '-79.3832',
       type: 'mechanical',
       startTime: 'Sun Aug 26 2018 18:37:58',
       endTime: 'Sun Aug 26 2018 18:50:12',

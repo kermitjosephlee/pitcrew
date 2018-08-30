@@ -100,9 +100,7 @@ module.exports = {
                 lat: data.lat,
                 long: data.long,
                 type: data.type,
-                values: data.value,
                 startTime: data.startTime,
-                endTime: data.endTime,
                 description: data.description,
                 status: data.status
             }).then(() => {
@@ -127,7 +125,11 @@ module.exports = {
         })
     },
     updateTicket: data => {
-
+        Ticket.update({
+            status: data.status
+        }, {
+            where: data.id
+        })
     },
     getTickets: function (data) {
         Ticket.find({
@@ -135,7 +137,7 @@ module.exports = {
                 status: data.status
             }
         }).then(data => {
-            console.log(data);
+            return data
         })
     }
 };

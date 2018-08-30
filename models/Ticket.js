@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     rider: DataTypes.STRING,
     contact: DataTypes.STRING,
     lat: DataTypes.STRING,
-    long: DataTypes.STRING,
+    lng: DataTypes.STRING,
     type: {
       type: DataTypes.ENUM,
       values: ['mechanical', 'medical', 'sweep']

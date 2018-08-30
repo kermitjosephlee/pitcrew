@@ -116,12 +116,13 @@ app.post("/login", (req, res) => {
 
 app.post("/register/rider", (req, res) => {
   let data = req.body;
-  activeUsers.push({
-    username: data.username,
-    password: data.password,
-    type: "rider"
-  });
-  console.log(activeUsers);
+  db.openTicket(data)
+  // activeUsers.push({
+  //   username: data.username,
+  //   password: data.password,
+  //   type: "rider"
+  // });
+  // console.log(activeUsers);
 });
 
 app.post("/register", (req, res) => {
