@@ -21,7 +21,7 @@ class Dashboard extends Component {
       myPosition: {},
       tickets: [],
       sidebarDocked: mql.matches,
-      sidebarOpen: true
+      sidebarOpen: false
     };
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -63,16 +63,6 @@ class Dashboard extends Component {
     });
   }
 
-  fetchLocation() {
-    const CurrentPosition = {};
-    navigator.geolocation.getCurrentPosition(position => {
-      const CurrentPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-    });
-    return CurrentPosition;
-  }
   componentWillUnmount() {
     mql.removeListener(this.mediaQueryChanged);
   }
@@ -111,14 +101,15 @@ class Dashboard extends Component {
             docked={this.state.sidebarDocked}
             onSetOpen={this.onSetSidebarOpen}
           >
-            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
+            <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
+
         </div>
-      );
-    } else {
-      return (
+        );
+      } else {
+        return (
         <div id="menu">
           <Sidebar
             sidebar={<em>PitCrew Dashboard</em>}
@@ -131,8 +122,10 @@ class Dashboard extends Component {
             <b>Main content</b>
             <p className="ticketBox">ticket box</p>
           </Sidebar>
+
         </div>
       );
+      }
     }
   }
 }
