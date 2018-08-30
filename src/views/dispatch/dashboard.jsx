@@ -10,6 +10,9 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
+import Sidebar from "react-sidebar"
+
+const mql = window.matchMedia(`(min-width: 250px)`);
 
 class Dashboard extends Component {
   constructor(props) {
