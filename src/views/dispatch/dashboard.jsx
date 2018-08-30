@@ -52,7 +52,7 @@ class Dashboard extends Component {
   };
   componentDidMount() {
     // this._fetchTickets();
-    // mql.addListener(this.mediaQueryChanged);
+    mql.addListener(this.mediaQueryChanged);
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       const myPosition = {
@@ -62,17 +62,6 @@ class Dashboard extends Component {
       this.setState({ myPosition });
       console.log("Dashboard location:", myPosition);
     });
-  }
-
-  fetchLocation() {
-    const CurrentPosition = {};
-    navigator.geolocation.getCurrentPosition(position => {
-      const CurrentPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-    });
-    return CurrentPosition;
   }
 
   render() {
