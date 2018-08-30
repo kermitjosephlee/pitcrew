@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
 import {
   withGoogleMap,
   GoogleMap,
@@ -20,6 +19,7 @@ class Dashboard extends Component {
     this.state = {
       sidebarDocked: mql.matches,
       sidebarOpen: false,
+      center: undefined,
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
@@ -56,12 +56,16 @@ class Dashboard extends Component {
     mql.addListener(this.mediaQueryChanged);
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
-      const myPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      this.setState({ myPosition });
-      console.log("Dashboard location:", myPosition);
+      // const myPosition = {
+      //   lat: position.coords.latitude,
+      //   lng: position.coords.longitude
+      // };
+      this.setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      });
     });
   }
 
@@ -77,6 +81,26 @@ class Dashboard extends Component {
     this.setState({ sidebarDocked: mql.matches, sidebarOpen: false });
   }
 
+  // handleMapDragStart = this.handleMapDragStart.bind(this);
+  // handleMapDragEnd = this.handleMapDragEnd.bind(this);
+  //
+  // handleMapDragStart(map) {
+  //   this.setState({ ticketFetching: false });
+  //   console.log("Drag started");
+  // }
+  //
+  // handleMapDragEnd(map) {
+  //   this.setState({ ticketFetching: true });
+  //   console.log("Drag ended");
+  // }
+
+  _handleCenterChanged() {
+    const center = this.refs.map.getCenter();
+    if (!center.equals(this.state.center)) {
+      this.setState({ center });
+    }
+  }
+
   render() {
     const sidebarStyles = {
       sidebar: {
@@ -84,30 +108,28 @@ class Dashboard extends Component {
       }
     };
 
-    if (this.state.myPosition) {
+    if (this.state.center) {
       return (
-        <div id="menu">
-          <GoogleMap
-            center={{
-              lat: this.state.myPosition.lat,
-              lng: this.state.myPosition.lng
-            }}
-            defaultZoom={9}
-          >
-            <MapMarker tickets={this.state.tickets} />
-          </GoogleMap>
-          <Sidebar
-            sidebar={<em>PitCrew Dashboard</em>}
-            styles={sidebarStyles}
-            open={this.state.sidebarOpen}
-            docked={this.state.sidebarDocked}
-            onSetOpen={this.onSetSidebarOpen}
-          >
-            <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
-            <b>Main content</b>
-            <p className="ticketBox">ticket box</p>
-          </Sidebar>
-        </div>
+        // <div id="menu">
+        <GoogleMap
+          defaultZoom={9}
+          defaultCenter={this.state.center}
+          onCenterChanged={this._handleCenterChanged.bind(this)}
+        >
+          <MapMarker tickets={this.state.tickets} />
+        </GoogleMap>
+        // <Sidebar
+        //   sidebar={<em>PitCrew Dashboard</em>}
+        //   styles={sidebarStyles}
+        //   open={this.state.sidebarOpen}
+        //   docked={this.state.sidebarDocked}
+        //   onSetOpen={this.onSetSidebarOpen}
+        // >
+        //   <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
+        //   <b>Main content</b>
+        //   <p className="ticketBox">ticket box</p>
+        // </Sidebar>
+        // </div>
       );
     } else {
       return (

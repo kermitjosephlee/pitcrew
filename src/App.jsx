@@ -69,17 +69,11 @@ class App extends Component {
   }
 
   //
-  addTicket(location) {
+  newTicket(data) {
     $.ajax({
       url: "http://localhost:8080/newTicket",
       type: "POST",
-      data: {
-        id: 6,
-        location: {
-          lat: location.lat,
-          lng: location.lng
-        }
-      }
+      data
     });
   }
 
@@ -104,7 +98,7 @@ class App extends Component {
             component={() => (
               <Rider
                 user={this.state.user}
-                newTicket={this.addTicket.bind(this)}
+                handleTicket={this.newTicket.bind(this)}
               />
             )}
           />
