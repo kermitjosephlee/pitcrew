@@ -98,18 +98,18 @@ class Dashboard extends Component {
 
   componentDidMount() {
     // this._reloadTickets();
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   // const myPosition = {
-    //   //   lat: position.coords.latitude,
-    //   //   lng: position.coords.longitude
-    //   // };
-    //   this.setState({
-    //     center: {
-    //       lat: position.coords.latitude,
-    //       lng: position.coords.longitude
-    //     }
-    //   });
-    // });
+    navigator.geolocation.getCurrentPosition(position => {
+      // const myPosition = {
+      //   lat: position.coords.latitude,
+      //   lng: position.coords.longitude
+      // };
+      this.setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      });
+    });
   }
 
   render() {
@@ -119,6 +119,7 @@ class Dashboard extends Component {
           center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
           defaultZoom={9}
         >
+          {/* <MapMarker tickets={this.state.tickets} /> */}
           <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
         </GoogleMap>
         <Button onClick={this.getTickets}>GET TICKETS</Button>
