@@ -9,8 +9,8 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  animation: App-logo-spin infinite 15s linear;
+  height: 60px;
   color: "white";
 }
 
@@ -56,7 +56,7 @@
   align-items: center;
 
   border-radius: 18px 0px 0px 18px;
-  box-shadow: 10px 5px 5px 5px grey;
+  /* box-shadow: 10px 5px 5px 5px grey; */
 }
 
 .iconCornerRemainder {
@@ -68,11 +68,11 @@
   width: 120px;
   padding: 10px;
   margin: 0;
-  color: white;
+  color: black;
   font-size: 2.2em;
   justify-content: left;
   align-items: center;
   background-color: #ffc080;
   border-radius: 0px 18px 18px 0px;
-  box-shadow: 10px 5px 5px 5px grey;
+  /* box-shadow: 10px 5px 5px 5px grey; */
 }
