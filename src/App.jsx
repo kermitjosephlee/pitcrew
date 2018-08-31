@@ -11,6 +11,7 @@ import Main from "./main";
 import TopNav from "./navbar";
 import Login from "./login";
 import Rider from "./views/rider/rider";
+import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 import Technician from "./views/technician/technician";
@@ -77,8 +78,14 @@ class App extends Component {
     $.ajax({
       url: "http://localhost:8080/newTicket",
       type: "POST",
-      data
+      data: {
+        id: 6,
+        lat: location.lat,
+        lng: location.lng
+      }
     });
+
+    console.log(location);
   }
 
   render() {
@@ -125,6 +132,7 @@ class App extends Component {
                   )}
                 />
                 <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/tech" exact component={Tech} />
               </Switch>
             </div>
           </Column>

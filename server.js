@@ -100,14 +100,10 @@ app.post("/login", (req, res) => {
     });
 });
 
-// app.post("/register/rider", (req, res) => {
-//   let data = req.body;
-//   activeUsers.push({
-//     username: data.username,
-//     contact: data.contact,
-//   });
-//   console.log(activeUsers);
-// });
+app.post("/register/rider", (req, res) => {
+  let data = req.body;
+  db.openTicket(data);
+});
 
 app.post("/register", (req, res) => {
   const data = req.body;
@@ -128,18 +124,12 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/newTicket", (req, res) => {
-  let data = req.body;
-  console.log('NEW TICKET', data)
-  db.openTicket(data)
-  // tickets.push(data)
-  // tickets.push({
-  //   id: parseFloat(data.id),
-  //   location: {
-  //     lat: parseFloat(data.location.lat),
-  //     lng: parseFloat(data.location.lng)
-  //   }
-  //   // type: "rider"
-  // });
+  const data = req.body;
+  tickets.push({
+    id: parseFloat(data.id),
+    lat: parseFloat(data.lat),
+    lng: parseFloat(data.lng)
+  });
   console.log("Tickets:", tickets);
 });
 
