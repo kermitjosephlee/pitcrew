@@ -9,24 +9,18 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
-import Sidebar from "react-sidebar";
-
-const mql = window.matchMedia(`(min-width: 250px)`);
+import "./dashboard.css";
+import { Grid } from "react-bootstrap";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidebarDocked: mql.matches,
-      sidebarOpen: false,
-      center: undefined,
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
       tickets: []
     };
-    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
   handleToggleOpen = id => {
@@ -52,8 +46,8 @@ class Dashboard extends Component {
       this._fetchTickets();
     }, 2500);
   };
+
   componentDidMount() {
-    mql.addListener(this.mediaQueryChanged);
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       // const myPosition = {
@@ -69,82 +63,25 @@ class Dashboard extends Component {
     });
   }
 
-  componentWillUnmount() {
-    mql.removeListener(this.mediaQueryChanged);
-  }
-
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
-  }
-
-  mediaQueryChanged() {
-    this.setState({ sidebarDocked: mql.matches, sidebarOpen: false });
-  }
-
-  // handleMapDragStart = this.handleMapDragStart.bind(this);
-  // handleMapDragEnd = this.handleMapDragEnd.bind(this);
-  //
-  // handleMapDragStart(map) {
-  //   this.setState({ ticketFetching: false });
-  //   console.log("Drag started");
-  // }
-  //
-  // handleMapDragEnd(map) {
-  //   this.setState({ ticketFetching: true });
-  //   console.log("Drag ended");
-  // }
-
-  _handleCenterChanged() {
-    const center = this.refs.map.getCenter();
-    if (!center.equals(this.state.center)) {
-      this.setState({ center });
-    }
-  }
-
   render() {
-    const sidebarStyles = {
-      sidebar: {
-        backgroundColor: "honeydew"
-      }
-    };
-
-    if (this.state.center) {
+    if (this.state.myPosition) {
       return (
-        // <div id="menu">
-        <GoogleMap
-          defaultZoom={9}
-          defaultCenter={this.state.center}
-          onCenterChanged={this._handleCenterChanged.bind(this)}
-        >
-          <MapMarker tickets={this.state.tickets} />
-        </GoogleMap>
-        // <Sidebar
-        //   sidebar={<em>PitCrew Dashboard</em>}
-        //   styles={sidebarStyles}
-        //   open={this.state.sidebarOpen}
-        //   docked={this.state.sidebarDocked}
-        //   onSetOpen={this.onSetSidebarOpen}
-        // >
-        //   <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
-        //   <b>Main content</b>
-        //   <p className="ticketBox">ticket box</p>
-        // </Sidebar>
-        // </div>
+        <div id="menu" className="GoogleMap" borderColor="green">
+          <GoogleMap
+            center={{
+              lat: this.state.myPosition.lat,
+              lng: this.state.myPosition.lng
+            }}
+            defaultZoom={9}
+          >
+            <MapMarker tickets={this.state.tickets} />
+          </GoogleMap>
+        </div>
       );
     } else {
       return (
         <div id="menu">
-          <Sidebar
-            sidebar={<em>PitCrew Dashboard</em>}
-            styles={sidebarStyles}
-            open={this.state.sidebarOpen}
-            docked={this.state.sidebarDocked}
-            onSetOpen={this.onSetSidebarOpen}
-          >
-            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
-            <b>Main content</b>
-            <p className="ticketBox">ticket box</p>
-          </Sidebar>
+          <p className="ticketBox">ticket box</p>
         </div>
       );
     }

@@ -26,18 +26,7 @@ app.use(function(req, res, next) {
 
 //****************************************
 
-const dispatchUsers = {};
-
-const techUsers = [
-  {
-    RideId: 1,
-    username: "Bob",
-    name: "Mr. MeeFix",
-    password: "123456",
-    createdAt: new Date(),
-    updatedAt: new Date()
-  }
-];
+const user = [];
 
 // const checkUser = async (data) => {
 //   console.log('Verifying User')
@@ -52,36 +41,26 @@ const techUsers = [
 // }
 
 let tickets = [
-  {
-    id: 1,
-    rider: "Bob",
-    lat: 43.639701,
-    lng: -79.459055,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "A",
-    status: "pending"
-  },
-  {
-    id: 2,
-    rider: "Sally",
-    lat: 43.6476611,
-    lng: -79.459055,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "B",
-    status: "pending"
-  },
-  {
-    id: 3,
-    rider: "Edward",
-    lat: 43.6447046,
-    lng: -79.3906215,
-    type: "mechanic",
-    startTime: "2018-08-30T16:10:28.638Z",
-    description: "C",
-    status: "pending"
-  }
+  // {
+  //   id: 1,
+  //   rider: "Bob",
+  //   lat: 43.639701,
+  //   lng: -79.459055,
+  //   type: "mechanic",
+  //   startTime: "2018-08-30T16:10:28.638Z",
+  //   description: "A",
+  //   status: "pending"
+  // },
+  // {
+  //   id: 2,
+  //   rider: "Sally",
+  //   lat: 43.6476611,
+  //   lng: -79.459055,
+  //   type: "mechanic",
+  //   startTime: "2018-08-30T16:10:28.638Z",
+  //   description: "B",
+  //   status: "pending"
+  // },
 ];
 
 //****************************************
@@ -128,14 +107,20 @@ app.post("/register/rider", (req, res) => {
 
 app.post("/register", (req, res) => {
   const data = req.body;
-  db.checkRegister(data)
-    .then(() => {
-      if (data.type === "Dispatch") db.registerDispatch(data);
-      else db.registerTechnician(data);
-    })
-    .catch(error => {
-      console.log(`ERROR ${error}`);
-    });
+  db.checkRegister(data).then(() => {
+    if (data.type === 'Dispatch')
+      db.registerDispatch(data)
+    else if (data.type === 'Technician')
+      db.registerTechnician(data)
+    else if (data.type === 'Rider')
+      activeUsers.push({
+        username: data.username,
+        contact: data.contact,
+      });
+    console.log(activeUsers);
+  }).catch(error => {
+    console.log(`ERROR ${error}`)
+  })
 });
 
 app.post("/newTicket", (req, res) => {
