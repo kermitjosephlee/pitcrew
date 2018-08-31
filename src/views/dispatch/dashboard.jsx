@@ -56,7 +56,7 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    this._reloadTickets();
+    // this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       // const myPosition = {
       //   lat: position.coords.latitude,
@@ -72,29 +72,17 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (this.state.myPosition) {
-      return (
-        <div id="menu" className="GoogleMap" borderColor="green">
-          <GoogleMap
-            center={{
-              lat: this.state.myPosition.lat,
-              lng: this.state.myPosition.lng
-            }}
-            defaultZoom={9}
-          >
-            <MapMarker tickets={this.state.tickets} />
-          </GoogleMap>
-          <Button onClick={this.getTickets}>GET TICKETS</Button>
-        </div>
-      );
-    } else {
-      return (
-        <div id="menu">
-          <p className="ticketBox">ticket box</p>
-          <Button onClick={this.getTickets}>GET TICKETS</Button>
-        </div>
-      );
-    }
+    return (
+      <div id="menu" className="GoogleMap" borderColor="green">
+        <GoogleMap
+          center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
+          defaultZoom={9}
+        >
+          {/* <MapMarker tickets={this.state.tickets} /> */}
+        </GoogleMap>
+        <Button onClick={this.getTickets}>GET TICKETS</Button>
+      </div>
+    );
   }
 }
 // }

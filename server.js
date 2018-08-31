@@ -145,11 +145,15 @@ app.post("/newTicket", (req, res) => {
 
 app.get("/fetchTickets", (req, res) => {
   const data = req.body
-  const tickets = db.getTickets(data);
-  console.log(`TICKET DATA IN SERVER ${tickets}`)
-  res.send({
-    tickets
-  });
+  console.log(typeof db.getTickets)
+
+  db.getTickets(data).then(data => {
+    tickets = data
+    console.log(`TICKET DATA IN SERVER`, tickets)
+  })
+  // res.send({
+  //   tickets
+  // });
 });
 
 //****************************************
