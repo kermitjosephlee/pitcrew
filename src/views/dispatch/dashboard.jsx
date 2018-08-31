@@ -20,7 +20,48 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-      tickets: []
+      tickets: [
+        {
+          id: 1,
+          rider: "Bob",
+          lat: 43.639701,
+          lng: -79.459055,
+          type: "mechanic",
+          startTime: "2018-08-30T16:10:28.638Z",
+          description: "A",
+          status: "active"
+        },
+        {
+          id: 2,
+          rider: "Sally",
+          lat: 43.6476611,
+          lng: -79.459055,
+          type: "mechanic",
+          startTime: "2018-08-30T16:10:28.638Z",
+          description: "B",
+          status: "pending"
+        }
+      ],
+      techs: [
+        {
+          RideId: 1,
+          username: "Bob",
+          name: "Mr. MeeFix",
+          password: "123456",
+          specialty: "mechanic",
+          lat: 43.6876611,
+          lng: -79.579055
+        },
+        {
+          RideId: 2,
+          username: "Chris",
+          name: "Evans",
+          password: "123456",
+          specialty: "medical",
+          lat: 43.6976611,
+          lng: -79.479055
+        }
+      ]
     };
   }
 
@@ -56,45 +97,33 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    this._reloadTickets();
-    navigator.geolocation.getCurrentPosition(position => {
-      // const myPosition = {
-      //   lat: position.coords.latitude,
-      //   lng: position.coords.longitude
-      // };
-      this.setState({
-        center: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        }
-      });
-    });
+    // this._reloadTickets();
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   // const myPosition = {
+    //   //   lat: position.coords.latitude,
+    //   //   lng: position.coords.longitude
+    //   // };
+    //   this.setState({
+    //     center: {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude
+    //     }
+    //   });
+    // });
   }
 
   render() {
-    if (this.state.myPosition) {
-      return (
-        <div id="menu" className="GoogleMap" borderColor="green">
-          <GoogleMap
-            center={{
-              lat: this.state.myPosition.lat,
-              lng: this.state.myPosition.lng
-            }}
-            defaultZoom={9}
-          >
-            <MapMarker tickets={this.state.tickets} />
-          </GoogleMap>
-          <Button onClick={this.getTickets}>GET TICKETS</Button>
-        </div>
-      );
-    } else {
-      return (
-        <div id="menu">
-          <p className="ticketBox">ticket box</p>
-          <Button onClick={this.getTickets}>GET TICKETS</Button>
-        </div>
-      );
-    }
+    return (
+      <div id="menu" className="GoogleMap" borderColor="green">
+        <GoogleMap
+          center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
+          defaultZoom={9}
+        >
+          <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
+        </GoogleMap>
+        <Button onClick={this.getTickets}>GET TICKETS</Button>
+      </div>
+    );
   }
 }
 // }
