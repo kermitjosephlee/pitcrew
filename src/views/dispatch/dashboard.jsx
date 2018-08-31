@@ -10,23 +10,18 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
-import Sidebar from "react-sidebar";
-
-const mql = window.matchMedia(`(min-width: 250px)`);
+import "./dashboard.css";
+import { Grid } from "react-bootstrap";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidebarDocked: mql.matches,
-      sidebarOpen: false,
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
       tickets: []
     };
-    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
   handleToggleOpen = id => {
@@ -52,8 +47,8 @@ class Dashboard extends Component {
       this._fetchTickets();
     }, 2500);
   };
+
   componentDidMount() {
-    mql.addListener(this.mediaQueryChanged);
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       const myPosition = {
@@ -65,28 +60,10 @@ class Dashboard extends Component {
     });
   }
 
-  componentWillUnmount() {
-    mql.removeListener(this.mediaQueryChanged);
-  }
-
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
-  }
-
-  mediaQueryChanged() {
-    this.setState({ sidebarDocked: mql.matches, sidebarOpen: false });
-  }
-
   render() {
-    const sidebarStyles = {
-      sidebar: {
-        backgroundColor: "honeydew"
-      }
-    };
-
     if (this.state.myPosition) {
       return (
-        <div id="menu">
+        <div id="menu" className="GoogleMap" borderColor="green">
           <GoogleMap
             center={{
               lat: this.state.myPosition.lat,
@@ -96,33 +73,12 @@ class Dashboard extends Component {
           >
             <MapMarker tickets={this.state.tickets} />
           </GoogleMap>
-          <Sidebar
-            sidebar={<em>PitCrew Dashboard</em>}
-            styles={sidebarStyles}
-            open={this.state.sidebarOpen}
-            docked={this.state.sidebarDocked}
-            onSetOpen={this.onSetSidebarOpen}
-          >
-            <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
-            <b>Main content</b>
-            <p className="ticketBox">ticket box</p>
-          </Sidebar>
         </div>
       );
     } else {
       return (
         <div id="menu">
-          <Sidebar
-            sidebar={<em>PitCrew Dashboard</em>}
-            styles={sidebarStyles}
-            open={this.state.sidebarOpen}
-            docked={this.state.sidebarDocked}
-            onSetOpen={this.onSetSidebarOpen}
-          >
-            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
-            <b>Main content</b>
-            <p className="ticketBox">ticket box</p>
-          </Sidebar>
+          <p className="ticketBox">ticket box</p>
         </div>
       );
     }

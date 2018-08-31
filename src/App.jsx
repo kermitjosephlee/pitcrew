@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import $ from "jquery";
 import "./App.css";
+import logo from "./logo.svg";
+
+// import { Grid } from "react-bootstrap";
+import { Column, Row } from "simple-flexbox";
 
 import Main from "./main";
 import TopNav from "./navbar";
@@ -84,38 +88,53 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <TopNav />
-          <h1 className="App-title">PitCrew</h1>
-          <button onClick={this.addTicket}>Test</button>
-        </header>
-        <Switch>
-          <Route path="/" exact component={Main} />
-          <Route
-            path="/login"
-            component={() => (
-              <Login user={this.state.user} onSignIn={this.signIn.bind(this)} />
-            )}
-          />
-          <Route
-            path="/rider"
-            component={() => (
-              <Rider
-                user={this.state.user}
-                newTicket={this.addTicket.bind(this)}
-              />
-            )}
-          />
-          <Route
-            path="/register"
-            component={() => (
-              <Register onRegister={this.registerTech.bind(this)} />
-            )}
-          />
-        <Route path="/dashboard" exact component={Dashboard} />
-        </Switch>
-      </div>
+      <React.Fragment>
+        <div className="App">
+          <Column flexGrow={1}>
+            <header>
+              <Row horizontal="center" vertical="center">
+                <div className="iconCorner">
+                  <img src={logo} className="App-logo" alt="logo" />
+                </div>
+                <div className="iconCornerRemainder">
+                  <span>PitCrew</span>
+                </div>
+              </Row>
+            </header>
+
+            <div className="Switch">
+              <Switch>
+                <Route path="/" exact component={Main} />
+                <Route
+                  path="/login"
+                  component={() => (
+                    <Login
+                      user={this.state.user}
+                      onSignIn={this.signIn.bind(this)}
+                    />
+                  )}
+                />
+                <Route
+                  path="/rider"
+                  component={() => (
+                    <Rider
+                      user={this.state.user}
+                      newTicket={this.addTicket.bind(this)}
+                    />
+                  )}
+                />
+                <Route
+                  path="/register"
+                  component={() => (
+                    <Register onRegister={this.registerTech.bind(this)} />
+                  )}
+                />
+                <Route path="/dashboard" exact component={Dashboard} />
+              </Switch>
+            </div>
+          </Column>
+        </div>
+      </React.Fragment>
     );
   }
 }
