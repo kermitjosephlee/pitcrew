@@ -82,47 +82,50 @@ class App extends Component {
   }
 
   render() {
+    console.log("location:", this.props);
     return (
       <React.Fragment>
-        <Column flexGrow={1}>
-          <header>
-            <Row horizontal="center" vertical="center">
-              <div className="iconCorner">
-                <img src={logo} className="App-logo" alt="logo" />
-              </div>
-              <div className="iconCornerRemainder">
-                <span>PitCrew</span>
-              </div>
-            </Row>
-          </header>
+        <div className="App">
+          <Column flexGrow={1}>
+            <header>
+              <Row horizontal="center" vertical="center">
+                <div className="iconCorner">
+                  <img src={logo} className="App-logo-spin" alt="logo" />
+                </div>
+                <div className="iconCornerRemainder">
+                  <span>PitCrew</span>
+                </div>
+              </Row>
+            </header>
 
-          <Switch>
-            <Route path="/" exact component={Main} />
-            <Route
-              path="/login"
-              component={() => (
-                <Login
-                  user={this.state.user}
-                  onSignIn={this.signIn.bind(this)}
-                />
-              )}
-            />
-            <Route
-              path="/rider"
-              component={() => (
-                <Rider user={this.state.user} handleTicket={this.newTicket} />
-              )}
-            />
-            <Route
-              path="/register"
-              component={() => (
-                <Register onRegister={this.registerTech.bind(this)} />
-              )}
-            />
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/tech" exact component={Tech} />
-          </Switch>
-        </Column>
+            <Switch>
+              <Route path="/" exact component={Main} />
+              <Route
+                path="/login"
+                component={() => (
+                  <Login
+                    user={this.state.user}
+                    onSignIn={this.signIn.bind(this)}
+                  />
+                )}
+              />
+              <Route
+                path="/rider"
+                component={() => (
+                  <Rider user={this.state.user} handleTicket={this.newTicket} />
+                )}
+              />
+              <Route
+                path="/register"
+                component={() => (
+                  <Register onRegister={this.registerTech.bind(this)} />
+                )}
+              />
+              <Route path="/dashboard" exact component={Dashboard} />
+              <Route path="/tech" exact component={Tech} />
+            </Switch>
+          </Column>
+        </div>
       </React.Fragment>
     );
   }

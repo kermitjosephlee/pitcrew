@@ -10,3 +10,9 @@
   padding: 20px;
   color: grey;
 }
+
+.App-logo {
+  animation: App-logo-spin 1s 15s linear;
+  height: 60px;
+  color: "white";
+}
