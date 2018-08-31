@@ -21,26 +21,26 @@ class Dashboard extends Component {
       myPosition: undefined,
       // dummie positions for testing
       tickets: [
-        {
-          id: 1,
-          rider: "Bob",
-          lat: 43.639701,
-          lng: -79.459055,
-          type: "mechanic",
-          startTime: "2018-08-30T16:10:28.638Z",
-          description: "A",
-          status: "active"
-        },
-        {
-          id: 2,
-          rider: "Sally",
-          lat: 43.6476611,
-          lng: -79.459055,
-          type: "mechanic",
-          startTime: "2018-08-30T16:10:28.638Z",
-          description: "B",
-          status: "pending"
-        }
+        // {
+        //   id: 1,
+        //   rider: "Bob",
+        //   lat: 43.839701,
+        //   lng: -79.459055,
+        //   type: "mechanic",
+        //   startTime: "2018-08-30T16:10:28.638Z",
+        //   description: "A",
+        //   status: "active"
+        // }
+        // {
+        //   id: 2,
+        //   rider: "Sally",
+        //   lat: 43.6476611,
+        //   lng: -79.459055,
+        //   type: "mechanic",
+        //   startTime: "2018-08-30T16:10:28.638Z",
+        //   description: "B",
+        //   status: "pending"
+        // }
       ],
       techs: [
         {
@@ -84,6 +84,12 @@ class Dashboard extends Component {
     fetch(url)
       .then(results => results.json())
       .then(data => {
+        console.log("data:", data.tickets);
+        let tempTickets = data.tickets;
+        for (var ticket in tempTickets) {
+          tempTickets[ticket].lat = parseFloat(tempTickets[ticket].lat);
+          tempTickets[ticket].lng = parseFloat(tempTickets[ticket].lng);
+        }
         this.setState({ tickets: data.tickets });
         console.log(this.state.tickets);
       })
@@ -93,11 +99,11 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
-    }, 2500);
+    }, 3000);
   };
 
   componentDidMount() {
-    // this._reloadTickets();
+    this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       // const myPosition = {
       //   lat: position.coords.latitude,
@@ -120,7 +126,9 @@ class Dashboard extends Component {
           defaultZoom={9}
         >
           {/* <MapMarker tickets={this.state.tickets} /> */}
-          <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
+          {this.state.tickets.length !== 0 && (
+            <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
+          )}
         </GoogleMap>
         <Button onClick={this.getTickets}>GET TICKETS</Button>
       </div>

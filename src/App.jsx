@@ -84,52 +84,45 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="App">
-          <Column flexGrow={1}>
-            <header>
-              <Row horizontal="center" vertical="center">
-                <div className="iconCorner">
-                  <img src={logo} className="App-logo" alt="logo" />
-                </div>
-                <div className="iconCornerRemainder">
-                  <span>PitCrew</span>
-                </div>
-              </Row>
-            </header>
+        <Column flexGrow={1}>
+          <header>
+            <Row horizontal="center" vertical="center">
+              <div className="iconCorner">
+                <img src={logo} className="App-logo" alt="logo" />
+              </div>
+              <div className="iconCornerRemainder">
+                <span>PitCrew</span>
+              </div>
+            </Row>
+          </header>
 
-            <div className="Switch">
-              <Switch>
-                <Route path="/" exact component={Main} />
-                <Route
-                  path="/login"
-                  component={() => (
-                    <Login
-                      user={this.state.user}
-                      onSignIn={this.signIn.bind(this)}
-                    />
-                  )}
+          <Switch>
+            <Route path="/" exact component={Main} />
+            <Route
+              path="/login"
+              component={() => (
+                <Login
+                  user={this.state.user}
+                  onSignIn={this.signIn.bind(this)}
                 />
-                <Route
-                  path="/rider"
-                  component={() => (
-                    <Rider
-                      user={this.state.user}
-                      handleTicket={this.newTicket}
-                    />
-                  )}
-                />
-                <Route
-                  path="/register"
-                  component={() => (
-                    <Register onRegister={this.registerTech.bind(this)} />
-                  )}
-                />
-                <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/tech" exact component={Tech} />
-              </Switch>
-            </div>
-          </Column>
-        </div>
+              )}
+            />
+            <Route
+              path="/rider"
+              component={() => (
+                <Rider user={this.state.user} handleTicket={this.newTicket} />
+              )}
+            />
+            <Route
+              path="/register"
+              component={() => (
+                <Register onRegister={this.registerTech.bind(this)} />
+              )}
+            />
+            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/tech" exact component={Tech} />
+          </Switch>
+        </Column>
       </React.Fragment>
     );
   }

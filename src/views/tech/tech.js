@@ -43,12 +43,12 @@ class Tech extends Component {
     );
 
     return (
-      <div>
+      <React.Fragment>
         <GoogleMap defaultZoom={9}>
           <DirectionsRenderer directions={this.props.directions} />
         </GoogleMap>
         {this.state.assignedTicket.id ? (
-          <div>
+          <React.Fragment>
             <p>go help {this.state.assignedTicket.rider}!</p>
             <Marker
               icon={{
@@ -59,11 +59,11 @@ class Tech extends Component {
                 lng: this.state.assignedTicket.lng
               }}
             />
-          </div>
+          </React.Fragment>
         ) : (
           <p />
         )}
-      </div>
+      </React.Fragment>
     );
 
     if (this.state.center) {
