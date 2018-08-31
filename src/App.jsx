@@ -72,21 +72,22 @@ class App extends Component {
   }
 
   //
-  addTicket(location) {
+  addTicket(position) {
     $.ajax({
       url: "http://localhost:8080/newTicket",
       type: "POST",
       data: {
         id: 6,
         location: {
-          lat: location.lat,
-          lng: location.lng
+          lat: position.lat,
+          lng: position.lng
         }
       }
     });
   }
 
   render() {
+    console.log("location:", this.props);
     return (
       <React.Fragment>
         <div className="App">
@@ -94,7 +95,7 @@ class App extends Component {
             <header>
               <Row horizontal="center" vertical="center">
                 <div className="iconCorner">
-                  <img src={logo} className="App-logo" alt="logo" />
+                  <img src={logo} className="App-logo-spin" alt="logo" />
                 </div>
                 <div className="iconCornerRemainder">
                   <span>PitCrew</span>

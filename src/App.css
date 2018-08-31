@@ -8,8 +8,8 @@
   align-items: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 15s linear;
+.App-logo-spin {
+  animation: App-logo-spin 1s 15s linear;
   height: 60px;
   color: "white";
 }
