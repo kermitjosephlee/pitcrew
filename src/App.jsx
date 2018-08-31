@@ -82,6 +82,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("location:", this.props);
     return (
       <React.Fragment>
         <div className="App">
@@ -89,7 +90,7 @@ class App extends Component {
             <header>
               <Row horizontal="center" vertical="center">
                 <div className="iconCorner">
-                  <img src={logo} className="App-logo" alt="logo" />
+                  <img src={logo} className="App-logo-spin" alt="logo" />
                 </div>
                 <div className="iconCornerRemainder">
                   <span>PitCrew</span>

@@ -74,18 +74,19 @@ class Dashboard extends Component {
   render() {
     if (this.state.myPosition) {
       return (
-        <div id="menu" className="GoogleMap" borderColor="green">
-          <GoogleMap
-            center={{
-              lat: this.state.myPosition.lat,
-              lng: this.state.myPosition.lng
-            }}
-            defaultZoom={9}
-          >
-            <MapMarker tickets={this.state.tickets} />
-          </GoogleMap>
-          <Button onClick={this.getTickets}>GET TICKETS</Button>
-        </div>
+        <React.Fragment>
+          <div id="menu" className="GoogleMap" borderColor="green">
+            <GoogleMap
+              center={{
+                lat: this.state.myPosition.lat,
+                lng: this.state.myPosition.lng
+              }}
+              defaultZoom={9}
+            >
+              <MapMarker tickets={this.state.tickets} />
+            </GoogleMap>
+          </div>
+        </React.Fragment>
       );
     } else {
       return (
