@@ -7,6 +7,7 @@ import Main from "./main";
 import TopNav from "./navbar";
 import Login from "./login";
 import Rider from "./views/rider/rider";
+import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 
@@ -74,12 +75,12 @@ class App extends Component {
       type: "POST",
       data: {
         id: 6,
-        location: {
-          lat: location.lat,
-          lng: location.lng
-        }
+        lat: location.lat,
+        lng: location.lng
       }
     });
+
+    console.log(location);
   }
 
   render() {
@@ -113,7 +114,8 @@ class App extends Component {
               <Register onRegister={this.registerTech.bind(this)} />
             )}
           />
-        <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/tech" exact component={Tech} />
         </Switch>
       </div>
     );

@@ -28,7 +28,16 @@ app.use(function(req, res, next) {
 
 const dispatchUsers = {};
 
-const techUsers = {};
+const techUsers = [
+  {
+    RideId: 1,
+    username: "Bob",
+    name: "Mr. MeeFix",
+    password: "123456",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+];
 
 // const checkUser = async (data) => {
 //   console.log('Verifying User')
@@ -115,12 +124,6 @@ app.post("/login", (req, res) => {
 app.post("/register/rider", (req, res) => {
   let data = req.body;
   db.openTicket(data);
-  // activeUsers.push({
-  //   username: data.username,
-  //   password: data.password,
-  //   type: "rider"
-  // });
-  // console.log(activeUsers);
 });
 
 app.post("/register", (req, res) => {
@@ -136,10 +139,11 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/newTicket", (req, res) => {
+  const data = req.body;
   tickets.push({
     id: parseFloat(data.id),
-    lat: parseFloat(data.location.lat),
-    lng: parseFloat(data.location.lng)
+    lat: parseFloat(data.lat),
+    lng: parseFloat(data.lng)
   });
   console.log("Tickets:", tickets);
 });
