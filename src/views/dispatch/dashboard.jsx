@@ -10,6 +10,7 @@ import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
 import Sidebar from "react-sidebar";
+import { Button } from "react-bootstrap";
 
 const mql = window.matchMedia(`(min-width: 250px)`);
 
@@ -28,6 +29,13 @@ class Dashboard extends Component {
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
+
+  getTickets = () => {
+    $.ajax({
+      url: "http://localhost:8080/fetchTickets",
+      type: "GET"
+    });
+  };
 
   handleToggleOpen = id => {
     console.log("tag id:", id);
@@ -54,7 +62,7 @@ class Dashboard extends Component {
   };
   componentDidMount() {
     mql.addListener(this.mediaQueryChanged);
-    this._reloadTickets();
+    // this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       // const myPosition = {
       //   lat: position.coords.latitude,
@@ -108,48 +116,38 @@ class Dashboard extends Component {
       }
     };
 
-    if (this.state.center) {
-      return (
-        // <div id="menu">
-        <GoogleMap
-          defaultZoom={9}
-          defaultCenter={this.state.center}
-          onCenterChanged={this._handleCenterChanged.bind(this)}
-        >
-          <MapMarker tickets={this.state.tickets} />
-        </GoogleMap>
-        // <Sidebar
-        //   sidebar={<em>PitCrew Dashboard</em>}
-        //   styles={sidebarStyles}
-        //   open={this.state.sidebarOpen}
-        //   docked={this.state.sidebarDocked}
-        //   onSetOpen={this.onSetSidebarOpen}
-        // >
-        //   <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
-        //   <b>Main content</b>
-        //   <p className="ticketBox">ticket box</p>
-        // </Sidebar>
-        // </div>
-      );
-    } else {
-      return (
-        <div id="menu">
-          <Sidebar
-            sidebar={<em>PitCrew Dashboard</em>}
-            styles={sidebarStyles}
-            open={this.state.sidebarOpen}
-            docked={this.state.sidebarDocked}
-            onSetOpen={this.onSetSidebarOpen}
-          >
-            <button onClick={() => this.onSetSidebarOpen(true)}>Menu</button>
-            <b>Main content</b>
-            <p className="ticketBox">ticket box</p>
-          </Sidebar>
-        </div>
-      );
-    }
+    // if (this.state.center) {
+    //   return (
+    //     // <div id="menu">
+    //     <GoogleMap
+    //       defaultZoom={9}
+    //       defaultCenter={this.state.center}
+    //       onCenterChanged={this._handleCenterChanged.bind(this)}
+    //     >
+    //       <MapMarker tickets={this.state.tickets} />
+    //     </GoogleMap>
+    //     // <Sidebar
+    //     //   sidebar={<em>PitCrew Dashboard</em>}
+    //     //   styles={sidebarStyles}
+    //     //   open={this.state.sidebarOpen}
+    //     //   docked={this.state.sidebarDocked}
+    //     //   onSetOpen={this.onSetSidebarOpen}
+    //     // >
+    //     //   <button onClick={() => this.onSetSidebarOpen(false)}>Menu</button>
+    //     //   <b>Main content</b>
+    //     //   <p className="ticketBox">ticket box</p>
+    //     // </Sidebar>
+    //     // </div>
+    //   );
+    // } else {
+    return (
+      <div id="menu">
+        <Button onClick={this.getTickets}>Submit</Button>
+      </div>
+    );
   }
 }
+// }
 
 export default compose(
   withProps({

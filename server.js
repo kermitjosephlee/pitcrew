@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -144,6 +144,9 @@ app.post("/newTicket", (req, res) => {
 });
 
 app.get("/fetchTickets", (req, res) => {
+  const data = req.body
+  const tickets = db.getTickets(data);
+  console.log(`TICKET DATA IN SERVER ${tickets}`)
   res.send({
     tickets
   });
