@@ -81,9 +81,8 @@ class Rider extends Component {
     // }
     return (
       <div>
-        <h2> Rider Page </h2> <p> welcome rider! </p>{" "}
-        {/* <button onClick={this.requestHelp.bind(this)}> Request Help! </button>{" "} */}
-        <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+        <h2> RIDER RIDER </h2>
+        <Button bsStyle="danger" bsSize="large" onClick={this.handleShow}>
           Request Assistance
         </Button>
         <Modal show={this.state.show} onHide={this.handleClose}>

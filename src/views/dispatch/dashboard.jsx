@@ -9,6 +9,7 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
+import { Button } from "react-bootstrap";
 import "./dashboard.css";
 import { Grid } from "react-bootstrap";
 
@@ -22,6 +23,13 @@ class Dashboard extends Component {
       tickets: []
     };
   }
+
+  getTickets = () => {
+    $.ajax({
+      url: "http://localhost:8080/fetchTickets",
+      type: "GET"
+    });
+  };
 
   handleToggleOpen = id => {
     console.log("tag id:", id);
@@ -76,17 +84,20 @@ class Dashboard extends Component {
           >
             <MapMarker tickets={this.state.tickets} />
           </GoogleMap>
+          <Button onClick={this.getTickets}>GET TICKETS</Button>
         </div>
       );
     } else {
       return (
         <div id="menu">
           <p className="ticketBox">ticket box</p>
+          <Button onClick={this.getTickets}>GET TICKETS</Button>
         </div>
       );
     }
   }
 }
+// }
 
 export default compose(
   withProps({

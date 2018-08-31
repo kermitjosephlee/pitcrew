@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -100,10 +100,14 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.post("/register/rider", (req, res) => {
-  let data = req.body;
-  db.openTicket(data);
-});
+// app.post("/register/rider", (req, res) => {
+//   let data = req.body;
+//   activeUsers.push({
+//     username: data.username,
+//     contact: data.contact,
+//   });
+//   console.log(activeUsers);
+// });
 
 app.post("/register", (req, res) => {
   const data = req.body;
@@ -124,16 +128,25 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/newTicket", (req, res) => {
-  const data = req.body;
-  tickets.push({
-    id: parseFloat(data.id),
-    lat: parseFloat(data.lat),
-    lng: parseFloat(data.lng)
-  });
+  let data = req.body;
+  console.log('NEW TICKET', data)
+  db.openTicket(data)
+  // tickets.push(data)
+  // tickets.push({
+  //   id: parseFloat(data.id),
+  //   location: {
+  //     lat: parseFloat(data.location.lat),
+  //     lng: parseFloat(data.location.lng)
+  //   }
+  //   // type: "rider"
+  // });
   console.log("Tickets:", tickets);
 });
 
 app.get("/fetchTickets", (req, res) => {
+  const data = req.body
+  const tickets = db.getTickets(data);
+  console.log(`TICKET DATA IN SERVER ${tickets}`)
   res.send({
     tickets
   });

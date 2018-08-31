@@ -14,7 +14,6 @@ import Rider from "./views/rider/rider";
 import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
-import Technician from "./views/technician/technician";
 
 let myPosition = {};
 
@@ -78,14 +77,8 @@ class App extends Component {
     $.ajax({
       url: "http://localhost:8080/newTicket",
       type: "POST",
-      data: {
-        id: 6,
-        lat: location.lat,
-        lng: location.lng
-      }
+      data
     });
-
-    console.log(location);
   }
 
   render() {
@@ -121,7 +114,7 @@ class App extends Component {
                   component={() => (
                     <Rider
                       user={this.state.user}
-                      newTicket={this.addTicket.bind(this)}
+                      handleTicket={this.newTicket}
                     />
                   )}
                 />

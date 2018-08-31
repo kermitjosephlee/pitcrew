@@ -132,12 +132,13 @@ module.exports = {
         })
     },
     getTickets: function (data) {
-        Ticket.find({
+        Ticket.findAll({
             where: {
-                status: data.status
-            }
+                status: 'pending'
+            },
+            raw: true
         }).then(data => {
-            return data
+            console.log('TICKET DATA IN DB', data)
         })
     }
 };
