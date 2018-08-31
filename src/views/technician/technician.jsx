@@ -29,4 +29,4 @@ export default compose(
   }),
   withScriptjs,
   withGoogleMap
-)(Technician);
+);
