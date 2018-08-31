@@ -134,7 +134,7 @@ module.exports = {
     getTickets: function (data) {
         Ticket.findAll({
             where: {
-                status: data.status
+                status: 'pending'
             },
             raw: true
         }).then(data => {
