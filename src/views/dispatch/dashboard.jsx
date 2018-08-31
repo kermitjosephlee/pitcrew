@@ -20,7 +20,48 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-      tickets: []
+      tickets: [
+        {
+          id: 1,
+          rider: "Bob",
+          lat: 43.639701,
+          lng: -79.459055,
+          type: "mechanic",
+          startTime: "2018-08-30T16:10:28.638Z",
+          description: "A",
+          status: "active"
+        },
+        {
+          id: 2,
+          rider: "Sally",
+          lat: 43.6476611,
+          lng: -79.459055,
+          type: "mechanic",
+          startTime: "2018-08-30T16:10:28.638Z",
+          description: "B",
+          status: "pending"
+        }
+      ],
+      techs: [
+        {
+          RideId: 1,
+          username: "Bob",
+          name: "Mr. MeeFix",
+          password: "123456",
+          specialty: "mechanic",
+          lat: 43.6876611,
+          lng: -79.579055
+        },
+        {
+          RideId: 2,
+          username: "Chris",
+          name: "Evans",
+          password: "123456",
+          specialty: "medical",
+          lat: 43.6976611,
+          lng: -79.479055
+        }
+      ]
     };
   }
 
@@ -79,6 +120,7 @@ class Dashboard extends Component {
           defaultZoom={9}
         >
           {/* <MapMarker tickets={this.state.tickets} /> */}
+          <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
         </GoogleMap>
         <Button onClick={this.getTickets}>GET TICKETS</Button>
       </div>

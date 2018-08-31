@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -111,26 +111,26 @@ app.post("/login", (req, res) => {
 
 app.post("/register", (req, res) => {
   const data = req.body;
-  db.checkRegister(data).then(() => {
-    if (data.type === 'Dispatch')
-      db.registerDispatch(data)
-    else if (data.type === 'Technician')
-      db.registerTechnician(data)
-    else if (data.type === 'Rider')
-      activeUsers.push({
-        username: data.username,
-        contact: data.contact,
-      });
-    console.log(activeUsers);
-  }).catch(error => {
-    console.log(`ERROR ${error}`)
-  })
+  db.checkRegister(data)
+    .then(() => {
+      if (data.type === "Dispatch") db.registerDispatch(data);
+      else if (data.type === "Technician") db.registerTechnician(data);
+      else if (data.type === "Rider")
+        activeUsers.push({
+          username: data.username,
+          contact: data.contact
+        });
+      console.log(activeUsers);
+    })
+    .catch(error => {
+      console.log(`ERROR ${error}`);
+    });
 });
 
 app.post("/newTicket", (req, res) => {
   let data = req.body;
-  console.log('NEW TICKET', data)
-  db.openTicket(data)
+  console.log("NEW TICKET", data);
+  db.openTicket(data);
   // tickets.push(data)
   // tickets.push({
   //   id: parseFloat(data.id),
@@ -145,8 +145,6 @@ app.post("/newTicket", (req, res) => {
 
 app.get("/fetchTickets", (req, res) => {
   const data = req.body
-  console.log(typeof db.getTickets)
-
   db.getTickets(data).then(data => {
     tickets = data
     console.log(`TICKET DATA IN SERVER`, tickets)
