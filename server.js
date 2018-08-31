@@ -144,14 +144,18 @@ app.post("/newTicket", (req, res) => {
 });
 
 app.get("/fetchTickets", (req, res) => {
-  const data = req.body
+  const data = req.body;
   db.getTickets(data).then(data => {
-    tickets = data
-    console.log(`TICKET DATA IN SERVER`, tickets)
-  })
-  // res.send({
-  //   tickets
-  // });
+    tickets = data;
+    for (var ticket in tickets) {
+      tickets[ticket].lat = parseFloat(tickets[ticket].lat);
+      tickets[ticket].lng = parseFloat(tickets[ticket].lng);
+    }
+    console.log(`TICKET DATA IN SERVER`, tickets);
+  });
+  res.send({
+    tickets
+  });
 });
 
 //****************************************
