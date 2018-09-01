@@ -4,7 +4,7 @@ import $ from "jquery";
 import "./App.css";
 import logo from "./logo.svg";
 
-// import { Grid } from "react-bootstrap";
+import { Grid } from "react-bootstrap";
 import { Column, Row } from "simple-flexbox";
 
 import Main from "./main";
@@ -124,6 +124,11 @@ class App extends Component {
               <Route path="/dashboard" exact component={Dashboard} />
               <Route path="/tech" exact component={Tech} />
             </Switch>
+            <footer>
+              <Row horizontal="center" vertical="center">
+                <div className="footer" />
+              </Row>
+            </footer>
           </Column>
         </div>
       </React.Fragment>
