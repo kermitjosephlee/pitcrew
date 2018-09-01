@@ -14,6 +14,7 @@ import Rider from "./views/rider/rider";
 import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 
 let myPosition = {};
 
@@ -24,23 +25,38 @@ class App extends Component {
       user: {
         username: "",
         password: "",
-        login: false,
+        login: "",
         type: ""
       },
       rider: {
         name: "",
-        phone: undefined
+        phone: ""
       }
     };
   }
 
-  registerTech(data) {
+  register = data => {
     $.ajax({
       url: "http://localhost:8080/register",
       type: "POST",
-      data
+      data,
+      success: data => {
+        if (data) {
+          const tempUser = {
+            username: data.username,
+            login: true,
+            type: data.type
+          };
+          localStorage.setItem("user", tempUser);
+        } else {
+          alert("Username or Password does not exist");
+        }
+      },
+      error: function(data) {
+        console.log("fail");
+      }
     });
-  }
+  };
 
   signIn(data) {
     $.ajax({
@@ -49,14 +65,12 @@ class App extends Component {
       data,
       success: data => {
         if (data) {
-          this.setState({
-            user: {
-              username: data.username,
-              password: data.password,
-              login: true,
-              type: data.type
-            }
-          });
+          const tempUser = {
+            username: data.username,
+            login: true,
+            type: data.type
+          };
+          localStorage.setItem("user", JSON.stringify(tempUser));
         } else {
           alert("Username or Password does not exist");
         }
@@ -86,17 +100,32 @@ class App extends Component {
       <React.Fragment>
         <div className="App">
           <Column flexGrow={1}>
-            <header>
-              <Row horizontal="center" vertical="center">
-                <div className="iconCorner">
-                  <img src={logo} className="App-logo" alt="logo" />
-                </div>
-                <div className="iconCornerRemainder">
-                  <span>PitCrew</span>
-                </div>
-              </Row>
-            </header>
-
+            <Navbar inverse collapseOnSelect>
+              <Navbar.Header>
+                <Navbar.Brand>
+                  <span>
+                    <img src={logo} className="App-logo" alt="logo" />
+                  </span>
+                  <span>
+                    <a href="/"> pitCrew</a>
+                  </span>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                <Nav pullRight>
+                  <NavItem eventKey={1} href="/login">
+                    login
+                  </NavItem>
+                  <NavItem eventKey={2} href="/register">
+                    register
+                  </NavItem>
+                  <NavItem eventKey={3} href="/rider">
+                    rider
+                  </NavItem>
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
             <div className="Switch">
               <Switch>
                 <Route path="/" exact component={Main} />
@@ -121,11 +150,14 @@ class App extends Component {
                 <Route
                   path="/register"
                   component={() => (
-                    <Register onRegister={this.registerTech.bind(this)} />
+                    <Register
+                      onRegister={this.register}
+                      user={this.state.user}
+                    />
                   )}
                 />
                 <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/tech" exact component={Tech} />
+                <Route path="/technician" exact component={Tech} />
               </Switch>
             </div>
           </Column>

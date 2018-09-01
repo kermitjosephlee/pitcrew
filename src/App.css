@@ -10,7 +10,7 @@
 
 .App-logo {
   animation: App-logo-spin infinite 15s linear;
-  height: 60px;
+  height: 3vh;
   color: "white";
 }
 
@@ -36,6 +36,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -54,7 +55,6 @@
   color: "white";
   justify-content: center;
   align-items: center;
-
   border-radius: 18px 0px 0px 18px;
   /* box-shadow: 10px 5px 5px 5px grey; */
 }

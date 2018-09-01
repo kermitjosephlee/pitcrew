@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -113,14 +113,13 @@ app.post("/register", (req, res) => {
   const data = req.body;
   db.checkRegister(data)
     .then(() => {
-      if (data.type === "Dispatch") db.registerDispatch(data);
-      else if (data.type === "Technician") db.registerTechnician(data);
-      else if (data.type === "Rider")
-        activeUsers.push({
-          username: data.username,
-          contact: data.contact
-        });
-      console.log(activeUsers);
+      if (data.type === "Dispatch") {
+        db.registerDispatch(data);
+        res.send(data);
+      } else if (data.type === "Technician") {
+        db.registerTechnician(data);
+        res.send(data)
+      }
     })
     .catch(error => {
       console.log(`ERROR ${error}`);

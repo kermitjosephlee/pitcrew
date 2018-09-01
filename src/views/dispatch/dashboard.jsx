@@ -9,9 +9,8 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
-import { Button } from "react-bootstrap";
+import { Button, Grid, Row, Col } from "react-bootstrap";
 import "./dashboard.css";
-import { Grid } from "react-bootstrap";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -114,16 +113,26 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div id="menu" className="GoogleMap" borderColor="green">
-        <GoogleMap
-          center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
-          defaultZoom={9}
-        >
-          {/* <MapMarker tickets={this.state.tickets} /> */}
-          <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
-        </GoogleMap>
-        <Button onClick={this.getTickets}>GET TICKETS</Button>
-      </div>
+      <Grid id="menu" className="GoogleMap" borderColor="green">
+        <Row className="show-grid">
+          <Col xs={12} md={8}>
+            <GoogleMap
+              center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
+              defaultZoom={9}
+            >
+              {/* <MapMarker tickets={this.state.tickets} /> */}
+              <MapMarker
+                tickets={this.state.tickets}
+                techs={this.state.techs}
+              />
+            </GoogleMap>
+            <Button onClick={this.getTickets}>GET TICKETS</Button>
+          </Col>
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
@@ -133,9 +142,9 @@ export default compose(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "500px", width: "500px" }} />,
-    mapElement: <div style={{ height: "100%" }} />
+    loadingElement: <div style={{ height: "100%", width: "80%" }} />,
+    containerElement: <div style={{ height: "100vh", width: "80vw" }} />,
+    mapElement: <div style={{ height: "100%", width: "80%" }} />
   }),
   withScriptjs,
   withGoogleMap
