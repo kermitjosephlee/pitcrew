@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withGoogleMap, GoogleMap, withScriptjs } from "react-google-maps";
 import MapMarker from "./map-markers.js";
+import DispatchTicket from "./dispatch-tickets";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
 import { Button } from "react-bootstrap";
@@ -39,6 +40,7 @@ class Dashboard extends Component {
       techs: [
         {
           RideId: 1,
+          id: 1,
           username: "Bob",
           name: "Mr. MeeFix",
           password: "123456",
@@ -48,6 +50,7 @@ class Dashboard extends Component {
         },
         {
           RideId: 2,
+          id: 2,
           username: "Chris",
           name: "Evans",
           password: "123456",
@@ -58,6 +61,11 @@ class Dashboard extends Component {
       ]
     };
   }
+
+  assignTech = () => {
+    const data = this.state.tickets[0];
+    data.technicianId = this.setState = {};
+  };
 
   getTickets = () => {
     $.ajax({
@@ -125,6 +133,7 @@ class Dashboard extends Component {
           )}
         </GoogleMap>
         <Button onClick={this.getTickets}>GET TICKETS</Button>
+        <DispatchTicket tickets={this.state.tickets} techs={this.state.techs} />
       </Fragment>
     );
   }
