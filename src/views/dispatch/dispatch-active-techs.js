@@ -6,19 +6,35 @@ import {
   ControlLabel,
   FormControl
 } from "react-bootstrap";
+import $ from "jquery";
 
 class DispatchActiveTechs extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: ""
+      assigned_tech_id: 0
     };
   }
 
   handleChange = e => {
     console.log(e.target.value);
-    this.setState({ value: e.target.value });
+    this.setState({ assigned_tech_id: e.target.value });
+  };
+
+  assignTech = () => {
+    const _rider = this.props.rider;
+
+    const data = {
+      assigned_tech_id: this.state.assigned_tech_id,
+      rider: this.props.rider
+    };
+
+    $.ajax({
+      url: "http://localhost:8080/assignTech",
+      type: "POST",
+      data: data
+    });
   };
 
   render() {
@@ -29,7 +45,7 @@ class DispatchActiveTechs extends Component {
           <FormControl
             componentClass="select"
             placeholder="select"
-            value={this.state.value}
+            value={this.state.assigned_tech_id}
             onChange={this.handleChange}
           >
             <option>---</option>
@@ -37,7 +53,9 @@ class DispatchActiveTechs extends Component {
               return <option value={tech.id}>{tech.username}</option>;
             })}
           </FormControl>
-          <Button>Assign Tech for {this.props.rider}</Button>
+          <Button onClick={this.assignTech.bind(this)}>
+            Assign Tech for {this.props.rider}
+          </Button>
         </FormGroup>
       </Fragment>
     );
