@@ -1,33 +1,42 @@
 import React, { Component, Fragment } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { Grid } from "react-bootstrap";
+import {
+  Button,
+  Grid,
+  FormGroup,
+  ControlLabel,
+  FormControl
+} from "react-bootstrap";
+import DispatchActiveTechs from "./dispatch-active-techs";
 
-class DispatchTickets extends Component {
+class DispatchTicket extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      value: ""
+    };
   }
 
+  handleChange = e => {
+    console.log(e.target.value);
+    this.setState({ value: e.target.value });
+  };
+
   render() {
-    const mapMarkers = this.props.tickets.map(ticket => {
-      if (ticket.status == "active")
+    const dispatchTickets = this.props.tickets.map(ticket => {
+      if (ticket.status == "pending")
         return (
-          <Marker
-            key={ticket.id}
-            onClick={() => this.handleToggleOpen(ticket.id)}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-            }}
-            position={{ lat: ticket.lat, lng: ticket.lng }}
-          />
+          <div class="container-fluid">
+            <h4>Rider: {ticket.rider}</h4>
+            <DispatchActiveTechs
+              rider={ticket.rider}
+              techs={this.props.techs}
+            />
+          </div>
         );
     });
 
-    return (
-      <Fragment>
-        {mapMarkers}
-        {mapTechs}
-      </Fragment>
-    );
+    return <Fragment>{dispatchTickets}</Fragment>;
   }
 }
-export default DispatchTickets;
+export default DispatchTicket;
