@@ -1,17 +1,11 @@
-import React, { Component } from "react";
-import {
-  withGoogleMap,
-  GoogleMap,
-  withScriptjs,
-  Marker,
-  InfoWindow
-} from "react-google-maps";
+import React, { Component, Fragment } from "react";
+import { withGoogleMap, GoogleMap, withScriptjs } from "react-google-maps";
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
 import { Button } from "react-bootstrap";
 import "./dashboard.css";
-import { Grid } from "react-bootstrap";
+// import { Grid } from "react-bootstrap";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -120,7 +114,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div id="menu" className="GoogleMap" borderColor="green">
+      <Fragment>
         <GoogleMap
           center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
           defaultZoom={9}
@@ -131,7 +125,7 @@ class Dashboard extends Component {
           )}
         </GoogleMap>
         <Button onClick={this.getTickets}>GET TICKETS</Button>
-      </div>
+      </Fragment>
     );
   }
 }

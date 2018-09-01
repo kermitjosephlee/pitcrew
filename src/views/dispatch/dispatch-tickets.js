@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Grid } from "react-bootstrap";
 
@@ -23,10 +23,10 @@ class DispatchTickets extends Component {
     });
 
     return (
-      <div>
+      <Fragment>
         {mapMarkers}
         {mapTechs}
-      </div>
+      </Fragment>
     );
   }
 }
