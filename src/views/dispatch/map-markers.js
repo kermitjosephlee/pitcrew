@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { Component, Fragment } from "react";
 import {
   withGoogleMap,
   GoogleMap,
@@ -9,9 +8,9 @@ import {
 } from "react-google-maps";
 
 class MapMarker extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   handleToggleOpen = id => {
     console.log("tag id:", id);
@@ -22,7 +21,7 @@ class MapMarker extends Component {
 
   render() {
     const mapMarkers = this.props.tickets.map(ticket => {
-      if (ticket.status == "active")
+      if (ticket.status === "active")
         return (
           <Marker
             key={ticket.id}
@@ -33,7 +32,7 @@ class MapMarker extends Component {
             position={{ lat: ticket.lat, lng: ticket.lng }}
           />
         );
-      if (ticket.status == "pending")
+      if (ticket.status === "pending")
         return (
           <Marker
             key={ticket.id}
@@ -47,7 +46,7 @@ class MapMarker extends Component {
     });
 
     const mapTechs = this.props.techs.map(tech => {
-      if (tech.specialty == "mechanic")
+      if (tech.specialty === "mechanic")
         return (
           <Marker
             key={tech.id}
@@ -58,7 +57,7 @@ class MapMarker extends Component {
             position={{ lat: tech.lat, lng: tech.lng }}
           />
         );
-      if (tech.specialty == "medical")
+      if (tech.specialty === "medical")
         return (
           <Marker
             key={tech.id}
@@ -72,10 +71,10 @@ class MapMarker extends Component {
     });
 
     return (
-      <div>
+      <Fragment>
         {mapMarkers}
         {mapTechs}
-      </div>
+      </Fragment>
     );
   }
 }

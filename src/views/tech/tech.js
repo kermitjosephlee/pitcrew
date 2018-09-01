@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   withGoogleMap,
   GoogleMap,
   withScriptjs,
   Marker,
-  InfoWindow,
   DirectionsRenderer
 } from "react-google-maps";
 import { compose, withProps, lifecycle } from "recompose";
-import Sidebar from "react-sidebar";
+// import Sidebar from "react-sidebar";
 
 class Tech extends Component {
   constructor(props) {
@@ -43,12 +42,12 @@ class Tech extends Component {
     );
 
     return (
-      <React.Fragment>
+      <Fragment>
         <GoogleMap defaultZoom={9}>
           <DirectionsRenderer directions={this.props.directions} />
         </GoogleMap>
         {this.state.assignedTicket.id ? (
-          <React.Fragment>
+          <Fragment>
             <p>go help {this.state.assignedTicket.rider}!</p>
             <Marker
               icon={{
@@ -59,17 +58,12 @@ class Tech extends Component {
                 lng: this.state.assignedTicket.lng
               }}
             />
-          </React.Fragment>
+          </Fragment>
         ) : (
           <p />
         )}
-      </React.Fragment>
+      </Fragment>
     );
-
-    if (this.state.center) {
-    } else {
-      return <div />;
-    }
   }
 }
 
