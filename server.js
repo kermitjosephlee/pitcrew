@@ -140,7 +140,7 @@ app.post("/newTicket", (req, res) => {
   //   }
   //   // type: "rider"
   // });
-  console.log("Tickets:", tickets);
+  // console.log("Tickets:", tickets);
 });
 
 app.get("/fetchTickets", (req, res) => {
@@ -151,11 +151,18 @@ app.get("/fetchTickets", (req, res) => {
       tickets[ticket].lat = parseFloat(tickets[ticket].lat);
       tickets[ticket].lng = parseFloat(tickets[ticket].lng);
     }
-    console.log(`TICKET DATA IN SERVER`, tickets);
+    // console.log(`TICKET DATA IN SERVER`, tickets);
   });
   res.send({
     tickets
   });
+});
+
+app.post("/assignTech", (req, res) => {
+  const data = req.body;
+  console.log(
+    data.rider + " is assigned to tech with id: " + data.assigned_tech_id
+  );
 });
 
 //****************************************
