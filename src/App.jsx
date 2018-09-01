@@ -11,6 +11,7 @@ import Main from "./main";
 import TopNav from "./navbar";
 import Login from "./login";
 import Rider from "./views/rider/rider";
+import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 
@@ -72,17 +73,11 @@ class App extends Component {
   }
 
   //
-  addTicket(position) {
+  newTicket(data) {
     $.ajax({
       url: "http://localhost:8080/newTicket",
       type: "POST",
-      data: {
-        id: 6,
-        location: {
-          lat: position.lat,
-          lng: position.lng
-        }
-      }
+      data
     });
   }
 
@@ -103,36 +98,32 @@ class App extends Component {
               </Row>
             </header>
 
-            <div className="Switch">
-              <Switch>
-                <Route path="/" exact component={Main} />
-                <Route
-                  path="/login"
-                  component={() => (
-                    <Login
-                      user={this.state.user}
-                      onSignIn={this.signIn.bind(this)}
-                    />
-                  )}
-                />
-                <Route
-                  path="/rider"
-                  component={() => (
-                    <Rider
-                      user={this.state.user}
-                      newTicket={this.addTicket.bind(this)}
-                    />
-                  )}
-                />
-                <Route
-                  path="/register"
-                  component={() => (
-                    <Register onRegister={this.registerTech.bind(this)} />
-                  )}
-                />
-                <Route path="/dashboard" exact component={Dashboard} />
-              </Switch>
-            </div>
+            <Switch>
+              <Route path="/" exact component={Main} />
+              <Route
+                path="/login"
+                component={() => (
+                  <Login
+                    user={this.state.user}
+                    onSignIn={this.signIn.bind(this)}
+                  />
+                )}
+              />
+              <Route
+                path="/rider"
+                component={() => (
+                  <Rider user={this.state.user} handleTicket={this.newTicket} />
+                )}
+              />
+              <Route
+                path="/register"
+                component={() => (
+                  <Register onRegister={this.registerTech.bind(this)} />
+                )}
+              />
+              <Route path="/dashboard" exact component={Dashboard} />
+              <Route path="/tech" exact component={Tech} />
+            </Switch>
           </Column>
         </div>
       </React.Fragment>

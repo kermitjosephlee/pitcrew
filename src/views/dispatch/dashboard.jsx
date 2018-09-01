@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
 import {
   withGoogleMap,
   GoogleMap,
@@ -10,6 +9,7 @@ import {
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
+import { Button } from "react-bootstrap";
 import "./dashboard.css";
 import { Grid } from "react-bootstrap";
 
@@ -20,9 +20,57 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-      tickets: []
+      tickets: [
+        // {
+        //   id: 1,
+        //   rider: "Bob",
+        //   lat: 43.839701,
+        //   lng: -79.459055,
+        //   type: "mechanic",
+        //   startTime: "2018-08-30T16:10:28.638Z",
+        //   description: "A",
+        //   status: "active"
+        // }
+        // {
+        //   id: 2,
+        //   rider: "Sally",
+        //   lat: 43.6476611,
+        //   lng: -79.459055,
+        //   type: "mechanic",
+        //   startTime: "2018-08-30T16:10:28.638Z",
+        //   description: "B",
+        //   status: "pending"
+        // }
+      ],
+      techs: [
+        {
+          RideId: 1,
+          username: "Bob",
+          name: "Mr. MeeFix",
+          password: "123456",
+          specialty: "mechanic",
+          lat: 43.6876611,
+          lng: -79.579055
+        },
+        {
+          RideId: 2,
+          username: "Chris",
+          name: "Evans",
+          password: "123456",
+          specialty: "medical",
+          lat: 43.6976611,
+          lng: -79.479055
+        }
+      ]
     };
   }
+
+  getTickets = () => {
+    $.ajax({
+      url: "http://localhost:8080/fetchTickets",
+      type: "GET"
+    });
+  };
 
   handleToggleOpen = id => {
     console.log("tag id:", id);
@@ -36,6 +84,12 @@ class Dashboard extends Component {
     fetch(url)
       .then(results => results.json())
       .then(data => {
+        console.log("data:", data.tickets);
+        let tempTickets = data.tickets;
+        for (var ticket in tempTickets) {
+          tempTickets[ticket].lat = parseFloat(tempTickets[ticket].lat);
+          tempTickets[ticket].lng = parseFloat(tempTickets[ticket].lng);
+        }
         this.setState({ tickets: data.tickets });
         console.log(this.state.tickets);
       })
@@ -45,47 +99,43 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
-    }, 2500);
+    }, 3000);
   };
 
   componentDidMount() {
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
-      const myPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      this.setState({ myPosition });
-      console.log("Dashboard location:", myPosition);
+      // const myPosition = {
+      //   lat: position.coords.latitude,
+      //   lng: position.coords.longitude
+      // };
+      this.setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      });
     });
   }
 
   render() {
-    if (this.state.myPosition) {
-      return (
-        <React.Fragment>
-          <div id="menu" className="GoogleMap" borderColor="green">
-            <GoogleMap
-              center={{
-                lat: this.state.myPosition.lat,
-                lng: this.state.myPosition.lng
-              }}
-              defaultZoom={9}
-            >
-              <MapMarker tickets={this.state.tickets} />
-            </GoogleMap>
-          </div>
-        </React.Fragment>
-      );
-    } else {
-      return (
-        <div id="menu">
-          <p className="ticketBox">ticket box</p>
-        </div>
-      );
-    }
+    return (
+      <div id="menu" className="GoogleMap" borderColor="green">
+        <GoogleMap
+          center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
+          defaultZoom={9}
+        >
+          {/* <MapMarker tickets={this.state.tickets} /> */}
+          {this.state.tickets.length !== 0 && (
+            <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
+          )}
+        </GoogleMap>
+        <Button onClick={this.getTickets}>GET TICKETS</Button>
+      </div>
+    );
   }
 }
+// }
 
 export default compose(
   withProps({
