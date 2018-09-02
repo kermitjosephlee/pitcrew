@@ -11,7 +11,8 @@ import {
   Modal,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  FieldGroup
 } from "react-bootstrap";
 
 class Rider extends Component {
@@ -19,12 +20,12 @@ class Rider extends Component {
     super(props);
     this.state = {
       rider: {
-        rider: "Bob",
+        rider: "",
         lat: 0,
         lng: 0,
-        type: "mechanical",
+        type: "",
         startTime: new Date(),
-        description: "need a new tires",
+        description: "",
         status: "pending"
       }
     };
@@ -50,7 +51,7 @@ class Rider extends Component {
     this.setState({ show: true });
   };
 
-  handleChange = e => {
+  handleChangeDescription = e => {
     const rider = this.state.rider;
     rider.description = e.target.value;
     this.setState({
@@ -67,10 +68,36 @@ class Rider extends Component {
     });
   };
 
+  handleChangeName = e => {
+    const rider = this.state.rider;
+    rider.name = e.target.value;
+    this.setState({
+      rider
+    });
+  };
+
+  handleChangeContact = e => {
+    const rider = this.state.rider;
+    rider.contact = e.target.value;
+    this.setState({
+      rider
+    });
+  };
+
   requestHelp = e => {
     e.preventDefault();
+
+    const rider = this.state.rider;
+    rider.startTime = new Date();
+
+    this.setState({
+      rider
+    });
+
     const data = this.state.rider;
+
     console.log("I NEED TO KNOW THIS", data);
+
     this.props.handleTicket(data);
   };
 
@@ -78,6 +105,7 @@ class Rider extends Component {
     // if (!this.props.user.login) {
     //   return <Redirect from="/rider" to="/login" />;
     // }
+
     return (
       <Fragment>
         <h2> RIDER RIDER </h2>
@@ -91,24 +119,41 @@ class Rider extends Component {
           <Modal.Body>
             <form>
               <FormGroup>
-                <FormGroup controlId="formControlsSelect">
-                  <ControlLabel>Select</ControlLabel>
-                  <FormControl
-                    componentClass="select"
-                    onChange={this.handleSelect}
-                  >
-                    <option value="">Select...</option>
-                    <option value="mechanical">Mechanical</option>
-                    <option value="medical">Medical</option>
-                    <option value="sweep">Sweep</option>
-                  </FormControl>
-                </FormGroup>
+                <ControlLabel>Name</ControlLabel>
+                <FormControl
+                  id="formControlsText"
+                  type="text"
+                  label="Text"
+                  placeholder="Name"
+                  onChange={this.handleChangeName}
+                />
+
+                <ControlLabel>Contact</ControlLabel>
+                <FormControl
+                  id="formControlsText"
+                  type="text"
+                  label="Text"
+                  placeholder="Contact Number"
+                  onChange={this.handleChangeContact}
+                />
+
+                <ControlLabel>Select</ControlLabel>
+                <FormControl
+                  componentClass="select"
+                  onChange={this.handleSelect}
+                >
+                  <option value="">Select...</option>
+                  <option value="mechanical">Mechanical</option>
+                  <option value="medical">Medical</option>
+                  <option value="sweep">Sweep</option>
+                </FormControl>
+
                 <ControlLabel>Description</ControlLabel>
                 <FormControl
                   componentClass="textarea"
                   type="text"
                   placeholder="Description"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeDescription}
                 />
               </FormGroup>
             </form>
