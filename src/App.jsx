@@ -1,22 +1,19 @@
-import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Route, Switch } from "react-router-dom";
 import $ from "jquery";
 import "./App.css";
 import logo from "./logo.svg";
 
-// import { Grid } from "react-bootstrap";
+import { Grid } from "react-bootstrap";
 import { Column, Row } from "simple-flexbox";
 
-import Main from "./main";
-import TopNav from "./navbar";
+import Main from "./main.jsx";
 import Login from "./login";
 import Rider from "./views/rider/rider";
 import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
-
-let myPosition = {};
 
 class App extends Component {
   constructor(props) {
@@ -86,6 +83,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("location:", this.props);
     return (
       <React.Fragment>
         <div className="App">
@@ -154,6 +152,11 @@ class App extends Component {
               </Switch>
             </div>
           </Column>
+          <footer>
+            <Row horizontal="center" vertical="center">
+              <div className="footer" />
+            </Row>
+          </footer>
         </div>
       </React.Fragment>
     );

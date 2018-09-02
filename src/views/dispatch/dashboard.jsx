@@ -126,7 +126,6 @@ class Dashboard extends Component {
                 techs={this.state.techs}
               />
             </GoogleMap>
-            <Button onClick={this.getTickets}>GET TICKETS</Button>
           </Col>
           <Col xs={6} md={4}>
             <code>{"<Col xs={6} md={4} />"}</code>

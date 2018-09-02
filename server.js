@@ -139,18 +139,29 @@ app.post("/newTicket", (req, res) => {
   //   }
   //   // type: "rider"
   // });
-  console.log("Tickets:", tickets);
+  // console.log("Tickets:", tickets);
 });
 
 app.get("/fetchTickets", (req, res) => {
-  const data = req.body
+  const data = req.body;
   db.getTickets(data).then(data => {
-    tickets = data
-    console.log(`TICKET DATA IN SERVER`, tickets)
-  })
-  // res.send({
-  //   tickets
-  // });
+    tickets = data;
+    for (var ticket in tickets) {
+      tickets[ticket].lat = parseFloat(tickets[ticket].lat);
+      tickets[ticket].lng = parseFloat(tickets[ticket].lng);
+    }
+    // console.log(`TICKET DATA IN SERVER`, tickets);
+  });
+  res.send({
+    tickets
+  });
+});
+
+app.post("/assignTech", (req, res) => {
+  const data = req.body;
+  console.log(
+    data.rider + " is assigned to tech with id: " + data.assigned_tech_id
+  );
 });
 
 //****************************************

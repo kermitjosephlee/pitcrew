@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import { Route, Switch, Redirect, Link } from "react-router-dom";
-import {
-  withGoogleMap,
-  GoogleMap,
-  withScriptjs,
-  Marker,
-  InfoWindow
-} from "react-google-maps";
+import React, { Component, Fragment } from "react";
+// import {
+//   withGoogleMap,
+//   GoogleMap,
+//   withScriptjs,
+//   Marker,
+//   InfoWindow
+// } from "react-google-maps";
 import {
   Button,
   Modal,
@@ -108,7 +107,7 @@ class Rider extends Component {
     // }
 
     return (
-      <div>
+      <Fragment>
         <h2> RIDER RIDER </h2>
         <Button bsStyle="danger" bsSize="large" onClick={this.handleShow}>
           Request Assistance
@@ -163,7 +162,7 @@ class Rider extends Component {
             <Button onClick={this.requestHelp}>Submit</Button>
           </Modal.Footer>
         </Modal>
-      </div>
+      </Fragment>
     );
   }
 }

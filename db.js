@@ -65,6 +65,7 @@ module.exports = {
                     console.log(`ERROR ${error}`);
                 });
         });
+<<<<<<< HEAD
     },
     registerRide: function (data) {
         Dispatch.find({
@@ -149,6 +150,52 @@ module.exports = {
             console.log(`ERROR ${error}`)
         })
     }
+=======
+    });
+  },
+  assignTech: data => {
+    Technician.find({
+      where: {
+        username: data.id
+      }
+    }).then(query => {
+      Ticket.update(
+        {
+          technicianId: query.id,
+          status: "active"
+        },
+        {
+          where: data.id
+        }
+      );
+    });
+  },
+  updateTicket: data => {
+    Ticket.update(
+      {
+        status: data.status
+      },
+      {
+        where: data.id
+      }
+    );
+  },
+  getTickets: function(data) {
+    return Ticket.findAll({
+      where: {
+        status: "pending"
+      },
+      raw: true
+    })
+      .then(data => {
+        console.log("TICKET DATA IN DB", data);
+        return data;
+      })
+      .catch(error => {
+        console.log(`ERROR ${error}`);
+      });
+  }
+>>>>>>> e58cce47571c44d50cd77063d610b1c605c1183e
 };
 
 //  DB AS SERVER (below)
