@@ -54,9 +54,6 @@
   color: "white";
   justify-content: center;
   align-items: center;
-
-  /* border-radius: 18px 0px 0px 18px; */
-  /* box-shadow: 10px 5px 5px 5px grey; */
 }
 
 .iconCornerRemainder {
@@ -73,6 +70,9 @@
   justify-content: left;
   align-items: center;
   background-color: #004d99;
-  /* border-radius: 0px 18px 18px 0px; */
-  /* box-shadow: 10px 5px 5px 5px grey; */
+}
+
+.footer {
+  background-color: #004d99;
+  height: 110px;
 }
