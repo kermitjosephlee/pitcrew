@@ -10,13 +10,13 @@
   height: 500px;
 }
 
-/*.carousel-inner {
+.carousel-inner {
   position: relative;
-  width: 80%;
-  max-height: 800px;
+  width: 100%;
+  max-height: 650px;
   overflow: hidden;
 }
-*/
+
 .carousel-item {
   position: relative;
   display: none;
