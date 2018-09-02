@@ -21,18 +21,7 @@ let myPosition = {};
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: {
-        username: "",
-        password: "",
-        login: "",
-        type: ""
-      },
-      rider: {
-        name: "",
-        phone: ""
-      }
-    };
+    this.state = {};
   }
 
   register = data => {
@@ -58,32 +47,33 @@ class App extends Component {
     });
   };
 
-  signIn(data) {
-    $.ajax({
-      url: "http://localhost:8080/login",
-      type: "POST",
-      data,
-      success: data => {
-        if (data) {
-          const tempUser = {
-            username: data.username,
-            login: true,
-            type: data.type
-          };
-          localStorage.setItem("user", JSON.stringify(tempUser));
-        } else {
-          alert("Username or Password does not exist");
-        }
-      },
-      error: function(data) {
-        console.log("fail");
-      }
-    });
-  }
+  // signIn(data) {
+  //   $.ajax({
+  //     url: "http://localhost:8080/login",
+  //     type: "POST",
+  //     data,
+  //     success: data => {
+  //       if (data) {
+  //         const tempUser = {
+  //           username: data.username,
+  //           login: true,
+  //           type: data.type
+  //         };
+  //         localStorage.setItem("user", JSON.stringify(tempUser));
+  //       } else {
+  //         alert("Username or Password does not exist");
+  //       }
+  //     },
+  //     error: function(data) {
+  //       console.log("fail");
+  //     }
+  //   });
+  // }
 
   signOut() {
     // clear out user from state
-    this.setState({ user: null });
+    localStorage.removeItem("user");
+    console.log("SIGNING OUT");
   }
 
   //
@@ -123,6 +113,9 @@ class App extends Component {
                   <NavItem eventKey={3} href="/rider">
                     rider
                   </NavItem>
+                  <NavItem eventKey={4} onClick={this.signOut}>
+                    logout
+                  </NavItem>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
@@ -134,7 +127,7 @@ class App extends Component {
                   component={() => (
                     <Login
                       user={this.state.user}
-                      onSignIn={this.signIn.bind(this)}
+                      // onSignIn={this.signIn.bind(this)}
                     />
                   )}
                 />
