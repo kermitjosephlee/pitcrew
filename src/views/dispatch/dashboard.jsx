@@ -1,12 +1,16 @@
-import React, { Component, Fragment } from "react";
-import { withGoogleMap, GoogleMap, withScriptjs } from "react-google-maps";
+import React, { Component } from "react";
+import {
+  withGoogleMap,
+  GoogleMap,
+  withScriptjs,
+  Marker,
+  InfoWindow
+} from "react-google-maps";
 import MapMarker from "./map-markers.js";
-import DispatchTicket from "./dispatch-tickets";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
-import { Button } from "react-bootstrap";
+import { Button, Grid, Row, Col } from "react-bootstrap";
 import "./dashboard.css";
-// import { Grid } from "react-bootstrap";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -16,31 +20,30 @@ class Dashboard extends Component {
       myPosition: undefined,
       // dummie positions for testing
       tickets: [
-        // {
-        //   id: 1,
-        //   rider: "Bob",
-        //   lat: 43.839701,
-        //   lng: -79.459055,
-        //   type: "mechanic",
-        //   startTime: "2018-08-30T16:10:28.638Z",
-        //   description: "A",
-        //   status: "active"
-        // }
-        // {
-        //   id: 2,
-        //   rider: "Sally",
-        //   lat: 43.6476611,
-        //   lng: -79.459055,
-        //   type: "mechanic",
-        //   startTime: "2018-08-30T16:10:28.638Z",
-        //   description: "B",
-        //   status: "pending"
-        // }
+        {
+          id: 1,
+          rider: "Bob",
+          lat: 43.639701,
+          lng: -79.459055,
+          type: "mechanic",
+          startTime: "2018-08-30T16:10:28.638Z",
+          description: "A",
+          status: "active"
+        },
+        {
+          id: 2,
+          rider: "Sally",
+          lat: 43.6476611,
+          lng: -79.459055,
+          type: "mechanic",
+          startTime: "2018-08-30T16:10:28.638Z",
+          description: "B",
+          status: "pending"
+        }
       ],
       techs: [
         {
           RideId: 1,
-          id: 1,
           username: "Bob",
           name: "Mr. MeeFix",
           password: "123456",
@@ -50,7 +53,6 @@ class Dashboard extends Component {
         },
         {
           RideId: 2,
-          id: 2,
           username: "Chris",
           name: "Evans",
           password: "123456",
@@ -61,11 +63,6 @@ class Dashboard extends Component {
       ]
     };
   }
-
-  assignTech = () => {
-    const data = this.state.tickets[0];
-    data.technicianId = this.setState = {};
-  };
 
   getTickets = () => {
     $.ajax({
@@ -86,12 +83,6 @@ class Dashboard extends Component {
     fetch(url)
       .then(results => results.json())
       .then(data => {
-        console.log("data:", data.tickets);
-        let tempTickets = data.tickets;
-        for (var ticket in tempTickets) {
-          tempTickets[ticket].lat = parseFloat(tempTickets[ticket].lat);
-          tempTickets[ticket].lng = parseFloat(tempTickets[ticket].lng);
-        }
         this.setState({ tickets: data.tickets });
         console.log(this.state.tickets);
       })
@@ -101,11 +92,11 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
-    }, 3000);
+    }, 2500);
   };
 
   componentDidMount() {
-    this._reloadTickets();
+    // this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       // const myPosition = {
       //   lat: position.coords.latitude,
@@ -122,19 +113,25 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <Fragment>
-        <GoogleMap
-          center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
-          defaultZoom={9}
-        >
-          {/* <MapMarker tickets={this.state.tickets} /> */}
-          {this.state.tickets.length !== 0 && (
-            <MapMarker tickets={this.state.tickets} techs={this.state.techs} />
-          )}
-        </GoogleMap>
-        <Button onClick={this.getTickets}>GET TICKETS</Button>
-        <DispatchTicket tickets={this.state.tickets} techs={this.state.techs} />
-      </Fragment>
+      <Grid id="menu" className="GoogleMap" borderColor="green">
+        <Row className="show-grid">
+          <Col xs={12} md={8}>
+            <GoogleMap
+              center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
+              defaultZoom={9}
+            >
+              {/* <MapMarker tickets={this.state.tickets} /> */}
+              <MapMarker
+                tickets={this.state.tickets}
+                techs={this.state.techs}
+              />
+            </GoogleMap>
+          </Col>
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
@@ -144,9 +141,9 @@ export default compose(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "500px", width: "500px" }} />,
-    mapElement: <div style={{ height: "100%" }} />
+    loadingElement: <div style={{ height: "100%", width: "80%" }} />,
+    containerElement: <div style={{ height: "100vh", width: "80vw" }} />,
+    mapElement: <div style={{ height: "100%", width: "80%" }} />
   }),
   withScriptjs,
   withGoogleMap
