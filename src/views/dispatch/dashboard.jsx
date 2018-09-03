@@ -10,8 +10,8 @@ import MapMarker from "./map-markers.js";
 import $ from "jquery";
 import { compose, withProps } from "recompose";
 import { Button, Grid, Row, Col } from "react-bootstrap";
+import DispatchTicket from "./dispatch-tickets";
 import { Redirect } from "react-router-dom";
-
 import "./dashboard.css";
 
 class Dashboard extends Component {
@@ -44,24 +44,24 @@ class Dashboard extends Component {
         }
       ],
       techs: [
-        {
-          RideId: 1,
-          username: "Bob",
-          name: "Mr. MeeFix",
-          password: "123456",
-          specialty: "mechanic",
-          lat: 43.6876611,
-          lng: -79.579055
-        },
-        {
-          RideId: 2,
-          username: "Chris",
-          name: "Evans",
-          password: "123456",
-          specialty: "medical",
-          lat: 43.6976611,
-          lng: -79.479055
-        }
+        // {
+        //   RideId: 1,
+        //   username: "Bob",
+        //   name: "Mr. MeeFix",
+        //   password: "123456",
+        //   specialty: "mechanic",
+        //   lat: 43.6876611,
+        //   lng: -79.579055
+        // },
+        // {
+        //   RideId: 2,
+        //   username: "Chris",
+        //   name: "Evans",
+        //   password: "123456",
+        //   specialty: "medical",
+        //   lat: 43.6976611,
+        //   lng: -79.479055
+        // }
       ]
     };
   }
@@ -86,7 +86,16 @@ class Dashboard extends Component {
       .then(results => results.json())
       .then(data => {
         this.setState({ tickets: data.tickets });
-        console.log(this.state.tickets);
+      })
+      .catch(err => console.error("ERROR:", err));
+  };
+
+  _fetchAvailableTechs = () => {
+    const url = "/fetchAvailableTechs";
+    fetch(url)
+      .then(results => results.json())
+      .then(data => {
+        this.setState({ techs: data.techs });
       })
       .catch(err => console.error("ERROR:", err));
   };
@@ -94,11 +103,12 @@ class Dashboard extends Component {
   _reloadTickets = () => {
     setInterval(() => {
       this._fetchTickets();
+      this._fetchAvailableTechs();
     }, 2500);
   };
 
   componentDidMount() {
-    // this._reloadTickets();
+    this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
       // const myPosition = {
       //   lat: position.coords.latitude,
@@ -133,7 +143,10 @@ class Dashboard extends Component {
             </GoogleMap>
           </Col>
           <Col xs={6} md={4}>
-            <code>{"<Col xs={6} md={4} />"}</code>
+            <DispatchTicket
+              tickets={this.state.tickets}
+              techs={this.state.techs}
+            />
           </Col>
         </Row>
       </Grid>
