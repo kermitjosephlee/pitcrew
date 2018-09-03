@@ -127,13 +127,25 @@ class Dashboard extends Component {
     if (!localStorage.getItem("user")) {
       return <Redirect to="/login" />;
     }
+    const divStyle = {
+      margin: "40px"
+    };
     return (
-      <Grid id="menu" className="container" borderColor="green">
+      <Grid
+        id="menu"
+        borderColor="green"
+        fluid
+        style={{ paddingLeft: 0, paddingRight: 0 }}
+      >
         <Row>
-          <Col xs={12} md={8}>
-            <TechMap tickets={this.state.tickets} techs={this.state.techs} />
+          <Col xs={12} md={8} xl={8}>
+            <TechMap
+              tickets={this.state.tickets}
+              techs={this.state.techs}
+              style={divStyle}
+            />
           </Col>
-          <Col xs={6} md={4}>
+          <Col xs={6} md={4} xl={4}>
             <DispatchTicket
               tickets={this.state.tickets}
               techs={this.state.techs}
@@ -150,7 +162,9 @@ const TechMap = compose(
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: "100%", width: "80%" }} />,
-    containerElement: <div style={{ height: "80vh", width: "120%" }} />,
+    containerElement: (
+      <div style={{ height: "80vh", width: "120%", marginLeft: "20px" }} />
+    ),
     mapElement: <div style={{ height: "100%", width: "80%" }} />
   }),
   withScriptjs,
@@ -158,7 +172,7 @@ const TechMap = compose(
 )(({ tickets, techs }) => (
   <GoogleMap
     center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
-    defaultZoom={9}
+    defaultZoom={12}
   >
     {/* <MapMarker tickets={this.state.tickets} /> */}
     <MapMarker tickets={tickets} techs={techs} />
