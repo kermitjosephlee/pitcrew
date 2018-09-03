@@ -93,7 +93,7 @@ class App extends Component {
                   <Register onRegister={this.register} user={this.state.user} />
                 )}
               />
-              <Route path="/dispatch" exact component={Dashboard} />
+              <Route path="/dashboard" exact component={Dashboard} />
               <Route path="/technician" exact component={Tech} />
             </Switch>
           </div>

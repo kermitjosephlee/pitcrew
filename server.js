@@ -28,7 +28,41 @@ app.use(function (req, res, next) {
 
 const user = [];
 
-const techs = [];
+const techs = [
+  // {
+  //   id: 1,
+  //   RideId: 1,
+  //   username: "Bob",
+  //   name: "Mr. MeeFix",
+  //   password: "123456",
+  //   specialty: "mechanic",
+  //   lat: 43.6876611,
+  //   lng: -79.579055,
+  //   availability: true
+  // },
+  // {
+  //   id: 2,
+  //   RideId: 1,
+  //   username: "Chris",
+  //   name: "Evans",
+  //   password: "123456",
+  //   specialty: "medical",
+  //   lat: 43.6976611,
+  //   lng: -79.479055,
+  //   availability: true
+  // },
+  // {
+  //   id: 3,
+  //   RideId: 1,
+  //   username: "Johnny",
+  //   name: "Depp",
+  //   password: "123456",
+  //   specialty: "sweep",
+  //   lat: 43.6996611,
+  //   lng: -79.549555,
+  //   availability: true
+  // }
+];
 
 // const checkUser = async (data) => {
 //   console.log('Verifying User')
@@ -74,7 +108,7 @@ app.post("/login", (req, res) => {
   db.checkUser(data)
     .then((query) => {
       console.log(`USER EXISTS`);
-      data.status = 'active'
+      data.availability = true
       data.id = query.id
       techs.push(data)
       console.log('tech list', techs)
@@ -85,14 +119,11 @@ app.post("/login", (req, res) => {
     });
 });
 
-// app.post("/register/rider", (req, res) => {
-//   let data = req.body;
-//   activeUsers.push({
-//     username: data.username,
-//     contact: data.contact,
-//   });
-//   console.log(activeUsers);
-// });
+app.get("/fetchAvailableTechs", (req, res) => {
+  res.send({
+    techs
+  });
+});
 
 app.post("/register", (req, res) => {
   const data = req.body;
@@ -144,6 +175,13 @@ app.get("/fetchTickets", (req, res) => {
 
 app.post("/assignTech", (req, res) => {
   const data = req.body;
+  console.log("id >>> " + data.assigned_tech_id);
+  var tech = techs.find(function (tech) {
+    return tech.id == data.assigned_tech_id;
+  });
+  console.log(tech);
+  tech.availability = false;
+  // db.assignTech(data);
   console.log(
     data.rider + " is assigned to tech with id: " + data.assigned_tech_id
   );

@@ -115,6 +115,28 @@ module.exports = {
                 });
         });
     },
+    updateTicket: data => {
+        Ticket.update({
+            status: data.status
+        }, {
+            where: data.id
+        });
+    },
+    getTickets: function ( /*data*/ ) {
+        return Ticket.findAll({
+                where: {
+                    status: "pending"
+                },
+                raw: true
+            })
+            .then(data => {
+                console.log("TICKET DATA IN DB", data);
+                return data;
+            })
+            .catch(error => {
+                console.log(`ERROR ${error}`);
+            });
+    },
     assignTech: data => {
         Technician.find({
             where: {
@@ -128,26 +150,6 @@ module.exports = {
                 where: data.id
             });
         });
-    },
-    updateTicket: data => {
-        Ticket.update({
-            status: data.status
-        }, {
-            where: data.id
-        });
-    },
-    getTickets: function (data) {
-        return Ticket.findAll({
-            where: {
-                status: 'pending'
-            },
-            raw: true
-        }).then(data => {
-            console.log('TICKET DATA IN DB', data)
-            return data;
-        }).catch(error => {
-            console.log(`ERROR ${error}`)
-        })
     }
 };
 
