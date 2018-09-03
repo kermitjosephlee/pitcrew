@@ -37,7 +37,7 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="App">
         <Column flexGrow={1}>
           <Navbar inverse collapseOnSelect>
             <Navbar.Header>
@@ -103,7 +103,7 @@ class App extends Component {
             <div className="footer" />
           </Row>
         </footer>
-      </React.Fragment>
+      </div>
     );
   }
 }
