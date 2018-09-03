@@ -53,16 +53,16 @@ class App extends Component {
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav pullRight>
-                {!localStorage.getItem("user") &&
-                  ((
-                    <NavItem eventKey={1} href="/login">
-                      login
-                    </NavItem>
-                  ) && (
-                    <NavItem eventKey={2} href="/register">
-                      register
-                    </NavItem>
-                  ))}
+                {!localStorage.getItem("user") && (
+                  <NavItem eventKey={1} href="/login">
+                    login
+                  </NavItem>
+                )}
+                {!localStorage.getItem("user") && (
+                  <NavItem eventKey={2} href="/register">
+                    register
+                  </NavItem>
+                )}
                 <NavItem eventKey={3} href="/rider">
                   rider
                 </NavItem>
@@ -79,12 +79,7 @@ class App extends Component {
               <Route path="/" exact component={Main} />
               <Route
                 path="/login"
-                component={() => (
-                  <Login
-                    user={this.state.user}
-                    // onSignIn={this.signIn.bind(this)}
-                  />
-                )}
+                component={() => <Login user={this.state.user} />}
               />
               <Route
                 path="/rider"

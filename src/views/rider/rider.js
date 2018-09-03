@@ -102,10 +102,6 @@ class Rider extends Component {
   };
 
   render() {
-    // if (!this.props.user.login) {
-    //   return <Redirect from="/rider" to="/login" />;
-    // }
-
     return (
       <Fragment>
         <h2> RIDER RIDER </h2>
