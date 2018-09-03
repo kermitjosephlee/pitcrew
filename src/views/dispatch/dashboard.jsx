@@ -128,19 +128,10 @@ class Dashboard extends Component {
       return <Redirect to="/login" />;
     }
     return (
-      <Grid id="menu" className="GoogleMap" borderColor="green">
-        <Row className="show-grid">
+      <Grid id="menu" className="container" borderColor="green">
+        <Row>
           <Col xs={12} md={8}>
-            <GoogleMap
-              center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
-              defaultZoom={9}
-            >
-              {/* <MapMarker tickets={this.state.tickets} /> */}
-              <MapMarker
-                tickets={this.state.tickets}
-                techs={this.state.techs}
-              />
-            </GoogleMap>
+            <TechMap tickets={this.state.tickets} techs={this.state.techs} />
           </Col>
           <Col xs={6} md={4}>
             <DispatchTicket
@@ -153,16 +144,25 @@ class Dashboard extends Component {
     );
   }
 }
-// }
 
-export default compose(
+const TechMap = compose(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: "100%", width: "80%" }} />,
-    containerElement: <div style={{ height: "100vh", width: "80vw" }} />,
+    containerElement: <div style={{ height: "80vh", width: "120%" }} />,
     mapElement: <div style={{ height: "100%", width: "80%" }} />
   }),
   withScriptjs,
   withGoogleMap
-)(Dashboard);
+)(({ tickets, techs }) => (
+  <GoogleMap
+    center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
+    defaultZoom={9}
+  >
+    {/* <MapMarker tickets={this.state.tickets} /> */}
+    <MapMarker tickets={tickets} techs={techs} />
+  </GoogleMap>
+));
+
+export default Dashboard;
