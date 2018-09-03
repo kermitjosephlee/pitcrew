@@ -35,12 +35,17 @@ class Login extends Component {
 
   handleSignIn = e => {
     e.preventDefault();
-    const data = {
-      username: this.refs.username.value,
-      password: this.refs.password.value,
-      type: this.refs.type.value
-    };
-    this.signIn(data);
+
+    navigator.geolocation.getCurrentPosition(position => {
+      let data = {
+        username: this.refs.username.value,
+        password: this.refs.password.value,
+        type: this.refs.type.value,
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      this.signIn(data);
+    });
   };
 
   render() {
@@ -58,7 +63,7 @@ class Login extends Component {
         <h3> Sign in </h3>{" "}
         <select ref="type">
           <option value=""> Select... </option>{" "}
-          <option value="Dispatch"> Dispatch </option>{" "}
+          <option value="Dashboard"> Dispatch </option>{" "}
           <option value="Technician"> Technician </option>{" "}
         </select>{" "}
         <input type="text" ref="username" placeholder="enter you username" />

@@ -95,9 +95,7 @@ class Rider extends Component {
     });
 
     const data = this.state.rider;
-
     console.log("I NEED TO KNOW THIS", data);
-
     this.props.handleTicket(data);
   };
 

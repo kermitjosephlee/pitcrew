@@ -146,15 +146,15 @@ app.post("/newTicket", (req, res) => {
   let data = req.body;
   console.log("NEW TICKET", data);
   db.openTicket(data);
-  // tickets.push(data)
-  // tickets.push({
-  //   id: parseFloat(data.id),
-  //   location: {
-  //     lat: parseFloat(data.location.lat),
-  //     lng: parseFloat(data.location.lng)
-  //   }
-  //   // type: "rider"
-  // });
+  tickets.push(data)
+  tickets.push({
+    id: parseFloat(data.id),
+    location: {
+      lat: parseFloat(data.location.lat),
+      lng: parseFloat(data.location.lng)
+    },
+    type: "rider"
+  });
   // console.log("Tickets:", tickets);
 });
 
@@ -181,7 +181,7 @@ app.post("/assignTech", (req, res) => {
   });
   console.log(tech);
   tech.availability = false;
-  // db.assignTech(data);
+  db.assignTech(data);
   console.log(
     data.rider + " is assigned to tech with id: " + data.assigned_tech_id
   );
