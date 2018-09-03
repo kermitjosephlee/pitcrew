@@ -11,6 +11,7 @@ import $ from "jquery";
 import { compose, withProps } from "recompose";
 import { Button, Grid, Row, Col } from "react-bootstrap";
 import DispatchTicket from "./dispatch-tickets";
+import { Redirect } from "react-router-dom";
 import "./dashboard.css";
 
 class Dashboard extends Component {
@@ -123,6 +124,9 @@ class Dashboard extends Component {
   }
 
   render() {
+    if (!localStorage.getItem("user")) {
+      return <Redirect to="/login" />;
+    }
     return (
       <Grid id="menu" className="GoogleMap" borderColor="green">
         <Row className="show-grid">
