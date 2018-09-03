@@ -1,28 +1,48 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   TextInput,
-  Button,
+  Text,
   View,
-  NavigatorIOS
+  NavigatorIOS,
+  Button,
+  Container
 } from "react-native";
+import TopScreen from "./topscreen";
 
-export default class App extends Component {
+import { StackNavigator } from "react-navigation";
+
+const NavigationApp = StackNavigator({
+  Home: { screen: HomeScreen },
+  Rider: { screen: Rider }
+});
+
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: "HomeScreen"
+  };
   render() {
+    const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <Text>Welcome to PitCrew</Text>
-      </View>
+      <Button
+        title="Go to Jane's profile"
+        onPress={() => navigate("Rider", { name: "Jane" })}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+class Rider extends React.Component {
+  static navigationOptions = {
+    title: "Rider"
+  };
+  render() {
+    const { navigate } = this.props.navigation;
+    return (
+      <Button
+        title="Go to Jane's profile"
+        onPress={() => navigate("HomeScreen")}
+      />
+    );
   }
-});
+}
