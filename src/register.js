@@ -21,7 +21,7 @@ class Register extends Component {
             login: true,
             type: data.type
           };
-          localStorage.setItem("user", tempUser);
+          localStorage.setItem("user", JSON.stringify(tempUser));
           this.setState({ fireRedirect: true });
         } else {
           alert("Username or Password does not exist");
@@ -39,7 +39,7 @@ class Register extends Component {
       password: this.refs.password.value,
       type: this.refs.type.value
     };
-    this.props.onRegister(data);
+    this.register(data);
   };
 
   render() {
@@ -47,7 +47,10 @@ class Register extends Component {
     const page = "";
 
     if (localStorage.getItem("user")) {
-      return <Redirect to="/login" />;
+      const user = JSON.parse(localStorage.getItem("user"));
+      const page = `/${user.type}`;
+      console.log(user);
+      return <Redirect to={page} />;
     }
     return (
       <form onSubmit={this.handleRegistration}>
@@ -59,7 +62,7 @@ class Register extends Component {
         <input type="text" ref="username" placeholder="enter you username" />
         <input type="password" ref="password" placeholder="enter password" />
         <input type="submit" value="Register" />
-        {fireRedirect && <Redirect from="/login" to={page} />}
+        {fireRedirect && <Redirect to="/login" />}
       </form>
     );
   }

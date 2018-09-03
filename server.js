@@ -72,10 +72,12 @@ app.get("/dashboard", (req, res) => {
 app.post("/login", (req, res) => {
   const data = req.body;
   db.checkUser(data)
-    .then(() => {
+    .then((query) => {
       console.log(`USER EXISTS`);
       data.status = 'active'
+      data.id = query.id
       techs.push(data)
+      console.log('tech list', techs)
       res.send(data);
     })
     .catch(error => {

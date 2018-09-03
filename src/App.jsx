@@ -79,12 +79,7 @@ class App extends Component {
               <Route path="/" exact component={Main} />
               <Route
                 path="/login"
-                component={() => (
-                  <Login
-                    user={this.state.user}
-                    // onSignIn={this.signIn.bind(this)}
-                  />
-                )}
+                component={() => <Login user={this.state.user} />}
               />
               <Route
                 path="/rider"
@@ -98,7 +93,7 @@ class App extends Component {
                   <Register onRegister={this.register} user={this.state.user} />
                 )}
               />
-              <Route path="/dashboard" exact component={Dashboard} />
+              <Route path="/dispatch" exact component={Dashboard} />
               <Route path="/technician" exact component={Tech} />
             </Switch>
           </div>

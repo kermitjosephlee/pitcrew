@@ -13,7 +13,7 @@ module.exports = {
                 password: data.password
             }
         }).then(user => {
-            if (user) return true;
+            if (user) return user;
             else {
                 throw "USER DOES NOT EXISTS";
             }
