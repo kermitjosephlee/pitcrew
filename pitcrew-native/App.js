@@ -12,6 +12,8 @@ import TopScreen from "./topscreen";
 import HomeScreen from "./homescreen";
 import Rider from "./rider";
 import Tech from "./tech";
+import RiderMap from "./riderMap"
+import TechMap from "./techMap"
 
 import { createStackNavigator } from "react-navigation";
 

@@ -48,7 +48,8 @@ export default class Tech extends Component {
             borderWidth: 1
           }}
           placeholder="password"
-          keyboardType={"number-pad"}
+          keyboardType={"default"}
+          secureTextEntry={true}
           onSubmitEditing={text => this.setState({ password })}
           value={this.state.password}
         />
