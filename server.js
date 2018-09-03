@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -61,6 +61,42 @@ let tickets = [
   //   description: "B",
   //   status: "pending"
   // },
+];
+
+let techs = [
+  {
+    id: 1,
+    RideId: 1,
+    username: "Bob",
+    name: "Mr. MeeFix",
+    password: "123456",
+    specialty: "mechanic",
+    lat: 43.6876611,
+    lng: -79.579055,
+    availability: true
+  },
+  {
+    id: 2,
+    RideId: 1,
+    username: "Chris",
+    name: "Evans",
+    password: "123456",
+    specialty: "medical",
+    lat: 43.6976611,
+    lng: -79.479055,
+    availability: true
+  },
+  {
+    id: 3,
+    RideId: 1,
+    username: "Johnny",
+    name: "Depp",
+    password: "123456",
+    specialty: "sweep",
+    lat: 43.6996611,
+    lng: -79.549555,
+    availability: true
+  }
 ];
 
 //****************************************
@@ -118,7 +154,7 @@ app.post("/register", (req, res) => {
         res.send(data);
       } else if (data.type === "Technician") {
         db.registerTechnician(data);
-        res.send(data)
+        res.send(data);
       }
     })
     .catch(error => {
@@ -143,22 +179,42 @@ app.post("/newTicket", (req, res) => {
 });
 
 app.get("/fetchTickets", (req, res) => {
-  const data = req.body;
-  db.getTickets(data).then(data => {
+  // const data = req.body;
+  db.getTickets(/*data*/).then(data => {
     tickets = data;
     for (var ticket in tickets) {
       tickets[ticket].lat = parseFloat(tickets[ticket].lat);
       tickets[ticket].lng = parseFloat(tickets[ticket].lng);
     }
-    // console.log(`TICKET DATA IN SERVER`, tickets);
   });
   res.send({
     tickets
   });
 });
 
+app.get("/fetchAvailableTechs", (req, res) => {
+  // const data = req.body;
+  // db.getTickets(data).then(data => {
+  //   tickets = data;
+  //   for (var ticket in tickets) {
+  //     tickets[ticket].lat = parseFloat(tickets[ticket].lat);
+  //     tickets[ticket].lng = parseFloat(tickets[ticket].lng);
+  //   }
+  // });
+  res.send({
+    techs
+  });
+});
+
 app.post("/assignTech", (req, res) => {
   const data = req.body;
+  console.log("id >>> " + data.assigned_tech_id);
+  var tech = techs.find(function(tech) {
+    return tech.id == data.assigned_tech_id;
+  });
+  console.log(tech);
+  tech.availability = false;
+  // db.assignTech();
   console.log(
     data.rider + " is assigned to tech with id: " + data.assigned_tech_id
   );
