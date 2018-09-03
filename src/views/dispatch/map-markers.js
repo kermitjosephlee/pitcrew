@@ -46,7 +46,7 @@ class MapMarker extends Component {
     });
 
     const mapTechs = this.props.techs.map(tech => {
-      if (tech.specialty === "mechanic")
+      if (tech.specialty === "mechanic" && tech.availability)
         return (
           <Marker
             key={tech.id}
@@ -57,13 +57,26 @@ class MapMarker extends Component {
             position={{ lat: tech.lat, lng: tech.lng }}
           />
         );
-      if (tech.specialty === "medical")
+
+      if (tech.specialty === "medical" && tech.availability)
         return (
           <Marker
             key={tech.id}
             onClick={() => this.handleToggleOpen(tech.id)}
             icon={{
               url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+            }}
+            position={{ lat: tech.lat, lng: tech.lng }}
+          />
+        );
+
+      if (tech.specialty === "sweep" && tech.availability)
+        return (
+          <Marker
+            key={tech.id}
+            onClick={() => this.handleToggleOpen(tech.id)}
+            icon={{
+              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
             }}
             position={{ lat: tech.lat, lng: tech.lng }}
           />

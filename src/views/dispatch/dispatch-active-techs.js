@@ -18,7 +18,7 @@ class DispatchActiveTechs extends Component {
   }
 
   handleChange = e => {
-    console.log(e.target.value);
+    console.log("VALUE >> " + e.target.value);
     this.setState({ assigned_tech_id: e.target.value });
   };
 
@@ -50,7 +50,8 @@ class DispatchActiveTechs extends Component {
           >
             <option>---</option>
             {this.props.techs.map(tech => {
-              return <option value={tech.id}>{tech.username}</option>;
+              if (tech.availability)
+                return <option value={tech.id}>{tech.username}</option>;
             })}
           </FormControl>
           <Button onClick={this.assignTech.bind(this)}>
