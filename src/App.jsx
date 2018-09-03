@@ -20,12 +20,6 @@ class App extends Component {
     this.state = {};
   }
 
-  signOut() {
-    // clear out user from state
-    localStorage.removeItem("user");
-    console.log("SIGNING OUT");
-  }
-
   newTicket(data) {
     $.ajax({
       url: "http://localhost:8080/newTicket",

@@ -63,7 +63,7 @@ class Login extends Component {
         <h3> Sign in </h3>{" "}
         <select ref="type">
           <option value=""> Select... </option>{" "}
-          <option value="Dispatch"> Dispatch </option>{" "}
+          <option value="Dashboard"> Dispatch </option>{" "}
           <option value="Technician"> Technician </option>{" "}
         </select>{" "}
         <input type="text" ref="username" placeholder="enter you username" />
