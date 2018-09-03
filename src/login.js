@@ -35,18 +35,17 @@ class Login extends Component {
 
   handleSignIn = e => {
     e.preventDefault();
-    let data;
 
     navigator.geolocation.getCurrentPosition(position => {
-      data = {
+      let data = {
         username: this.refs.username.value,
         password: this.refs.password.value,
         type: this.refs.type.value,
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      this.signIn(data);
     });
-    this.signIn(data);
   };
 
   render() {
