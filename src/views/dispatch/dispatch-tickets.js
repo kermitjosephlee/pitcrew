@@ -36,7 +36,14 @@ class DispatchTicket extends Component {
         );
     });
 
-    return <Fragment>{dispatchTickets}</Fragment>;
+    return (
+      <Fragment>
+        <h3>Pending Tickets</h3>
+        {dispatchTickets}
+        <h3>Active Tickets</h3>
+        {dispatchTickets}
+      </Fragment>
+    );
   }
 }
 export default DispatchTicket;
