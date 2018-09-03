@@ -9,40 +9,20 @@ import {
   Container
 } from "react-native";
 import TopScreen from "./topscreen";
+import HomeScreen from "./homescreen";
+import Rider from "./rider";
+import Tech from "./tech";
 
-import { StackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
-const NavigationApp = StackNavigator({
-  Home: { screen: HomeScreen },
-  Rider: { screen: Rider }
+const NavigationApp = createStackNavigator({
+  HomeScreen: { screen: HomeScreen },
+  Rider: { screen: Rider },
+  Tech: { screen: Tech }
 });
 
-class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: "HomeScreen"
-  };
+export default class App extends Component {
   render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <Button
-        title="Go to Jane's profile"
-        onPress={() => navigate("Rider", { name: "Jane" })}
-      />
-    );
-  }
-}
-
-class Rider extends React.Component {
-  static navigationOptions = {
-    title: "Rider"
-  };
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <Button
-        title="Go to Jane's profile"
-        onPress={() => navigate("HomeScreen")}
-      />
-    );
+    return <NavigationApp />;
   }
 }
