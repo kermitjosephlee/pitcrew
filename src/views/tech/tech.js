@@ -7,7 +7,7 @@ import {
   DirectionsRenderer
 } from "react-google-maps";
 import { compose, withProps, lifecycle } from "recompose";
-// import Sidebar from "react-sidebar";
+import { Redirect } from "react-router-dom";
 
 class Tech extends Component {
   constructor(props) {
@@ -41,6 +41,9 @@ class Tech extends Component {
       </div>
     );
 
+    if (!localStorage.getItem("user")) {
+      return <Redirect to="/login" />;
+    }
     return (
       <Fragment>
         <GoogleMap defaultZoom={9}>
