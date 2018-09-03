@@ -28,6 +28,8 @@ app.use(function (req, res, next) {
 
 const user = [];
 
+const techs = [];
+
 // const checkUser = async (data) => {
 //   console.log('Verifying User')
 //   try {
@@ -40,28 +42,7 @@ const user = [];
 //   }
 // }
 
-let tickets = [
-  // {
-  //   id: 1,
-  //   rider: "Bob",
-  //   lat: 43.639701,
-  //   lng: -79.459055,
-  //   type: "mechanic",
-  //   startTime: "2018-08-30T16:10:28.638Z",
-  //   description: "A",
-  //   status: "pending"
-  // },
-  // {
-  //   id: 2,
-  //   rider: "Sally",
-  //   lat: 43.6476611,
-  //   lng: -79.459055,
-  //   type: "mechanic",
-  //   startTime: "2018-08-30T16:10:28.638Z",
-  //   description: "B",
-  //   status: "pending"
-  // },
-];
+let tickets = [];
 
 //****************************************
 
@@ -93,6 +74,8 @@ app.post("/login", (req, res) => {
   db.checkUser(data)
     .then(() => {
       console.log(`USER EXISTS`);
+      data.status = 'active'
+      techs.push(data)
       res.send(data);
     })
     .catch(error => {

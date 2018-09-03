@@ -47,10 +47,7 @@ class Register extends Component {
     const page = "";
 
     if (localStorage.getItem("user")) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const page = `/${user.type}`;
-      console.log(user);
-      return <Redirect from="/login" to={page} />;
+      return <Redirect to="/login" />;
     }
     return (
       <form onSubmit={this.handleRegistration}>
