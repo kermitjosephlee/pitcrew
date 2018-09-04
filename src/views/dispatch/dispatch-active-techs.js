@@ -41,7 +41,8 @@ class DispatchActiveTechs extends Component {
     const data = {
       id: this.state.id,
       rider: this.props.rider,
-      type: "dispatch"
+      type: "dispatch",
+      ticket: this.props.ticket
     };
     this.socket.send(JSON.stringify(data));
   };
