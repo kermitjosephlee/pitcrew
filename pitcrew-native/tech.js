@@ -5,7 +5,6 @@ import {
   TextInput,
   Text,
   View,
-  NavigatorIOS,
   Button,
   Container
 } from "react-native";

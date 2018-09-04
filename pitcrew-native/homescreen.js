@@ -7,8 +7,11 @@ import {
   View,
   Button,
   Container,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from "react-native";
+
+//**********************************************************************
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
@@ -20,18 +23,20 @@ export default class HomeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.rider}>
           <TouchableHighlight style={styles.riderBox} onPress={() => navigate("Rider")}>
-            <Text style={{fontSize: 30, color: "white", fontWeight: "bold"}}>Press for Help</Text>
+            <Text style={styles.text}>Press for Help</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.tech}>
           <TouchableHighlight style={styles.techBox} onPress={() => navigate("Tech")}>
-            <Text style={{fontSize: 30, color: "white", fontWeight: "bold"}}>Techs :: Sign in Here</Text>
+            <Text style={styles.text}>Tech Sign In</Text>
           </TouchableHighlight>
         </View>
       </View>
     );
   }
 }
+
+//**********************************************************************
 
 const styles = StyleSheet.create({
   container: {
@@ -42,9 +47,9 @@ const styles = StyleSheet.create({
   },
   rider: {
     flex: 3,
-    width: "100%",
-    backgroundColor: "red",
-
+    backgroundColor: "orange",
+    borderRadius: 40,
+    margin: 20,
   },
   riderBox: {
     width: "100%",
@@ -54,13 +59,19 @@ const styles = StyleSheet.create({
   },
   tech: {
     flex: 1,
-    width: "100%",
+    borderRadius: 40,
+    margin: 20,
     backgroundColor: "steelblue",
   },
   techBox:{
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  text:{
+    fontSize: 30,
+    color: "white",
+    fontWeight: "bold"
   }
 
 
