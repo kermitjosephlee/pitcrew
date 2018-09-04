@@ -159,17 +159,17 @@ app.get("/fetchTickets", (req, res) => {
   });
 });
 
-app.post("/assignTech", (req, res) => {
-  const data = req.body;
-  console.log("id >>> ", data);
-  var tech = techs.find(function(tech) {
-    return tech.id == data.id;
-  });
-  data.id = parseFloat(data.id);
-  tech.availability = false;
-  db.assignTech(tech);
-  console.log(data.rider + " is assigned to tech with id: " + data.id);
-});
+// app.post("/assignTech", (req, res) => {
+//   const data = req.body;
+//   console.log("id >>> ", data);
+//   var tech = techs.find(function(tech) {
+//     return tech.id == data.id;
+//   });
+//   data.id = parseFloat(data.id);
+//   tech.availability = false;
+//   db.assignTech(tech);
+//   console.log(data.rider + " is assigned to tech with id: " + data.id);
+// });
 
 //****************************************
 
@@ -221,6 +221,21 @@ wss.on("connection", ws => {
       clients[message.id] = ws;
       clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
     }
+
+    app.post("/assignTech", (req, res) => {
+      const data = req.body;
+      console.log("id >>> ", data);
+      var tech = techs.find(function(tech) {
+        return tech.id == data.id;
+      });
+      data.id = parseFloat(data.id);
+      tech.availability = false;
+      db.assignTech(tech);
+      console.log(data.rider + " is assigned to tech with id: " + data.id);
+      clients[message.id].send(
+        JSON.stringify(`...YOU ARE ASSGINED TO ${data.rider}`)
+      );
+    });
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
