@@ -49,9 +49,25 @@ export default class Rider extends Component {
    _selectSweep = () =>
    this.setState({type_of_help: "sweep", isModalVisible: !this.state.isModalVisible})
 
+   submit = () => {
+     console.log("on submit contact:", this.state.contact)
+     this.props.navigation.navigate("RiderSummary", {
+       name: "Joe",
+       contact: this.state.contact,
+       type_of_help: this.state.type_of_help,
+       latitude: this.state.riderLocation.latitude,
+       longitude: this.state.riderLocation.longitude
+     });
+
+   }
+
   constructor(props) {
     super(props);
-    this.state = { rider: "", contact: "" };
+    this.state = {
+      name: "",
+      contact: "",
+      riderLocation: {},
+    };
   }
 
   componentDidMount() {
@@ -69,8 +85,8 @@ export default class Rider extends Component {
           <TextInput
             style={styles.textInput}
             placeholder='Name'
-            onSubmitEditing={text => this.setState({ rider })}
-            value={this.state.rider}
+            onChangeText={ name => this.setState({ name })}
+            value={this.state.name}
           />
         </View>
         <View>
@@ -78,13 +94,17 @@ export default class Rider extends Component {
             style={styles.textInput}
             placeholder="Mobile Number"
             keyboardType={"number-pad"}
-            onSubmitEditing={text => this.setState({ contact })}
+            onChangeText={ contact => this.setState({ contact})}
             value={this.state.contact}
           />
         </View>
         <View>
           <Text>
+            Name :: {this.state.name}
+            Contact :: {this.state.contact}
             Type of Help :: {this.state.type_of_help}
+            Lat :: {this.state.riderLocation.latitude}
+            Lng :: {this.state.riderLocation.longitude}
           </Text>
 
         </View>
@@ -111,7 +131,7 @@ export default class Rider extends Component {
           </Modal>
         </View>
         <View>
-          <TouchableHighlight style={styles.submit} onPress={() => navigate("RiderSummary")}>
+          <TouchableHighlight style={styles.submit} onPress={this.submit}>
             <Text style={styles.submitText}>Submit</Text>
           </TouchableHighlight>
         </View>

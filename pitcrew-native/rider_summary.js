@@ -44,7 +44,15 @@ export default class RiderSummary extends Component{
 
   constructor(props) {
     super(props);
-    this.state = { name: "", contact: "" };
+    const { navigation } = this.props;
+    this.state = {
+      name: this.props.navigation.getParam("name", "Cats!!!"),
+      contact: navigation.getParam("contact", ""),
+      type_of_help: navigation.getParam("type_of_help", ""),
+      latitude: navigation.getParam("latitude", ""),
+      longitude: navigation.getParam("longitude", ""),
+    };
+    console.log("construtor: ", this.props.navigation.state.params)
   }
 
   render(){
@@ -57,7 +65,7 @@ export default class RiderSummary extends Component{
       </View>
 
       <View>
-        <TouchableHighlight style={styles.submit} onPress={() => navigate("RiderSummary")}>
+        <TouchableHighlight style={styles.submit} onPress={() => console.log(this.state)}>
           <Text style={styles.submitText}>Submit</Text>
         </TouchableHighlight>
       </View>
