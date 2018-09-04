@@ -24,6 +24,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-sidebar": "^3.0.2",
+    "react-spinners": "^0.4.5",
     "recompose": "^0.29.0",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1",

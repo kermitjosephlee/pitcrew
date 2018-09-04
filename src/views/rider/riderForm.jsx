@@ -7,27 +7,14 @@ import {
   ControlLabel,
   FieldGroup
 } from "react-bootstrap";
-import RiderAssist from "./riderAssist.jsx";
-import riderForm from "./riderForm.jsx";
-import $ from "jquery";
-import { css } from "react-emotion";
-import { ScaleLoader } from "react-spinners";
 
-const override = css`
-  display: block;
-  text-align: center;
-  border-color: red;
-`;
-
-class Rider extends Component {
+class RiderForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       rider: {
         status: "pending"
-      },
-      loading: false,
-      assist: false
+      }
     };
   }
 
@@ -46,6 +33,7 @@ class Rider extends Component {
   handleClose = () => {
     this.setState({
       show: false,
+      fireRedirect: false,
       assist: false
     });
   };
@@ -99,51 +87,10 @@ class Rider extends Component {
 
     const data = this.state.rider;
     console.log("I NEED TO KNOW THIS", data);
-    this.newTicket(data);
+    this.props.newTicket(data);
   };
 
-  newTicket(data) {
-    this.setState({
-      loading: true
-    });
-    $.ajax({
-      url: "http://localhost:8080/newTicket",
-      type: "POST",
-      data
-    });
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        assist: true
-      });
-    }, 1500);
-  }
-
   render() {
-    const { assist, loading } = this.state;
-
-    if (loading)
-      return (
-        <Modal
-          show={this.state.show}
-          onHide={this.handleClose}
-          className="sweet-loading"
-        >
-          <Modal.Header closeButton />
-          <Modal.Body>
-            <ScaleLoader
-              className={override}
-              sizeUnit={"px"}
-              size={250}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
-          </Modal.Body>
-        </Modal>
-      );
-    if (assist) {
-      return <RiderAssist show={this.state.show} onHide={this.handleClose} />;
-    }
     return (
       <div>
         <h2> RIDER RIDER </h2>
@@ -205,4 +152,4 @@ class Rider extends Component {
   }
 }
 
-export default Rider;
+export default RiderForm;

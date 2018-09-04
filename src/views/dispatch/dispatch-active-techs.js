@@ -17,6 +17,18 @@ class DispatchActiveTechs extends Component {
     };
   }
 
+  componentDidMount() {
+    this.socket = new WebSocket("ws://localhost:3001");
+
+    this.socket.onopen = event => {
+      console.log("Connected to server");
+
+      this.socket.addEventListener("message", evt => {
+        console.log("receiving from WSS: ...", evt.data);
+      });
+    };
+  }
+
   handleChange = e => {
     console.log("VALUE >> " + e.target.value);
     this.setState({
@@ -26,25 +38,12 @@ class DispatchActiveTechs extends Component {
 
   assignTech = () => {
     // const _rider = this.props.rider;
-
     const data = {
       id: this.state.id,
       rider: this.props.rider,
       type: "dispatch"
     };
-
-    this.socket = new WebSocket("ws://localhost:3001");
-
-    this.socket.onopen = event => {
-      console.log("Connected to server");
-      getTickets = () => {
-        this.socket.send(JSON.stringify(data));
-      };
-
-      this.socket.addEventListener("message", evt => {
-        console.log("receiving from WSS: ...", evt.data);
-      });
-    };
+    this.socket.send(JSON.stringify(data));
   };
 
   render() {

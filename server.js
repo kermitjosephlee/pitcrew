@@ -177,7 +177,7 @@ app.listen(PORT, () => {
 
 const WebSocket = require("ws");
 // const express = require("express");
-const SocketServer = require("ws").Server;
+const SocketServer = WebSocket.Server;
 
 // Set the port to 3001
 const _PORT = 3001;
@@ -205,7 +205,7 @@ wss.broadcast = function broadcast(data) {};
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on("connection", ws => {
-  console.log("Client...", ws.clients);
+  // console.log("Client...", wss.clients);
 
   ws.on("message", function incoming(data) {
     message = JSON.parse(data);
