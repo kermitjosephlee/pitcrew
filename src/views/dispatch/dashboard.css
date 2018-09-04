@@ -16,3 +16,10 @@
   height: 5vh;
   color: "white";
 }
+
+.rider-list {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 1vh;
+  overflow: scroll;
+}

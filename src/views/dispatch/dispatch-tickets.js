@@ -1,11 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {
-  Button,
-  Grid,
-  FormGroup,
-  ControlLabel,
-  FormControl
-} from "react-bootstrap";
+import { Tab, Tabs } from "react-bootstrap";
 import DispatchActiveTechs from "./dispatch-active-techs";
 
 class DispatchTicket extends Component {
@@ -26,8 +20,8 @@ class DispatchTicket extends Component {
     const dispatchTickets = this.props.tickets.map(ticket => {
       if (ticket.status == "pending")
         return (
-          <div class="container-fluid">
-            <h4>Rider: {ticket.rider}</h4>
+          <div class="rider-list">
+            <p>{ticket.rider}</p>
             <DispatchActiveTechs
               rider={ticket.rider}
               ticket={ticket}
@@ -38,12 +32,14 @@ class DispatchTicket extends Component {
     });
 
     return (
-      <Fragment>
-        <h3>Pending Tickets</h3>
-        {dispatchTickets}
-        <h3>Active Tickets</h3>
-        {dispatchTickets}
-      </Fragment>
+      <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+        <Tab eventKey={1} title="Pending">
+          {dispatchTickets}
+        </Tab>
+        <Tab eventKey={2} title="Active">
+          Tab 2 content
+        </Tab>
+      </Tabs>
     );
   }
 }
