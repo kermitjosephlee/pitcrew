@@ -44,7 +44,6 @@ class Register extends Component {
 
   render() {
     const { fireRedirect } = this.state;
-    const page = "";
 
     return (
       <form onSubmit={this.handleRegistration}>

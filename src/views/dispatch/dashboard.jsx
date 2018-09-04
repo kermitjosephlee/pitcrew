@@ -110,10 +110,6 @@ class Dashboard extends Component {
   componentDidMount() {
     this._reloadTickets();
     navigator.geolocation.getCurrentPosition(position => {
-      // const myPosition = {
-      //   lat: position.coords.latitude,
-      //   lng: position.coords.longitude
-      // };
       this.setState({
         center: {
           lat: position.coords.latitude,
