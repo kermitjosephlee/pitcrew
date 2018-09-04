@@ -19,7 +19,8 @@ class Register extends Component {
           const tempUser = {
             username: data.username,
             login: true,
-            type: data.type
+            type: data.type,
+            id: data.id
           };
           this.setState({ fireRedirect: true });
         } else {
