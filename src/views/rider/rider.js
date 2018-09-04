@@ -95,17 +95,11 @@ class Rider extends Component {
     });
 
     const data = this.state.rider;
-
     console.log("I NEED TO KNOW THIS", data);
-
     this.props.handleTicket(data);
   };
 
   render() {
-    // if (!this.props.user.login) {
-    //   return <Redirect from="/rider" to="/login" />;
-    // }
-
     return (
       <Fragment>
         <h2> RIDER RIDER </h2>

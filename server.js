@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -28,6 +28,42 @@ app.use(function(req, res, next) {
 
 const user = [];
 
+const techs = [
+  // {
+  //   id: 1,
+  //   RideId: 1,
+  //   username: "Bob",
+  //   name: "Mr. MeeFix",
+  //   password: "123456",
+  //   specialty: "mechanic",
+  //   lat: 43.6876611,
+  //   lng: -79.579055,
+  //   availability: true
+  // },
+  // {
+  //   id: 2,
+  //   RideId: 1,
+  //   username: "Chris",
+  //   name: "Evans",
+  //   password: "123456",
+  //   specialty: "medical",
+  //   lat: 43.6976611,
+  //   lng: -79.479055,
+  //   availability: true
+  // },
+  // {
+  //   id: 3,
+  //   RideId: 1,
+  //   username: "Johnny",
+  //   name: "Depp",
+  //   password: "123456",
+  //   specialty: "sweep",
+  //   lat: 43.6996611,
+  //   lng: -79.549555,
+  //   availability: true
+  // }
+];
+
 // const checkUser = async (data) => {
 //   console.log('Verifying User')
 //   try {
@@ -40,64 +76,7 @@ const user = [];
 //   }
 // }
 
-let tickets = [
-  // {
-  //   id: 1,
-  //   rider: "Bob",
-  //   lat: 43.639701,
-  //   lng: -79.459055,
-  //   type: "mechanic",
-  //   startTime: "2018-08-30T16:10:28.638Z",
-  //   description: "A",
-  //   status: "pending"
-  // },
-  // {
-  //   id: 2,
-  //   rider: "Sally",
-  //   lat: 43.6476611,
-  //   lng: -79.459055,
-  //   type: "mechanic",
-  //   startTime: "2018-08-30T16:10:28.638Z",
-  //   description: "B",
-  //   status: "pending"
-  // },
-];
-
-let techs = [
-  {
-    id: 1,
-    RideId: 1,
-    username: "Bob",
-    name: "Mr. MeeFix",
-    password: "123456",
-    specialty: "mechanic",
-    lat: 43.6876611,
-    lng: -79.579055,
-    availability: true
-  },
-  {
-    id: 2,
-    RideId: 1,
-    username: "Chris",
-    name: "Evans",
-    password: "123456",
-    specialty: "medical",
-    lat: 43.6976611,
-    lng: -79.479055,
-    availability: true
-  },
-  {
-    id: 3,
-    RideId: 1,
-    username: "Johnny",
-    name: "Depp",
-    password: "123456",
-    specialty: "sweep",
-    lat: 43.6996611,
-    lng: -79.549555,
-    availability: true
-  }
-];
+let tickets = [];
 
 //****************************************
 
@@ -127,8 +106,12 @@ app.get("/dashboard", (req, res) => {
 app.post("/login", (req, res) => {
   const data = req.body;
   db.checkUser(data)
-    .then(() => {
+    .then((query) => {
       console.log(`USER EXISTS`);
+      data.availability = true
+      data.id = query.id
+      techs.push(data)
+      console.log('tech list', techs)
       res.send(data);
     })
     .catch(error => {
@@ -136,14 +119,11 @@ app.post("/login", (req, res) => {
     });
 });
 
-// app.post("/register/rider", (req, res) => {
-//   let data = req.body;
-//   activeUsers.push({
-//     username: data.username,
-//     contact: data.contact,
-//   });
-//   console.log(activeUsers);
-// });
+app.get("/fetchAvailableTechs", (req, res) => {
+  res.send({
+    techs
+  });
+});
 
 app.post("/register", (req, res) => {
   const data = req.body;
@@ -154,7 +134,7 @@ app.post("/register", (req, res) => {
         res.send(data);
       } else if (data.type === "Technician") {
         db.registerTechnician(data);
-        res.send(data);
+        res.send(data)
       }
     })
     .catch(error => {
@@ -166,55 +146,42 @@ app.post("/newTicket", (req, res) => {
   let data = req.body;
   console.log("NEW TICKET", data);
   db.openTicket(data);
-  // tickets.push(data)
-  // tickets.push({
-  //   id: parseFloat(data.id),
-  //   location: {
-  //     lat: parseFloat(data.location.lat),
-  //     lng: parseFloat(data.location.lng)
-  //   }
-  //   // type: "rider"
-  // });
+  tickets.push(data)
+  tickets.push({
+    id: parseFloat(data.id),
+    location: {
+      lat: parseFloat(data.location.lat),
+      lng: parseFloat(data.location.lng)
+    },
+    type: "rider"
+  });
   // console.log("Tickets:", tickets);
 });
 
 app.get("/fetchTickets", (req, res) => {
-  // const data = req.body;
-  db.getTickets(/*data*/).then(data => {
+  const data = req.body;
+  db.getTickets(data).then(data => {
     tickets = data;
     for (var ticket in tickets) {
       tickets[ticket].lat = parseFloat(tickets[ticket].lat);
       tickets[ticket].lng = parseFloat(tickets[ticket].lng);
     }
+    // console.log(`TICKET DATA IN SERVER`, tickets);
   });
   res.send({
     tickets
   });
 });
 
-app.get("/fetchAvailableTechs", (req, res) => {
-  // const data = req.body;
-  // db.getTickets(data).then(data => {
-  //   tickets = data;
-  //   for (var ticket in tickets) {
-  //     tickets[ticket].lat = parseFloat(tickets[ticket].lat);
-  //     tickets[ticket].lng = parseFloat(tickets[ticket].lng);
-  //   }
-  // });
-  res.send({
-    techs
-  });
-});
-
 app.post("/assignTech", (req, res) => {
   const data = req.body;
   console.log("id >>> " + data.assigned_tech_id);
-  var tech = techs.find(function(tech) {
+  var tech = techs.find(function (tech) {
     return tech.id == data.assigned_tech_id;
   });
   console.log(tech);
   tech.availability = false;
-  // db.assignTech();
+  db.assignTech(data);
   console.log(
     data.rider + " is assigned to tech with id: " + data.assigned_tech_id
   );

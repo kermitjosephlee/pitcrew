@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import $ from "jquery";
 import "./App.css";
-import logo from "./logo.svg";
 
 import { Grid } from "react-bootstrap";
 import { Column, Row } from "simple-flexbox";
@@ -13,18 +12,12 @@ import Rider from "./views/rider/rider";
 import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
+import NavigationBar from "./navigationBar.jsx";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  signOut() {
-    // clear out user from state
-    localStorage.removeItem("user");
-    console.log("SIGNING OUT");
   }
 
   newTicket(data) {
@@ -37,54 +30,15 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="App">
         <Column flexGrow={1}>
-          <Navbar inverse collapseOnSelect>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <span>
-                  <img src={logo} className="App-logo" alt="logo" />
-                </span>
-                <span>
-                  <a href="/"> pitCrew</a>
-                </span>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav pullRight>
-                {!localStorage.getItem("user") &&
-                  ((
-                    <NavItem eventKey={1} href="/login">
-                      login
-                    </NavItem>
-                  ) && (
-                    <NavItem eventKey={2} href="/register">
-                      register
-                    </NavItem>
-                  ))}
-                <NavItem eventKey={3} href="/rider">
-                  rider
-                </NavItem>
-                {localStorage.getItem("user") && (
-                  <NavItem eventKey={4} href="/" onClick={this.signOut}>
-                    logout
-                  </NavItem>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
+          <NavigationBar />
           <div className="Switch">
             <Switch>
               <Route path="/" exact component={Main} />
               <Route
                 path="/login"
-                component={() => (
-                  <Login
-                    user={this.state.user}
-                    // onSignIn={this.signIn.bind(this)}
-                  />
-                )}
+                component={() => <Login user={this.state.user} />}
               />
               <Route
                 path="/rider"
@@ -108,7 +62,7 @@ class App extends Component {
             <div className="footer" />
           </Row>
         </footer>
-      </React.Fragment>
+      </div>
     );
   }
 }
