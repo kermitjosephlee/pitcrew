@@ -108,7 +108,6 @@ app.get("/fetchAvailableTechs", (req, res) => {
   });
   console.log("---------------------------------");
   console.log("Techs available: ", techs);
-  console.log("---------------------------------");
 });
 
 app.post("/register", (req, res) => {
@@ -132,7 +131,7 @@ app.post("/newTicket", (req, res) => {
   let data = req.body;
   console.log("NEW TICKET", data);
   db.openTicket(data);
-  tickets.push(data)
+  tickets.push(data);
   tickets.push({
     id: parseFloat(data.id),
     location: {
@@ -146,17 +145,33 @@ app.post("/newTicket", (req, res) => {
 
 app.get("/fetchTickets", (req, res) => {
   const data = req.body;
+  data.status = "pending";
   db.getTickets(data).then(data => {
     tickets = data;
     for (var ticket in tickets) {
       tickets[ticket].lat = parseFloat(tickets[ticket].lat);
       tickets[ticket].lng = parseFloat(tickets[ticket].lng);
     }
-    // console.log(`TICKET DATA IN SERVER`, tickets);
+    console.log(`TICKET DATA IN SERVER`, tickets);
   });
   res.send({
     tickets
   });
+});
+
+app.post("/completeTicket", (req, res) => {
+  const data = req.body;
+  var ticket_to_be_completed = tickets.find(function(ticket) {
+    return ticket.id == data.ticket_id;
+  });
+  ticket_to_be_completed.status = "completed";
+  console.log("Completed ticket >>", ticket_to_be_completed);
+  let tempData = {
+    id: parseInt(data.ticket_id),
+    status: "completed"
+  };
+  console.log(tempData);
+  db.updateTicket(tempData);
 });
 
 // app.post("/assignTech", (req, res) => {
@@ -232,9 +247,14 @@ wss.on("connection", ws => {
       tech.availability = false;
       db.assignTech(tech);
       console.log(data.rider + " is assigned to tech with id: " + data.id);
-      clients[message.id].send(
-        JSON.stringify(`...YOU ARE ASSGINED TO ${data.rider}`)
-      );
+      console.log(data.ticket);
+
+      const assignMessage = {
+        content: `...YOU ARE ASSGINED TO ${data.rider}`,
+        ticket_id: data.ticket.id,
+        type: "notification"
+      };
+      clients[message.id].send(JSON.stringify(assignMessage));
     });
   });
 
