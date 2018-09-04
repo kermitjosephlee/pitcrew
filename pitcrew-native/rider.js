@@ -7,7 +7,10 @@ import {
   Text,
   View,
   Container,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 
 
@@ -50,10 +53,10 @@ export default class Rider extends Component {
    this.setState({type_of_help: "sweep", isModalVisible: !this.state.isModalVisible})
 
    submit = () => {
-     console.log("on submit contact:", this.state.contact)
      this.props.navigation.navigate("RiderSummary", {
        name: this.state.name,
        contact: this.state.contact,
+       description: this.state.description,
        type_of_help: this.state.type_of_help,
        latitude: this.state.riderLocation.latitude,
        longitude: this.state.riderLocation.longitude
@@ -66,21 +69,19 @@ export default class Rider extends Component {
     this.state = {
       name: "",
       contact: "",
+      description: "",
       riderLocation: {},
     };
   }
 
   componentDidMount() {
     this.getUserLocationHandler();
-    console.log(this.state.riderLocation)
   }
-
-
 
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
         <View>
           <TextInput
             style={styles.textInput}
@@ -94,20 +95,20 @@ export default class Rider extends Component {
             style={styles.textInput}
             placeholder="Mobile Number"
             keyboardType={"number-pad"}
-            onChangeText={ contact => this.setState({ contact})}
+            onChangeText={ contact => this.setState({ contact })}
             value={this.state.contact}
           />
         </View>
         <View>
-          <Text>
-            Name :: {this.state.name}
-            Contact :: {this.state.contact}
-            Type of Help :: {this.state.type_of_help}
-            Lat :: {this.state.riderLocation.latitude}
-            Lng :: {this.state.riderLocation.longitude}
-          </Text>
-
+          <TextInput
+            style={styles.textInputLarge}
+            multiline={true}
+            placeholder="Tell Us About Your Issue"
+            onChangeText={ description => this.setState({ description })}
+            value={this.state.description}
+          />
         </View>
+
         <View style={styles.modalBox}>
           <TouchableHighlight style={styles.helpMenu} onPress={this._toggleModal}>
             <Text style={styles.helpMenuText}>Type of Help</Text>
@@ -124,9 +125,9 @@ export default class Rider extends Component {
                 <TouchableHighlight style={styles.modalViewScreenSweep} onPress={this._selectSweep}>
                   <Text style={styles.textBox}>Sweep Vehicle</Text>
                 </TouchableHighlight>
-              <TouchableHighlight style={styles.modalViewScreenDone} onPress={this._toggleModal}>
-                <Text style={styles.textBox}>Done</Text>
-              </TouchableHighlight>
+                <TouchableHighlight style={styles.modalViewScreenDone} onPress={this._toggleModal}>
+                  <Text style={styles.textBox}>Back</Text>
+                </TouchableHighlight>
             </View>
           </Modal>
         </View>
@@ -135,7 +136,7 @@ export default class Rider extends Component {
             <Text style={styles.submitText}>Submit</Text>
           </TouchableHighlight>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -145,7 +146,7 @@ export default class Rider extends Component {
 const styles = StyleSheet.create({
   container:{
     flexDirection: "column",
-    margin: 10,
+    margin: 15
   },
   modalBox:{
 
@@ -160,21 +161,48 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   textInput: {
-    height: 40,
-    margin: 15,
+    height: 60,
+    marginBottom: 30,
     padding: 5,
     borderColor: "gray",
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: 3,
+    fontSize: 20
+  },
+  textInputLarge: {
+    height: 120,
+    marginBottom: 30,
+    padding: 5,
+    fontSize: 20,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 3,
   },
   submit: {
-    height: 60,
+    height: 90,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "green",
-    position: "absolute"
+    borderRadius: 15,
+    margin: 0,
+
   },
   submitText: {
+    fontSize: 30,
+    color: "white",
+    fontWeight: "bold"
+  },
+  helpMenu:{
+    height: 60,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "grey",
+    marginBottom: 30,
+    borderRadius: 15
+  },
+  helpMenuText:{
     fontSize: 20,
     color: "white",
     fontWeight: "bold"
@@ -185,44 +213,45 @@ const styles = StyleSheet.create({
     height: "50%",
   },
   modalViewScreenMech:{
-        width: "100%",
+    width: "100%",
     alignItems: "center",
     backgroundColor: "green",
     justifyContent: "center",
-    height: "50%",
+    height: "33%",
+    margin: 15,
+    borderRadius: 15,
+    padding: 15,
   },
   modalViewScreenMedic:{
-        width: "100%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "red",
-    height: "50%",
+    height: "33%",
+    margin: 15,
+    borderRadius: 15,
+    padding: 15,
   },
   modalViewScreenSweep:{
-        width: "100%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "blue",
-    height: "50%",
+    height: "33%%",
+    margin: 15,
+    borderRadius: 15,
+    padding: 15,
   },
   modalViewScreenDone:{
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "grey",
-    height: "50%",
+    height: "25%",
+    margin: 15,
+    borderRadius: 15,
+    padding: 15,
   },
-  helpMenu:{
-    height: 60,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "grey",
-    borderRadius: 40
-  },
-  helpMenuText:{
-    fontSize: 20,
-    color: "white",
-    fontWeight: "bold"
-  }
+
+
 })

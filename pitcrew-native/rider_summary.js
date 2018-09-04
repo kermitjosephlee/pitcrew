@@ -66,8 +66,9 @@ export default class RiderSummary extends Component{
     super(props);
     const { navigation } = this.props;
     this.state = {
-      name: this.props.navigation.getParam("name", "Cats!!!"),
+      name: navigation.getParam("name", ""),
       contact: navigation.getParam("contact", ""),
+      description: navigation.getParam("description", ""),
       type_of_help: navigation.getParam("type_of_help", ""),
       latitude: navigation.getParam("latitude", ""),
       longitude: navigation.getParam("longitude", ""),
@@ -85,22 +86,27 @@ export default class RiderSummary extends Component{
           </Text>
         </View>
         <View>
-          <Text>
+          <Text style={styles.textRender}>
           contact :: {this.state.contact}
           </Text>
         </View>
         <View>
-          <Text>
+          <Text style={styles.textRender}>
+          description :: {this.state.description}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.textRender}>
           help :: {this.state.type_of_help}
           </Text>
         </View>
         <View>
-          <Text>
+          <Text style={styles.textRender}>
           lat :: {this.state.latitude}
           </Text>
         </View>
         <View>
-          <Text>
+          <Text style={styles.textRender}>
           lng :: {this.state.longitude}
           </Text>
         </View>
@@ -150,5 +156,8 @@ const styles = StyleSheet.create({
   summary:{
     height: 200,
     width: "100%"
+  },
+  textRender: {
+    fontSize: 15,
   }
 })
