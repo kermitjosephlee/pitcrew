@@ -30,6 +30,7 @@ class DispatchTicket extends Component {
             <h4>Rider: {ticket.rider}</h4>
             <DispatchActiveTechs
               rider={ticket.rider}
+              ticket={ticket}
               techs={this.props.techs}
             />
           </div>

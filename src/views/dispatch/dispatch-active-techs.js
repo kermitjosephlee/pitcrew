@@ -27,7 +27,8 @@ class DispatchActiveTechs extends Component {
 
     const data = {
       id: this.state.id,
-      rider: this.props.rider
+      rider: this.props.rider,
+      ticket: this.props.ticket
     };
 
     $.ajax({

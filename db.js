@@ -118,17 +118,17 @@ module.exports = {
   updateTicket: data => {
     Ticket.update(
       {
-        status: data.status
+        status: "completed"
       },
       {
-        where: data.id
+        where: { id: data.id }
       }
     );
   },
-  getTickets: function(/*data*/) {
+  getTickets: function(data) {
     return Ticket.findAll({
       // where: {
-      //   status: "pending"
+      //   status: data.status
       // },
       raw: true
     })
