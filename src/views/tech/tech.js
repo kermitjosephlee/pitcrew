@@ -13,24 +13,41 @@ class Tech extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tech: {
-        RideId: 1,
-        username: "Bob",
-        name: "Mr. MeeFix",
-        password: "123456"
-      },
+      tech: {},
       assignedTicket: {
-        id: 1,
-        rider: "Bob",
-        lat: 43.639701,
-        lng: -79.459055,
-        type: "mechanic",
-        startTime: "2018-08-30T16:10:28.638Z",
-        description: "A",
-        status: "active"
+        // id: 1,
+        // rider: "Bob",
+        // lat: 43.639701,
+        // lng: -79.459055,
+        // type: "mechanic",
+        // startTime: "2018-08-30T16:10:28.638Z",
+        // description: "A",
+        // status: "active"
       },
       directions: {},
-      center: props.center
+      center: props.center,
+      tickets: {},
+      tech_assigned: true
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ tech: JSON.parse(localStorage.getItem("user")) });
+
+    this.socket = new WebSocket("ws://localhost:3001");
+
+    this.socket.onopen = event => {
+      let tech_id_message = {
+        id: this.state.tech.id,
+        type: "id"
+      };
+
+      console.log("Connected to server");
+      this.socket.send(JSON.stringify(tech_id_message));
+
+      this.socket.addEventListener("message", evt => {
+        console.log("receiving from WSS: ...", evt.data);
+      });
     };
   }
 

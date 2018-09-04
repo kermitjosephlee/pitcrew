@@ -19,7 +19,8 @@ class Login extends Component {
           const tempUser = {
             username: data.username,
             login: true,
-            type: data.type
+            type: data.type,
+            id: data.id
           };
           localStorage.setItem("user", JSON.stringify(tempUser));
           this.setState({ fireRedirect: true });

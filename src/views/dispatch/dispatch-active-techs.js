@@ -13,20 +13,20 @@ class DispatchActiveTechs extends Component {
     super(props);
 
     this.state = {
-      assigned_tech_id: 0
+      id: 0
     };
   }
 
   handleChange = e => {
     console.log("VALUE >> " + e.target.value);
-    this.setState({ assigned_tech_id: e.target.value });
+    this.setState({ id: e.target.value });
   };
 
   assignTech = () => {
     const _rider = this.props.rider;
 
     const data = {
-      assigned_tech_id: this.state.assigned_tech_id,
+      id: this.state.id,
       rider: this.props.rider
     };
 
@@ -45,7 +45,7 @@ class DispatchActiveTechs extends Component {
           <FormControl
             componentClass="select"
             placeholder="select"
-            value={this.state.assigned_tech_id}
+            value={this.state.id}
             onChange={this.handleChange}
           >
             <option>---</option>
