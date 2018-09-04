@@ -52,7 +52,7 @@ export default class Rider extends Component {
    submit = () => {
      console.log("on submit contact:", this.state.contact)
      this.props.navigation.navigate("RiderSummary", {
-       name: "Joe",
+       name: this.state.name,
        contact: this.state.contact,
        type_of_help: this.state.type_of_help,
        latitude: this.state.riderLocation.latitude,

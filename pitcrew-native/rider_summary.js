@@ -5,13 +5,13 @@ import {
   TextInput,
   Text,
   View,
-  Button,
   Container,
   TouchableHighlight
 } from "react-native";
 import { MapView } from "expo";
 import GetLocation from "./getLocation"
 import RiderMap from "./riderMap"
+import {API_HOST} from './config'
 
 //**********************************************************************
 
@@ -42,6 +42,26 @@ export default class RiderSummary extends Component{
     }, err => {console.log(err)})
   }
 
+  sendPostRequest = () => {
+    console.log("this state name:", this.state.name)
+    fetch(`${API_HOST}/newTicket`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        contact: this.state.contact,
+        type: this.state.type_of_help,
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+        startTime: new Date(),
+        status: "pending"
+      }),
+    });
+  }
+
   constructor(props) {
     super(props);
     const { navigation } = this.props;
@@ -52,23 +72,49 @@ export default class RiderSummary extends Component{
       latitude: navigation.getParam("latitude", ""),
       longitude: navigation.getParam("longitude", ""),
     };
-    console.log("construtor: ", this.props.navigation.state.params)
   }
 
   render(){
     const { navigate } = this.props.navigation;
     return (
-    <View>
+    <View style={styles.container}>
+      <View style={styles.summary}>
+        <View>
+          <Text>
+          name :: {this.state.name}
+          </Text>
+        </View>
+        <View>
+          <Text>
+          contact :: {this.state.contact}
+          </Text>
+        </View>
+        <View>
+          <Text>
+          help :: {this.state.type_of_help}
+          </Text>
+        </View>
+        <View>
+          <Text>
+          lat :: {this.state.latitude}
+          </Text>
+        </View>
+        <View>
+          <Text>
+          lng :: {this.state.longitude}
+          </Text>
+        </View>
+      </View>
       <View>
         <GetLocation onGetLocation={this.getUserLocationHandler} />
         <RiderMap riderLocation={this.state.riderLocation}/>
       </View>
-
       <View>
-        <TouchableHighlight style={styles.submit} onPress={() => console.log(this.state)}>
+        <TouchableHighlight style={styles.submit} onPress={this.sendPostRequest}>
           <Text style={styles.submitText}>Submit</Text>
         </TouchableHighlight>
       </View>
+
     </View>
 
     )
@@ -78,6 +124,10 @@ export default class RiderSummary extends Component{
 //**********************************************************************
 
 const styles = StyleSheet.create({
+  container:{
+    flexDirection: "column",
+    margin: 10,
+  },
   textInput: {
     height: 40,
     margin: 15,
@@ -96,5 +146,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     fontWeight: "bold"
+  },
+  summary:{
+    height: 200,
+    width: "100%"
   }
 })

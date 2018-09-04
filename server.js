@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const morgan = require('morgan')
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
@@ -13,6 +14,11 @@ app.use(
   })
 );
 
+app.use(
+  bodyParser.json()
+)
+
+app.use(morgan('dev'))
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -143,6 +149,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/newTicket", (req, res) => {
+  let postName = req.method;
   let data = req.body;
   console.log("NEW TICKET", data);
   db.openTicket(data);
