@@ -17,48 +17,57 @@ class DispatchActiveTechs extends Component {
     };
   }
 
+  componentDidMount() {
+    this.socket = new WebSocket("ws://localhost:3001");
+
+    this.socket.onopen = event => {
+      console.log("Connected to server");
+
+      this.socket.addEventListener("message", evt => {
+        console.log("receiving from WSS: ...", evt.data);
+      });
+    };
+  }
+
   handleChange = e => {
     console.log("VALUE >> " + e.target.value);
-    this.setState({ id: e.target.value });
+    this.setState({
+      id: e.target.value
+    });
   };
 
   assignTech = () => {
-    const _rider = this.props.rider;
-
+    // const _rider = this.props.rider;
     const data = {
       id: this.state.id,
       rider: this.props.rider,
+      type: "dispatch",
       ticket: this.props.ticket
     };
-
-    $.ajax({
-      url: "http://localhost:8080/assignTech",
-      type: "POST",
-      data: data
-    });
+    this.socket.send(JSON.stringify(data));
   };
 
   render() {
     return (
       <Fragment>
         <FormGroup controlId="formControlsSelect">
-          <ControlLabel>Available Tech</ControlLabel>
+          <ControlLabel> Available Tech </ControlLabel>{" "}
           <FormControl
             componentClass="select"
             placeholder="select"
             value={this.state.id}
             onChange={this.handleChange}
           >
-            <option>---</option>
+            <option> -- - </option>{" "}
             {this.props.techs.map(tech => {
               if (tech.availability)
-                return <option value={tech.id}>{tech.username}</option>;
-            })}
-          </FormControl>
+                return <option value={tech.id}> {tech.username} </option>;
+            })}{" "}
+          </FormControl>{" "}
           <Button onClick={this.assignTech.bind(this)}>
-            Assign Tech for {this.props.rider}
-          </Button>
-        </FormGroup>
+            Assign Tech for {this.props.rider}{" "}
+          </Button>{" "}
+        </FormGroup>{" "}
       </Fragment>
     );
   }

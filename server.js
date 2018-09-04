@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -74,11 +74,6 @@ let id = 8080;
 // };
 
 //****************************************
-
-app.get("/", (req, res) => {
-  db.getTickets();
-  res.send("frontpage");
-});
 
 app.get("/dashboard", (req, res) => {
   res.render({
@@ -197,7 +192,7 @@ app.listen(PORT, () => {
 
 const WebSocket = require("ws");
 // const express = require("express");
-const SocketServer = require("ws").Server;
+const SocketServer = WebSocket.Server;
 
 // Set the port to 3001
 const _PORT = 3001;
@@ -211,7 +206,9 @@ const server = express()
   );
 
 // Create the WebSockets server
-const wss = new SocketServer({ server });
+const wss = new SocketServer({
+  server
+});
 
 let clients = {};
 let counter = 0;
@@ -223,22 +220,20 @@ wss.broadcast = function broadcast(data) {};
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on("connection", ws => {
-  console.log("Client with id...");
-  // counter++;
-  // webSockets[counter] = ws;
+  // console.log("Client...", wss.clients);
 
   ws.on("message", function incoming(data) {
     message = JSON.parse(data);
-    // clients[1] = ws;
     console.log(message);
-    if (message.type == "id") {
-      console.log(`... id: ${message.id} is connected`);
-      clients[message.id] = ws;
-      clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
-    }
 
-    app.post("/assignTech", (req, res) => {
-      const data = req.body;
+    switch (message.type) {
+      case "id":
+        console.log(`... id: ${message.id} is connected`);
+        clients[message.id] = ws;
+        clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
+        break;
+      case "dispatch":
+              const data = req.body;
       console.log("id >>> ", data);
       var tech = techs.find(function(tech) {
         return tech.id == data.id;
@@ -255,7 +250,10 @@ wss.on("connection", ws => {
         type: "notification"
       };
       clients[message.id].send(JSON.stringify(assignMessage));
-    });
+        break;
+      default:
+        throw new Error("Unknown event type", message.type)
+    }
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
@@ -263,19 +261,3 @@ wss.on("connection", ws => {
     console.log("Client disconnected");
   });
 });
-
-//****************************************
-
-// express_socket = new WebSocket("ws://localhost:3001");
-//
-// express_socket.onopen = event => {
-//   console.log("Connected to server");
-//
-//   let express_message = {
-//     content: "Tech assgined",
-//     tech_id: 3,
-//     type: "Ticket"
-//   };
-//
-//   express_socket.send(JSON.stringify(express_message));
-// };

@@ -104,7 +104,7 @@ class Dashboard extends Component {
     setInterval(() => {
       this._fetchTickets();
       this._fetchAvailableTechs();
-    }, 2500);
+    }, 60000);
   };
 
   componentDidMount() {
