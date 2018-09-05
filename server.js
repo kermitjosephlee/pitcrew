@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -24,54 +24,9 @@ app.use(function (req, res, next) {
 
 //****************************************
 
-let techs = [
-  // {
-  //   id: 1,
-  //   RideId: 1,
-  //   username: "Bob",
-  //   name: "Mr. MeeFix",
-  //   password: "123456",
-  //   specialty: "mechanic",
-  //   lat: 43.6876611,
-  //   lng: -79.579055,
-  //   availability: true
-  // },
-  // {
-  //   id: 2,
-  //   RideId: 1,
-  //   username: "Chris",
-  //   name: "Evans",
-  //   password: "123456",
-  //   specialty: "medical",
-  //   lat: 43.6976611,
-  //   lng: -79.479055,
-  //   availability: true
-  // },
-  // {
-  //   id: 3,
-  //   RideId: 1,
-  //   username: "Johnny",
-  //   name: "Depp",
-  //   password: "123456",
-  //   specialty: "sweep",
-  //   lat: 43.6996611,
-  //   lng: -79.549555,
-  //   availability: true
-  // }
-];
+let techs = [];
 
 let tickets = [];
-
-let id = 8080;
-
-//****************************************
-
-// this.express_socket = new WebSocket("ws://localhost:3001");
-//
-// this.socket.onopen = event => {
-//   console.log("Connected to server");
-//   this.socket.send(JSON.stringify(id));
-// };
 
 //****************************************
 
@@ -155,7 +110,7 @@ app.get("/fetchTickets", (req, res) => {
 
 app.post("/completeTicket", (req, res) => {
   const data = req.body;
-  var ticket_to_be_completed = tickets.find(function (ticket) {
+  var ticket_to_be_completed = tickets.find(function(ticket) {
     return ticket.id == data.ticket_id;
   });
   ticket_to_be_completed.status = "completed";
@@ -167,18 +122,6 @@ app.post("/completeTicket", (req, res) => {
   console.log(tempData);
   db.updateTicket(tempData);
 });
-
-// app.post("/assignTech", (req, res) => {
-//   const data = req.body;
-//   console.log("id >>> ", data);
-//   var tech = techs.find(function(tech) {
-//     return tech.id == data.id;
-//   });
-//   data.id = parseFloat(data.id);
-//   tech.availability = false;
-//   db.assignTech(tech);
-//   console.log(data.rider + " is assigned to tech with id: " + data.id);
-// });
 
 //****************************************
 
@@ -210,7 +153,6 @@ const wss = new SocketServer({
 });
 
 let clients = {};
-let counter = 0;
 
 // Broadcast to all.
 wss.broadcast = function broadcast(data) {};
@@ -232,26 +174,28 @@ wss.on("connection", ws => {
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;
       case "dispatch":
-        const data = req.body;
-        console.log("id >>> ", data);
-        var tech = techs.find(function (tech) {
-          return tech.id == data.id;
+        // const data = req.body;
+        console.log("id >>> ", message);
+        var tech = techs.find(function(tech) {
+          return tech.id == message.id;
         });
-        data.id = parseFloat(data.id);
+        message.id = parseFloat(message.id);
         tech.availability = false;
         db.assignTech(tech);
-        console.log(data.rider + " is assigned to tech with id: " + data.id);
-        console.log(data.ticket);
+        console.log(
+          message.rider + " is assigned to tech with id: " + message.id
+        );
 
         const assignMessage = {
-          content: `...YOU ARE ASSGINED TO ${data.rider}`,
-          ticket_id: data.ticket.id,
+          content: `...YOU ARE ASSGINED TO ${message.rider}`,
+          ticket_id: message.ticket.id,
+          ticket: message.ticket,
           type: "notification"
         };
         clients[message.id].send(JSON.stringify(assignMessage));
         break;
       default:
-        throw new Error("Unknown event type", message.type)
+        throw new Error("Unknown event type", message.type);
     }
   });
 

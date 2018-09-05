@@ -40,6 +40,15 @@ class DispatchTicket extends Component {
         );
     });
 
+    const completedTickets = this.props.tickets.map(ticket => {
+      if (ticket.status == "completed")
+        return (
+          <div class="rider-list">
+            <p>{ticket.rider}</p>
+          </div>
+        );
+    });
+
     return (
       <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
         <Tab eventKey={1} title="Pending">
@@ -49,10 +58,7 @@ class DispatchTicket extends Component {
           {activeTickets}
         </Tab>
         <Tab eventKey={3} title="Completed">
-          COMPLETED
-        </Tab>
-        <Tab eventKey={4} title="Cancelled">
-          CANCELLED
+          {completedTickets}
         </Tab>
       </Tabs>
     );
