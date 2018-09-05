@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { StackNavigator } from "react-navigation";
+import React, {Component} from "react";
+import {StackNavigator} from "react-navigation";
 import {
   StyleSheet,
   TextInput,
@@ -8,21 +8,20 @@ import {
   Container,
   TouchableHighlight
 } from "react-native";
-import { MapView } from "expo";
+import {MapView} from "expo";
 import GetLocation from "./getLocation"
 import RiderMap from "./riderMap"
 import {API_HOST} from './config'
 
 //**********************************************************************
 
-
-export default class RiderSummary extends Component{
+export default class RiderSummary extends Component {
 
   state = {
     name: "",
     contact: "",
     riderLocation: null,
-    type: null,
+    type: null
   }
 
   static navigationOptions = {
@@ -32,14 +31,16 @@ export default class RiderSummary extends Component{
   getUserLocationHandler = () => {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
-        riderLocation:{
+        riderLocation: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           latitudeDelta: 0.02,
           longitudeDelta: 0.02
         }
       })
-    }, err => {console.log(err)})
+    }, err => {
+      console.log(err)
+    })
   }
 
   sendPostRequest = () => {
@@ -47,7 +48,7 @@ export default class RiderSummary extends Component{
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name: this.state.name,
@@ -58,62 +59,61 @@ export default class RiderSummary extends Component{
         lng: this.state.longitude,
         startTime: new Date(),
         status: "pending"
-      }),
+      })
     });
     this.props.navigation.navigate("RiderReceipt");
   }
 
   constructor(props) {
     super(props);
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     this.state = {
       name: navigation.getParam("name", ""),
       contact: navigation.getParam("contact", ""),
       description: navigation.getParam("description", ""),
       type_of_help: navigation.getParam("type_of_help", ""),
       latitude: navigation.getParam("latitude", ""),
-      longitude: navigation.getParam("longitude", ""),
+      longitude: navigation.getParam("longitude", "")
     };
   }
 
-  render(){
-    const { navigate } = this.props.navigation;
-    return (
-    <View style={styles.container}>
+  render() {
+    const {navigate} = this.props.navigation;
+    return (<View style={styles.container}>
       <View style={styles.summary}>
         <View>
           <Text>
-          name :: {this.state.name}
+            name :: {this.state.name}
           </Text>
         </View>
         <View>
           <Text style={styles.textRender}>
-          contact :: {this.state.contact}
+            contact :: {this.state.contact}
           </Text>
         </View>
         <View>
           <Text style={styles.textRender}>
-          description :: {this.state.description}
+            description :: {this.state.description}
           </Text>
         </View>
         <View>
           <Text style={styles.textRender}>
-          help :: {this.state.type_of_help}
+            help :: {this.state.type_of_help}
           </Text>
         </View>
         <View>
           <Text style={styles.textRender}>
-          lat :: {this.state.latitude}
+            lat :: {this.state.latitude}
           </Text>
         </View>
         <View>
           <Text style={styles.textRender}>
-          lng :: {this.state.longitude}
+            lng :: {this.state.longitude}
           </Text>
         </View>
       </View>
       <View>
-        <GetLocation onGetLocation={this.getUserLocationHandler} />
+        <GetLocation onGetLocation={this.getUserLocationHandler}/>
         <RiderMap riderLocation={this.state.riderLocation}/>
       </View>
       <View>
@@ -122,18 +122,16 @@ export default class RiderSummary extends Component{
         </TouchableHighlight>
       </View>
 
-    </View>
-
-    )
+    </View>)
   }
 }
 
 //**********************************************************************
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flexDirection: "column",
-    margin: 10,
+    margin: 10
   },
   textInput: {
     height: 40,
@@ -156,11 +154,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold"
   },
-  summary:{
+  summary: {
     height: 200,
     width: "100%"
   },
   textRender: {
-    fontSize: 15,
+    fontSize: 15
   }
 })

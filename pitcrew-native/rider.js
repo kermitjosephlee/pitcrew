@@ -58,7 +58,7 @@ export default class Rider extends Component {
        description: this.state.description,
        type_of_help: this.state.type_of_help,
        latitude: this.state.riderLocation.latitude,
-       longitude: this.state.riderLocation.longitude
+       longitude: this.state.riderLocation.longitude,
      });
    }
 
