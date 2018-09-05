@@ -51,23 +51,28 @@ class DispatchActiveTechs extends Component {
     return (
       <Fragment>
         <FormGroup controlId="formControlsSelect">
-          <ControlLabel> Available Tech </ControlLabel>{" "}
           <FormControl
             componentClass="select"
             placeholder="select"
             value={this.state.id}
             onChange={this.handleChange}
+            style={{ height: "4vh", width: "20vw" }}
           >
-            <option> -- - </option>{" "}
+            <option>assign tech</option>{" "}
             {this.props.techs.map(tech => {
               if (tech.availability)
                 return <option value={tech.id}> {tech.username} </option>;
             })}{" "}
           </FormControl>{" "}
-          <Button onClick={this.assignTech.bind(this)}>
-            Assign Tech for {this.props.rider}{" "}
-          </Button>{" "}
         </FormGroup>{" "}
+        <Button
+          bsSize="xsmall"
+          bsStyle="primary"
+          onClick={this.assignTech.bind(this)}
+          style={{ height: "min-content" }}
+        >
+          assign
+        </Button>
       </Fragment>
     );
   }
