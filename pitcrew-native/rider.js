@@ -60,7 +60,6 @@ export default class Rider extends Component {
        latitude: this.state.riderLocation.latitude,
        longitude: this.state.riderLocation.longitude
      });
-
    }
 
   constructor(props) {
