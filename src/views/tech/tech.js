@@ -8,74 +8,107 @@ import {
 } from "react-google-maps";
 import { compose, withProps, lifecycle } from "recompose";
 import { Redirect } from "react-router-dom";
+import $ from "jquery";
 
 class Tech extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tech: {
-        RideId: 1,
-        username: "Bob",
-        name: "Mr. MeeFix",
-        password: "123456"
-      },
-      assignedTicket: {
-        id: 1,
-        rider: "Bob",
-        lat: 43.639701,
-        lng: -79.459055,
-        type: "mechanic",
-        startTime: "2018-08-30T16:10:28.638Z",
-        description: "A",
-        status: "active"
-      },
+      tech: {},
+      assignedTicket: false,
       directions: {},
-      center: props.center
+      center: {},
+      ticket_id: 0
     };
   }
 
-  render() {
-    const ticketInfo = (
-      <div>
-        <p>go help {this.state.assignedTicket.rider}!</p>
-      </div>
-    );
+  componentDidMount() {
+    this.setState({ tech: JSON.parse(localStorage.getItem("user")) });
 
+    this.socket = new WebSocket("ws://localhost:3001");
+
+    this.socket.onopen = event => {
+      let tech_id_message = {
+        id: this.state.tech.id,
+        type: "id"
+      };
+
+      console.log("Connected to server");
+      this.socket.send(JSON.stringify(tech_id_message));
+
+      this.socket.addEventListener("message", evt => {
+        console.log("receiving from WSS: ...", evt.data);
+        const data = JSON.parse(evt.data);
+        if (data.type == "notification") {
+          this.setState({ assignedTicket: true, ticket_id: data.ticket_id });
+        }
+      });
+    };
+
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   console.log("initial position", position);
+    //   this.setState({
+    //     center: {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude
+    //     }
+    //   });
+    // });
+  }
+
+  ticketCompleted = () => {
+    $.ajax({
+      url: "http://localhost:8080/completeTicket",
+      type: "POST",
+      data: { ticket_id: this.state.ticket_id }
+    });
+    this.setState({ assignedTicket: false });
+  };
+
+  render() {
     if (!localStorage.getItem("user")) {
       return <Redirect to="/login" />;
     }
-    return (
-      <Fragment>
-        <GoogleMap defaultZoom={9}>
-          <DirectionsRenderer directions={this.props.directions} />
-        </GoogleMap>
-        {this.state.assignedTicket.id ? (
-          <Fragment>
-            <p>go help {this.state.assignedTicket.rider}!</p>
-            <Marker
-              icon={{
-                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-              }}
-              position={{
-                lat: this.state.assignedTicket.lat,
-                lng: this.state.assignedTicket.lng
-              }}
-            />
-          </Fragment>
-        ) : (
-          <p />
-        )}
-      </Fragment>
-    );
+
+    if (this.state.assignedTicket) {
+      return (
+        <div className="cointainer">
+          <h4>Ticket Assigned!</h4>
+          <TechMap
+            center={this.state.center}
+            assignedTicket={this.state.assignedTicket}
+          />
+          <button onClick={this.ticketCompleted}>Ticket Completed</button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="cointainer">
+          <TechMap
+            center={this.state.center}
+            assignedTicket={this.state.assignedTicket}
+          />
+        </div>
+      );
+    }
   }
 }
 
-export default compose(
+const TechMap = compose(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "500px", width: "500px" }} />,
+    containerElement: (
+      <div
+        style={{
+          height: "70vh",
+          width: "100vw",
+          paddingLeft: "1vw",
+          paddingRight: "1vw"
+        }}
+      />
+    ),
     mapElement: <div style={{ height: "100%" }} />
   }),
   withScriptjs,
@@ -83,37 +116,126 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const google = window.google;
+      console.log("props:", this.props);
+
+      console.log("props changed, fetching new location");
+      const position = this.props.center;
 
       navigator.geolocation.getCurrentPosition(position => {
-        const DirectionsService = new google.maps.DirectionsService();
-        DirectionsService.route(
-          {
-            origin: new google.maps.LatLng(
-              position.coords.latitude,
-              position.coords.longitude
-            ),
-            destination: new google.maps.LatLng(43.6543175, -79.4246381),
-            travelMode: google.maps.TravelMode.BICYCLING
-          },
-          (result, status) => {
-            console.log("result: ", result);
-            if (status === google.maps.DirectionsStatus.OK) {
-              this.setState({
-                directions: result,
-                markers: true
-              });
-            } else {
-              console.error(`error fetching directions result`, result, status);
-            }
-          }
-        );
+        console.log("initial position", position);
         this.setState({
           center: {
-            lat: 43.639701,
-            lng: -79.459055
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
           }
         });
+        if (this.props.assignedTicket == true) {
+          const DirectionsService = new google.maps.DirectionsService();
+          DirectionsService.route(
+            {
+              origin: new google.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude
+              ),
+              destination: new google.maps.LatLng(43.6543175, -79.4246381),
+              travelMode: google.maps.TravelMode.BICYCLING
+            },
+            (result, status) => {
+              console.log("result: ", result);
+              if (status === google.maps.DirectionsStatus.OK) {
+                this.setState({
+                  directions: result,
+                  markers: true
+                });
+              } else {
+                console.error(
+                  `error fetching directions result`,
+                  result,
+                  status
+                );
+              }
+            }
+          );
+        }
       });
+
+      // const DirectionsService = new google.maps.DirectionsService();
+      // DirectionsService.route(
+      //   {
+      //     origin: new google.maps.LatLng(position.lat, position.lng),
+      //     destination: new google.maps.LatLng(43.6543175, -79.4246381),
+      //     travelMode: google.maps.TravelMode.BICYCLING
+      //   },
+      //   (result, status) => {
+      //     console.log("result: ", result);
+      //     if (status === google.maps.DirectionsStatus.OK) {
+      //       this.setState({
+      //         directions: result,
+      //         markers: true
+      //       });
+      //     } else {
+      //       console.error(`error fetching directions result`, result, status);
+      //     }
+      //   }
+      // );
+      // }
+    },
+    shouldUpdate() {
+      console.log("ShouldUpdate");
     }
   })
-)(Tech);
+)(({ directions, center, assignedTicket }) => (
+  <GoogleMap defaultZoom={16} center={center} assignedTicket={assignedTicket}>
+    <DirectionsRenderer directions={directions} />
+  </GoogleMap>
+));
+
+export default Tech;
+
+// export default compose(
+//   withProps({
+//     googleMapURL:
+//       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
+//     loadingElement: <div style={{ height: "100%" }} />,
+//     containerElement: <div style={{ height: "500px", width: "500px" }} />,
+//     mapElement: <div style={{ height: "100%" }} />
+//   }),
+//   withScriptjs,
+//   withGoogleMap,
+//   lifecycle({
+//     componentDidMount() {
+//       const google = window.google;
+//
+//       navigator.geolocation.getCurrentPosition(position => {
+//         const DirectionsService = new google.maps.DirectionsService();
+//         DirectionsService.route(
+//           {
+//             origin: new google.maps.LatLng(
+//               position.coords.latitude,
+//               position.coords.longitude
+//             ),
+//             destination: new google.maps.LatLng(43.6543175, -79.4246381),
+//             travelMode: google.maps.TravelMode.BICYCLING
+//           },
+//           (result, status) => {
+//             console.log("result: ", result);
+//             if (status === google.maps.DirectionsStatus.OK) {
+//               this.setState({
+//                 directions: result,
+//                 markers: true
+//               });
+//             } else {
+//               console.error(`error fetching directions result`, result, status);
+//             }
+//           }
+//         );
+//         this.setState({
+//           center: {
+//             lat: 43.639701,
+//             lng: -79.459055
+//           }
+//         });
+//       });
+//     }
+//   })
+// )(Tech);

@@ -104,7 +104,7 @@ class Dashboard extends Component {
     setInterval(() => {
       this._fetchTickets();
       this._fetchAvailableTechs();
-    }, 2500);
+    }, 60000);
   };
 
   componentDidMount() {
@@ -135,7 +135,7 @@ class Dashboard extends Component {
       >
         <Row>
           <Col xs={12} md={8} xl={8}>
-            <TechMap
+            <Map
               tickets={this.state.tickets}
               techs={this.state.techs}
               style={divStyle}
@@ -153,7 +153,7 @@ class Dashboard extends Component {
   }
 }
 
-const TechMap = compose(
+const Map = compose(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",

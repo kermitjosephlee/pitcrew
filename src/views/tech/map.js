@@ -38,12 +38,13 @@ class DispatchTicket extends Component {
     });
 
     return (
-      <Fragment>
-        <h3>Pending Tickets</h3>
-        {dispatchTickets}
-        <h3>Active Tickets</h3>
-        {dispatchTickets}
-      </Fragment>
+      <GoogleMap
+        defaultZoom={16}
+        center={center}
+        assignedTicket={assignedTicket}
+      >
+        <DirectionsRenderer directions={directions} />
+      </GoogleMap>
     );
   }
 }
