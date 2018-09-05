@@ -128,14 +128,13 @@ app.post("/newTicket", (req, res) => {
   db.openTicket(data);
   tickets.push(data);
   tickets.push({
-    id: parseFloat(data.id),
+    id: parseInt(data.id),
     location: {
-      lat: parseFloat(data.location.lat),
-      lng: parseFloat(data.location.lng)
+      lat: parseFloat(data.lat),
+      lng: parseFloat(data.lng)
     },
     type: "rider"
   });
-  // console.log("Tickets:", tickets);
 });
 
 app.get("/fetchTickets", (req, res) => {
@@ -156,7 +155,7 @@ app.get("/fetchTickets", (req, res) => {
 
 app.post("/completeTicket", (req, res) => {
   const data = req.body;
-  var ticket_to_be_completed = tickets.find(function(ticket) {
+  var ticket_to_be_completed = tickets.find(function (ticket) {
     return ticket.id == data.ticket_id;
   });
   ticket_to_be_completed.status = "completed";
@@ -233,23 +232,23 @@ wss.on("connection", ws => {
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;
       case "dispatch":
-              const data = req.body;
-      console.log("id >>> ", data);
-      var tech = techs.find(function(tech) {
-        return tech.id == data.id;
-      });
-      data.id = parseFloat(data.id);
-      tech.availability = false;
-      db.assignTech(tech);
-      console.log(data.rider + " is assigned to tech with id: " + data.id);
-      console.log(data.ticket);
+        const data = req.body;
+        console.log("id >>> ", data);
+        var tech = techs.find(function (tech) {
+          return tech.id == data.id;
+        });
+        data.id = parseFloat(data.id);
+        tech.availability = false;
+        db.assignTech(tech);
+        console.log(data.rider + " is assigned to tech with id: " + data.id);
+        console.log(data.ticket);
 
-      const assignMessage = {
-        content: `...YOU ARE ASSGINED TO ${data.rider}`,
-        ticket_id: data.ticket.id,
-        type: "notification"
-      };
-      clients[message.id].send(JSON.stringify(assignMessage));
+        const assignMessage = {
+          content: `...YOU ARE ASSGINED TO ${data.rider}`,
+          ticket_id: data.ticket.id,
+          type: "notification"
+        };
+        clients[message.id].send(JSON.stringify(assignMessage));
         break;
       default:
         throw new Error("Unknown event type", message.type)

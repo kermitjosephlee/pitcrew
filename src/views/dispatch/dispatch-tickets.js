@@ -17,7 +17,7 @@ class DispatchTicket extends Component {
   };
 
   render() {
-    const dispatchTickets = this.props.tickets.map(ticket => {
+    const pendingTickets = this.props.tickets.map(ticket => {
       if (ticket.status == "pending")
         return (
           <div class="rider-list">
@@ -31,13 +31,28 @@ class DispatchTicket extends Component {
         );
     });
 
+    const activeTickets = this.props.tickets.map(ticket => {
+      if (ticket.status == "active")
+        return (
+          <div class="rider-list">
+            <p>{ticket.rider}</p>
+          </div>
+        );
+    });
+
     return (
       <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
         <Tab eventKey={1} title="Pending">
-          {dispatchTickets}
+          {pendingTickets}
         </Tab>
         <Tab eventKey={2} title="Active">
-          Tab 2 content
+          {activeTickets}
+        </Tab>
+        <Tab eventKey={3} title="Completed">
+          COMPLETED
+        </Tab>
+        <Tab eventKey={4} title="Cancelled">
+          CANCELLED
         </Tab>
       </Tabs>
     );

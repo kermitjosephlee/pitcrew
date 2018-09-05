@@ -141,7 +141,15 @@ class Dashboard extends Component {
               style={divStyle}
             />
           </Col>
-          <Col xs={6} md={4} xl={4}>
+          <Col
+            style={{
+              height: "100vh",
+              overflow: "scroll"
+            }}
+            xs={6}
+            md={4}
+            xl={4}
+          >
             <DispatchTicket
               tickets={this.state.tickets}
               techs={this.state.techs}
