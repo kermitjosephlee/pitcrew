@@ -177,7 +177,7 @@ const server = express()
   // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static("public"))
   .listen(_PORT, "0.0.0.0", "localhost", () =>
-    console.log(`Listening on ${_PORT}`)
+    console.log(`WebSockets Listening on ${_PORT}`)
   );
 
 // Create the WebSockets server
@@ -203,25 +203,32 @@ wss.on("connection", ws => {
 
     switch (message.type) {
       case "id":
+        console.log("***********************************");
+        console.log("***********************************");
+        console.log("***********************************");
+        console.log("***********************************");
+        console.log("***********************************");
+        console.log("***********************************");
+        console.log("***********************************");
         console.log(`... id: ${message.id} is connected`);
+        console.log("***********************************");
         clients[message.id] = ws;
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;
       case "dispatch":
-        const data = req.body;
         console.log("id >>> ", data);
         var tech = techs.find(function (tech) {
           return tech.id == data.id;
         });
-        data.id = parseFloat(data.id);
+        message.id = parseFloat(message.id);
         tech.availability = false;
         db.assignTech(tech);
-        console.log(data.rider + " is assigned to tech with id: " + data.id);
-        console.log(data.ticket);
+        console.log(message.rider + " is assigned to tech with id: " + message.id);
+        console.log(message.ticket);
 
         const assignMessage = {
-          content: `...YOU ARE ASSGINED TO ${data.rider}`,
-          ticket_id: data.ticket.id,
+          content: `...YOU ARE ASSGINED TO ${message.rider}`,
+          ticket_id: message.ticket.id,
           type: "notification"
         };
         clients[message.id].send(JSON.stringify(assignMessage));

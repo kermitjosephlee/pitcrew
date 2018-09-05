@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback,
   Container
 } from "react-native";
-import {API_HOST} from './config';
+import {API_HOST_HTTP} from './config';
+
 
 export default class Tech extends Component {
   static navigationOptions = {
@@ -17,22 +18,35 @@ export default class Tech extends Component {
   };
 
   submit = () => {
-    fetch(`${API_HOST}/login`, {
+    fetch(`${API_HOST_HTTP}/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({name: this.state.username, password: this.state.password})
-    })
-    this.props.navigation.navigate("TechIdle", {username: this.state.username});
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+        id: 2,
+        type: "Technician",})
+      })
+      .then (data => {
+        debugger;
+        console.log("Tech Screen:", data.id)
+        if (data) {
+          this.setState({id: data.id})
+        }
+      })
+
+    this.props.navigation.navigate("TechIdle", {username: this.state.username, id: this.state.id});
   }
 
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      id: 2,
     };
   }
 

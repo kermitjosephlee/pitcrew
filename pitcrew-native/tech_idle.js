@@ -11,13 +11,27 @@ import {
 } from "react-native";
 import {MapView} from "expo";
 import RiderMap from "./riderMap"
-
-import {API_HOST} from './config';
+import {API_HOST_WS} from './config';
 
 export default class TechIdle extends Component {
 
   static navigationOptions = {
     title: "Tech",
+  }
+
+  constructor(props) {
+    super(props);
+    const {navigation} = this.props;
+    this.state = {
+      id: navigation.getParam("id", 0),
+      username: navigation.getParam("username", ""),
+      riderLocation: {
+        latitude: 40,
+        longitude: -78
+      },
+      assignedTicket: false,
+      ticket_id: "",
+    }
   }
 
   getUserLocationHandler = () => {
@@ -37,19 +51,28 @@ export default class TechIdle extends Component {
 
   componentDidMount() {
     this.getUserLocationHandler();
-  }
 
-  constructor(props) {
-    super(props);
-    const {navigation} = this.props;
-    this.state = {
-      username: navigation.getParam("username", ""),
-      riderLocation: {
-        latitude: 40,
-        longitude: -78
-      }
+    this.socket = new WebSocket(`${API_HOST_WS}`);
+
+    this.socket.onopen = event => {
+      let tech_id_message = {
+        id: this.state.id,
+        type: "id"
+      };
+
+      console.log("Connected to server");
+      this.socket.send(JSON.stringify(tech_id_message));
+
+      this.socket.addEventListener("message", evt => {
+        console.log("receiving from WSS: ...", evt.data);
+        const data = JSON.parse(evt.data);
+        if (data.type == "notification") {
+          this.setState({ assignedTicket: true, ticket_id: data.ticket_id });
+        }
+      });
     }
   }
+
 
   render() {
     const {navigate} = this.props.navigation;
@@ -60,7 +83,7 @@ export default class TechIdle extends Component {
         </View>
         <View style={styles.textBox}>
           <Text style={styles.text}>
-
+            id :: {this.state.id}
           </Text>
         </View>
       </View>
