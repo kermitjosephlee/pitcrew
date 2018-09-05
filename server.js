@@ -28,54 +28,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-<<<<<<< HEAD
 
 //****************************************
 
 const user = [];
 
 const techs = [];
-  
-=======
-//****************************************
 
-let techs = [
-  // {
-  //   id: 1,
-  //   RideId: 1,
-  //   username: "Bob",
-  //   name: "Mr. MeeFix",
-  //   password: "123456",
-  //   specialty: "mechanic",
-  //   lat: 43.6876611,
-  //   lng: -79.579055,
-  //   availability: true
-  // },
-  // {
-  //   id: 2,
-  //   RideId: 1,
-  //   username: "Chris",
-  //   name: "Evans",
-  //   password: "123456",
-  //   specialty: "medical",
-  //   lat: 43.6976611,
-  //   lng: -79.479055,
-  //   availability: true
-  // },
-  // {
-  //   id: 3,
-  //   RideId: 1,
-  //   username: "Johnny",
-  //   name: "Depp",
-  //   password: "123456",
-  //   specialty: "sweep",
-  //   lat: 43.6996611,
-  //   lng: -79.549555,
-  //   availability: true
-  // }
-];
-
->>>>>>> master
 let tickets = [];
 
 let id = 8080;
@@ -204,80 +163,3 @@ app.listen(PORT, () => {
   console.log(`PitCrew app listening on port ${PORT}!`);
   console.log("ooo eee can do!");
 });
-<<<<<<< HEAD
-=======
-
-//****************************************
-
-const WebSocket = require("ws");
-// const express = require("express");
-const SocketServer = WebSocket.Server;
-
-// Set the port to 3001
-const _PORT = 3001;
-
-// Create a new express server
-const server = express()
-  // Make the express server serve static assets (html, javascript, css) from the /public folder
-  .use(express.static("public"))
-  .listen(_PORT, "0.0.0.0", "localhost", () =>
-    console.log(`Listening on ${_PORT}`)
-  );
-
-// Create the WebSockets server
-const wss = new SocketServer({
-  server
-});
-
-let clients = {};
-let counter = 0;
-
-// Broadcast to all.
-wss.broadcast = function broadcast(data) {};
-
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
-wss.on("connection", ws => {
-  // console.log("Client...", wss.clients);
-
-  ws.on("message", function incoming(data) {
-    message = JSON.parse(data);
-    console.log(message);
-
-    switch (message.type) {
-      case "id":
-        console.log(`... id: ${message.id} is connected`);
-        clients[message.id] = ws;
-        clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
-        break;
-      case "dispatch":
-              const data = req.body;
-      console.log("id >>> ", data);
-      var tech = techs.find(function(tech) {
-        return tech.id == data.id;
-      });
-      data.id = parseFloat(data.id);
-      tech.availability = false;
-      db.assignTech(tech);
-      console.log(data.rider + " is assigned to tech with id: " + data.id);
-      console.log(data.ticket);
-
-      const assignMessage = {
-        content: `...YOU ARE ASSGINED TO ${data.rider}`,
-        ticket_id: data.ticket.id,
-        type: "notification"
-      };
-      clients[message.id].send(JSON.stringify(assignMessage));
-        break;
-      default:
-        throw new Error("Unknown event type", message.type)
-    }
-  });
-
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-});
->>>>>>> master

@@ -144,10 +144,12 @@ const styles = StyleSheet.create({
   },
   submit: {
     height: 60,
+    marginTop: 10,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "green"
+    backgroundColor: "green",
+    borderRadius: 20
   },
   submitText: {
     fontSize: 20,
