@@ -1,11 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {
-  Button,
-  Grid,
-  FormGroup,
-  ControlLabel,
-  FormControl
-} from "react-bootstrap";
+import { Tab, Tabs } from "react-bootstrap";
 import DispatchActiveTechs from "./dispatch-active-techs";
 
 class DispatchTicket extends Component {
@@ -23,11 +17,11 @@ class DispatchTicket extends Component {
   };
 
   render() {
-    const dispatchTickets = this.props.tickets.map(ticket => {
+    const pendingTickets = this.props.tickets.map(ticket => {
       if (ticket.status == "pending")
         return (
-          <div class="container-fluid">
-            <h4>Rider: {ticket.rider}</h4>
+          <div class="rider-list">
+            <p>{ticket.rider}</p>
             <DispatchActiveTechs
               rider={ticket.rider}
               ticket={ticket}
@@ -37,13 +31,30 @@ class DispatchTicket extends Component {
         );
     });
 
+    const activeTickets = this.props.tickets.map(ticket => {
+      if (ticket.status == "active")
+        return (
+          <div class="rider-list">
+            <p>{ticket.rider}</p>
+          </div>
+        );
+    });
+
     return (
-      <Fragment>
-        <h3>Pending Tickets</h3>
-        {dispatchTickets}
-        <h3>Active Tickets</h3>
-        {dispatchTickets}
-      </Fragment>
+      <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+        <Tab eventKey={1} title="Pending">
+          {pendingTickets}
+        </Tab>
+        <Tab eventKey={2} title="Active">
+          {activeTickets}
+        </Tab>
+        <Tab eventKey={3} title="Completed">
+          COMPLETED
+        </Tab>
+        <Tab eventKey={4} title="Cancelled">
+          CANCELLED
+        </Tab>
+      </Tabs>
     );
   }
 }

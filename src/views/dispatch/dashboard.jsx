@@ -141,7 +141,15 @@ class Dashboard extends Component {
               style={divStyle}
             />
           </Col>
-          <Col xs={6} md={4} xl={4}>
+          <Col
+            style={{
+              height: "100vh",
+              overflow: "scroll"
+            }}
+            xs={6}
+            md={4}
+            xl={4}
+          >
             <DispatchTicket
               tickets={this.state.tickets}
               techs={this.state.techs}
@@ -157,11 +165,9 @@ const Map = compose(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCHs0Po1ZjrqqKy8pNXcXX3Gfl71w2GEDs&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: "100%", width: "80%" }} />,
-    containerElement: (
-      <div style={{ height: "80vh", width: "120%", marginLeft: "20px" }} />
-    ),
-    mapElement: <div style={{ height: "100%", width: "80%" }} />
+    loadingElement: <div style={{ height: "100%", width: "100%" }} />,
+    containerElement: <div style={{ height: "100vh", width: "104%" }} />,
+    mapElement: <div style={{ height: "100%", width: "100%" }} />
   }),
   withScriptjs,
   withGoogleMap

@@ -104,14 +104,13 @@ app.post("/newTicket", (req, res) => {
   db.openTicket(data);
   tickets.push(data);
   tickets.push({
-    id: parseFloat(data.id),
+    id: parseInt(data.id),
     location: {
       lat: parseFloat(data.lat),
       lng: parseFloat(data.lng)
     },
     type: "rider"
   });
-  // console.log("Tickets:", tickets);
 });
 
 app.get("/fetchTickets", (req, res) => {
@@ -132,7 +131,7 @@ app.get("/fetchTickets", (req, res) => {
 
 app.post("/completeTicket", (req, res) => {
   const data = req.body;
-  var ticket_to_be_completed = tickets.find(function(ticket) {
+  var ticket_to_be_completed = tickets.find(function (ticket) {
     return ticket.id == data.ticket_id;
   });
   ticket_to_be_completed.status = "completed";
@@ -162,4 +161,78 @@ app.post("/completeTicket", (req, res) => {
 app.listen(PORT, () => {
   console.log(`PitCrew app listening on port ${PORT}!`);
   console.log("ooo eee can do!");
+});
+
+//****************************************
+
+const WebSocket = require("ws");
+// const express = require("express");
+const SocketServer = WebSocket.Server;
+
+// Set the port to 3001
+const _PORT = 3001;
+
+// Create a new express server
+const server = express()
+  // Make the express server serve static assets (html, javascript, css) from the /public folder
+  .use(express.static("public"))
+  .listen(_PORT, "0.0.0.0", "localhost", () =>
+    console.log(`Listening on ${_PORT}`)
+  );
+
+// Create the WebSockets server
+const wss = new SocketServer({
+  server
+});
+
+let clients = {};
+let counter = 0;
+
+// Broadcast to all.
+wss.broadcast = function broadcast(data) {};
+
+// Set up a callback that will run when a client connects to the server
+// When a client connects they are assigned a socket, represented by
+// the ws parameter in the callback.
+wss.on("connection", ws => {
+  // console.log("Client...", wss.clients);
+
+  ws.on("message", function incoming(data) {
+    message = JSON.parse(data);
+    console.log(message);
+
+    switch (message.type) {
+      case "id":
+        console.log(`... id: ${message.id} is connected`);
+        clients[message.id] = ws;
+        clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
+        break;
+      case "dispatch":
+        const data = req.body;
+        console.log("id >>> ", data);
+        var tech = techs.find(function (tech) {
+          return tech.id == data.id;
+        });
+        data.id = parseFloat(data.id);
+        tech.availability = false;
+        db.assignTech(tech);
+        console.log(data.rider + " is assigned to tech with id: " + data.id);
+        console.log(data.ticket);
+
+        const assignMessage = {
+          content: `...YOU ARE ASSGINED TO ${data.rider}`,
+          ticket_id: data.ticket.id,
+          type: "notification"
+        };
+        clients[message.id].send(JSON.stringify(assignMessage));
+        break;
+      default:
+        throw new Error("Unknown event type", message.type)
+    }
+  });
+
+  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
 });
