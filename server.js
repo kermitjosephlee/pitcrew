@@ -200,33 +200,23 @@ wss.on("connection", ws => {
 
   ws.on("message", function incoming(data) {
     message = JSON.parse(data);
-    console.log(message);
+
 
     switch (message.type) {
       case "id":
-        console.log("***********************************");
-        console.log(`... id: ${message.id} is connected`);
-        console.log("***********************************");
+
         clients[message.id] = ws;
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;
       case "dispatch":
-        console.log("Data: ", data);
-        console.log("---------------------")
-        console.log("Data id1: ", JSON.parse(data).id)
-        console.log("---------------------")
-        console.log("Data id2: ", data.id)
-        console.log("---------------------")
         var tech = techs.find(function (tech) {
           return tech.id == (message.id);
         });
-        console.log("---------------------")
-        console.log('Tech: ', tech)
+
         message.id = parseFloat(message.id);
         tech.availability = false;
         db.assignTech(tech);
-        console.log(message.rider + " is assigned to tech with id: " + message.id);
-        console.log(message.ticket);
+    
 
         const assignMessage = {
           content: `...YOU ARE ASSGINED TO ${message.rider}`,
