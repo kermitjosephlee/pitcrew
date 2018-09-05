@@ -14,6 +14,8 @@ import DispatchTicket from "./dispatch-tickets";
 import { Redirect } from "react-router-dom";
 import "./dashboard.css";
 
+let loopInterval = 1000;
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -104,7 +106,7 @@ class Dashboard extends Component {
     setInterval(() => {
       this._fetchTickets();
       this._fetchAvailableTechs();
-    }, 1000);
+    }, loopInterval);
   };
 
   componentDidMount() {

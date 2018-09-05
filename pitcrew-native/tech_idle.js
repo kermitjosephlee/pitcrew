@@ -60,7 +60,7 @@ export default class TechIdle extends Component {
         type: "id"
       };
 
-      console.log("Connected to server");
+      console.log("Connected to server -- tech_id_message: ", tech_id_message);
       this.socket.send(JSON.stringify(tech_id_message));
 
       this.socket.addEventListener("message", evt => {
@@ -76,18 +76,35 @@ export default class TechIdle extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    return (
-      <View style={styles.container}>
-        <View style={styles.mapBox}>
-          <RiderMap riderLocation={this.state.riderLocation}/>
+
+    if(this.state.assignedTicket){
+      return (
+        <View style={styles.container}>
+          <View style={styles.mapBox}>
+            <RiderMap riderLocation={this.state.riderLocation}/>
+          </View>
+          <View style={styles.textBox}>
+            <Text style={styles.text}>
+              Name :: {this.state.username}
+              Ticket :: Ticket is assigned
+            </Text>
+          </View>
         </View>
-        <View style={styles.textBox}>
-          <Text style={styles.text}>
-            id :: {this.state.id}
-          </Text>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.mapBox}>
+            <RiderMap riderLocation={this.state.riderLocation}/>
+          </View>
+          <View style={styles.textBox}>
+            <Text style={styles.text}>
+              name :: {this.state.username}
+            </Text>
+          </View>
         </View>
-      </View>
-    )
+      )
+    }
   }
 }
 

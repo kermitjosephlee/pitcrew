@@ -30,15 +30,19 @@ export default class Tech extends Component {
         id: 2,
         type: "Technician",})
       })
+      .then (res => res.json())
       .then (data => {
-        debugger;
-        console.log("Tech Screen:", data.id)
         if (data) {
-          this.setState({id: data.id})
+          this.setState({id: data.id}, () => {
+            this.props.navigation.navigate
+            ("TechIdle",
+              {username: this.state.username,
+              id: this.state.id}
+            )
+          })
         }
       })
-
-    this.props.navigation.navigate("TechIdle", {username: this.state.username, id: this.state.id});
+      .catch (err => console.log(err))
   }
 
   constructor(props) {

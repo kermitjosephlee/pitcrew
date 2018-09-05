@@ -60,12 +60,13 @@ app.post("/login", (req, res) => {
   const data = req.body;
   db.checkUser(data)
     .then(query => {
-      console.log(`USER EXISTS`);
+      console.log(`USER EXISTS`, data);
       data.availability = true;
       data.id = query.id;
       techs.push(data);
+      console.log('TECHS >>', techs)
       console.log("tech list", techs);
-      res.send(data);
+      res.json(data);
     })
     .catch(error => {
       console.log(`ERROR ${error}`);
@@ -204,22 +205,23 @@ wss.on("connection", ws => {
     switch (message.type) {
       case "id":
         console.log("***********************************");
-        console.log("***********************************");
-        console.log("***********************************");
-        console.log("***********************************");
-        console.log("***********************************");
-        console.log("***********************************");
-        console.log("***********************************");
         console.log(`... id: ${message.id} is connected`);
         console.log("***********************************");
         clients[message.id] = ws;
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;
       case "dispatch":
-        console.log("id >>> ", data);
+        console.log("Data: ", data);
+        console.log("---------------------")
+        console.log("Data id1: ", JSON.parse(data).id)
+        console.log("---------------------")
+        console.log("Data id2: ", data.id)
+        console.log("---------------------")
         var tech = techs.find(function (tech) {
-          return tech.id == data.id;
+          return tech.id == (message.id);
         });
+        console.log("---------------------")
+        console.log('Tech: ', tech)
         message.id = parseFloat(message.id);
         tech.availability = false;
         db.assignTech(tech);
