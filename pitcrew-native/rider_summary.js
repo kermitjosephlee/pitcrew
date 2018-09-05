@@ -43,7 +43,6 @@ export default class RiderSummary extends Component{
   }
 
   sendPostRequest = () => {
-    console.log("this state name:", this.state.name)
     fetch(`${API_HOST}/newTicket`, {
       method: 'POST',
       headers: {
@@ -53,6 +52,7 @@ export default class RiderSummary extends Component{
       body: JSON.stringify({
         name: this.state.name,
         contact: this.state.contact,
+        description: this.state.description,
         type: this.state.type_of_help,
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -60,6 +60,7 @@ export default class RiderSummary extends Component{
         status: "pending"
       }),
     });
+    this.props.navigation.navigate("RiderReceipt");
   }
 
   constructor(props) {

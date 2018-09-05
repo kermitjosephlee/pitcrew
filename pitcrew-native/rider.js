@@ -29,7 +29,6 @@ export default class Rider extends Component {
   }
 
   getUserLocationHandler = () => {
-    console.log("Handler Kicked On")
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         riderLocation:{
@@ -211,13 +210,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "50%",
+    flexDirection: "column",
   },
   modalViewScreenMech:{
     width: "100%",
     alignItems: "center",
     backgroundColor: "green",
     justifyContent: "center",
-    height: "33%",
+    flex: 2,
     margin: 15,
     borderRadius: 15,
     padding: 15,
@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 15,
     padding: 15,
+    flex: 2,
   },
   modalViewScreenSweep:{
     width: "100%",
@@ -241,6 +242,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 15,
     padding: 15,
+    flex: 2,
   },
   modalViewScreenDone:{
     width: "100%",
@@ -251,6 +253,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 15,
     padding: 15,
+    flex: 1,
   },
 
 

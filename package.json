@@ -30,7 +30,6 @@
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1",
     "simple-flexbox": "^1.2.0",
-    "tinycolor2": "^1.4.1"
   },
   "devDependencies": {},
   "scripts": {

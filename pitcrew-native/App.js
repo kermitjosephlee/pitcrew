@@ -12,6 +12,7 @@ import TopScreen from "./topscreen";
 import HomeScreen from "./homescreen";
 import Rider from "./rider";
 import RiderSummary from "./rider_summary";
+import RiderReceipt from "./rider_receipt";
 import Tech from "./tech";
 import RiderMap from "./riderMap"
 import TechMap from "./techMap"
@@ -22,8 +23,8 @@ const NavigationApp = createStackNavigator({
   HomeScreen: { screen: HomeScreen },
   Rider: { screen: Rider },
   Tech: { screen: Tech },
-  RiderSummary: { screen: RiderSummary},
-
+  RiderSummary: { screen: RiderSummary },
+  RiderReceipt: { screen: RiderReceipt },
 });
 
 export default class App extends Component {

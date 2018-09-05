@@ -28,60 +28,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.use(express.static(path.join(__dirname, "build")));
 
 //****************************************
 
 const user = [];
 
-const techs = [
-  // {
-  //   id: 1,
-  //   RideId: 1,
-  //   username: "Bob",
-  //   name: "Mr. MeeFix",
-  //   password: "123456",
-  //   specialty: "mechanic",
-  //   lat: 43.6876611,
-  //   lng: -79.579055,
-  //   availability: true
-  // },
-  // {
-  //   id: 2,
-  //   RideId: 1,
-  //   username: "Chris",
-  //   name: "Evans",
-  //   password: "123456",
-  //   specialty: "medical",
-  //   lat: 43.6976611,
-  //   lng: -79.479055,
-  //   availability: true
-  // },
-  // {
-  //   id: 3,
-  //   RideId: 1,
-  //   username: "Johnny",
-  //   name: "Depp",
-  //   password: "123456",
-  //   specialty: "sweep",
-  //   lat: 43.6996611,
-  //   lng: -79.549555,
-  //   availability: true
-  // }
-];
-
-// const checkUser = async (data) => {
-//   console.log('Verifying User')
-//   try {
-//     await db.checkUser(data)
-//     console.log('CHEECK')
-//     return true
-//   } catch (err) {
-//     console.log("ERROR2", err)
-//     throw err
-//   }
-// }
-
+const techs = [];
+  
 let tickets = [];
 
 //****************************************
@@ -157,8 +110,8 @@ app.post("/newTicket", (req, res) => {
   tickets.push({
     id: parseFloat(data.id),
     location: {
-      lat: parseFloat(data.location.lat),
-      lng: parseFloat(data.location.lng)
+      lat: parseFloat(data.lat),
+      lng: parseFloat(data.lng)
     },
     type: "rider"
   });
