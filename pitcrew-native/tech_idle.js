@@ -31,6 +31,7 @@ export default class TechIdle extends Component {
       },
       assignedTicket: false,
       ticket_id: "",
+      ticketDetails: "",
     }
   }
 
@@ -65,7 +66,9 @@ export default class TechIdle extends Component {
 
       this.socket.addEventListener("message", evt => {
         console.log("receiving from WSS: ...", evt.data);
+
         const data = JSON.parse(evt.data);
+        console.log("DATA: ", data)
         if (data.type == "notification") {
           this.setState({ assignedTicket: true, ticket_id: data.ticket_id });
         }
@@ -86,7 +89,9 @@ export default class TechIdle extends Component {
           <View style={styles.textBox}>
             <Text style={styles.text}>
               Name :: {this.state.username}
-              Ticket :: Ticket is assigned
+            </Text>
+            <Text style={styles.text}>
+              Ticket :: Has Been Assigned
             </Text>
           </View>
         </View>
