@@ -14,6 +14,7 @@ import { Button, Grid, Row, Col } from "react-bootstrap";
 import DispatchTicket from "./dispatch-tickets";
 import { Redirect } from "react-router-dom";
 import "./dashboard.css";
+import { API_HOST_HTTP, API_HOST_WS } from "../../config.js";
 
 let loopInterval = 1000;
 
@@ -33,7 +34,7 @@ class Dashboard extends Component {
 
   getTickets = () => {
     $.ajax({
-      url: "http://localhost:8080/fetchTickets",
+      url: `${API_HOST_HTTP}/fetchTickets`,
       type: "GET"
     });
   };

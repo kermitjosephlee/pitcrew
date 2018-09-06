@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import $ from "jquery";
+import { API_HOST_HTTP, API_HOST_WS } from "./config.js";
 
 class Register extends Component {
   constructor() {
@@ -11,7 +12,7 @@ class Register extends Component {
   }
   register = data => {
     $.ajax({
-      url: "http://localhost:8080/register",
+      url: `${API_HOST_HTTP}/register`,
       type: "POST",
       data,
       success: data => {

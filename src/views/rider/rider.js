@@ -12,6 +12,7 @@ import riderForm from "./riderForm.jsx";
 import $ from "jquery";
 import { css } from "react-emotion";
 import { ScaleLoader } from "react-spinners";
+import { API_HOST_HTTP, API_HOST_WS } from "../../config.js";
 
 const override = css`
   display: block;
@@ -109,7 +110,7 @@ class Rider extends Component {
       loading: true
     });
     $.ajax({
-      url: "http://localhost:8080/newTicket",
+      url: `${API_HOST_HTTP}/newTicket`,
       type: "POST",
       data
     });

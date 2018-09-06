@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import $ from "jquery";
+import { API_HOST_HTTP, API_HOST_WS } from "./config.js";
 
 class Login extends Component {
   constructor() {
@@ -11,7 +12,7 @@ class Login extends Component {
   }
   signIn(data) {
     $.ajax({
-      url: "http://localhost:8080/login",
+      url: `${API_HOST_HTTP}/login`,
       type: "POST",
       data,
       success: data => {
