@@ -24,27 +24,27 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-//       tickets: [
-//         {
-//           id: 1,
-//           rider: "Bob",
-//           lat: 43.639701,
-//           lng: -79.459055,
-//           type: "mechanic",
-//           startTime: "2018-08-30T16:10:28.638Z",
-//           description: "A",
-//           status: "active"
-//         },
-//         {
-//           id: 2,
-//           rider: "Sally",
-//           lat: 43.6476611,
-//           lng: -79.459055,
-//           type: "mechanic",
-//           startTime: "2018-08-30T16:10:28.638Z",
-//           description: "B",
-//           status: "pending"
-//         }
+      tickets: [
+        //         {
+        //           id: 1,
+        //           rider: "Bob",
+        //           lat: 43.639701,
+        //           lng: -79.459055,
+        //           type: "mechanic",
+        //           startTime: "2018-08-30T16:10:28.638Z",
+        //           description: "A",
+        //           status: "active"
+        //         },
+        //         {
+        //           id: 2,
+        //           rider: "Sally",
+        //           lat: 43.6476611,
+        //           lng: -79.459055,
+        //           type: "mechanic",
+        //           startTime: "2018-08-30T16:10:28.638Z",
+        //           description: "B",
+        //           status: "pending"
+        //         }
       ],
       techs: [
         // {
@@ -134,10 +134,12 @@ class Dashboard extends Component {
     }
     return (
       <React.Fragment>
-        <h2 style={{}}>DASHBOARD</h2>
+        <h2 style={{ fontSize: "24px" }}>:: DASHBOARD ::</h2>
         <div className="container">
-          <p style={{ float: "left" }}>Ride to Conquer Cancer | Toronto, ON</p>
-          <p style={{ float: "right" }}>{this.state.curTime}</p>
+          <h4 style={{ float: "left" }}>
+            Ride to Conquer Cancer | Toronto, ON
+          </h4>
+          <h4 style={{ float: "right" }}>{this.state.curTime}</h4>
         </div>
         <Grid id="menu" borderColor="green" fluid>
           <Row>
