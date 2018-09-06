@@ -1,6 +1,6 @@
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import logo from "./images/logo.png";
 
 class NavigationBar extends Component {
   signOut() {
@@ -10,35 +10,46 @@ class NavigationBar extends Component {
   }
   render() {
     return (
-      <Navbar inverse collapseOnSelect style={{ marginBottom: "0px" }}>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <span>
-              <img src={logo} className="App-logo" alt="logo" />
-            </span>
-            <span>
-              <a href="/"> pitCrew</a>
-            </span>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
+      <Navbar
+        style={{
+          marginBottom: "0px",
+          borderRadius: "0px",
+          staticTop: "true"
+        }}
+      >
+        <Navbar.Brand>
+          <a href="/">
+            <img className="App-logo" src={logo} alt="logo" />
+          </a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav pullRight>
             {!localStorage.getItem("user") && (
-              <NavItem eventKey={1} href="/login">
+              <NavItem
+                eventKey={1}
+                href="/login"
+                class="btn"
+                style={{ fontColor: "white" }}
+              >
                 login
               </NavItem>
             )}
             {!localStorage.getItem("user") && (
-              <NavItem eventKey={2} href="/register">
+              <NavItem eventKey={2} href="/register" class="btn1">
                 register
               </NavItem>
             )}
-            <NavItem eventKey={3} href="/rider">
+            <NavItem eventKey={3} href="/rider" class="btn1">
               rider
             </NavItem>
             {localStorage.getItem("user") && (
-              <NavItem eventKey={4} href="/" onClick={this.signOut}>
+              <NavItem
+                eventKey={4}
+                href="/"
+                onClick={this.signOut}
+                class="btn1"
+              >
                 logout
               </NavItem>
             )}
