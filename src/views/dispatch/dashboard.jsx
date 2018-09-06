@@ -4,11 +4,12 @@ import {
   GoogleMap,
   withScriptjs,
   Marker,
-  InfoWindow
+  InfoWindow,
+  DirectionsRenderer
 } from "react-google-maps";
 import MapMarker from "./map-markers.js";
 import $ from "jquery";
-import { compose, withProps } from "recompose";
+import { compose, withProps, lifecycle } from "recompose";
 import { Button, Grid, Row, Col } from "react-bootstrap";
 import DispatchTicket from "./dispatch-tickets";
 import { Redirect } from "react-router-dom";
@@ -24,6 +25,7 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
+
       tickets: [],
       techs: []
     };
@@ -72,14 +74,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this._reloadTickets();
-    navigator.geolocation.getCurrentPosition(position => {
-      this.setState({
-        center: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        }
-      });
-    });
 
     setInterval(() => {
       this.setState({
@@ -94,10 +88,12 @@ class Dashboard extends Component {
     }
     return (
       <React.Fragment>
-        <h2 style={{}}>DASHBOARD</h2>
+        <h2 style={{ fontSize: "24px" }}>:: DASHBOARD ::</h2>
         <div className="container">
-          <p style={{ float: "left" }}>Ride to Conquer Cancer | Toronto, ON</p>
-          <p style={{ float: "right" }}>{this.state.curTime}</p>
+          <h4 style={{ float: "left" }}>
+            Ride to Conquer Cancer | Toronto, ON
+          </h4>
+          <h4 style={{ float: "right" }}>{this.state.curTime}</h4>
         </div>
         <Grid id="menu" borderColor="green" fluid>
           <Row>
@@ -136,14 +132,49 @@ const Map = compose(
     mapElement: <div style={{ height: "100%", width: "100%" }} />
   }),
   withScriptjs,
-  withGoogleMap
-)(({ tickets, techs }) => (
-  <GoogleMap
-    center={new window.google.maps.LatLng(43.6543175, -79.4246381)}
-    defaultZoom={12}
-  >
-    {/* <MapMarker tickets={this.state.tickets} /> */}
+  withGoogleMap,
+  lifecycle({
+    componentDidMount() {
+      const google = window.google;
+      console.log("props:", this.props);
+
+      console.log("props changed, fetching new location");
+      const position = this.props.center;
+
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log("initial position", position);
+        this.setState({
+          center: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+        });
+        const DirectionsService = new google.maps.DirectionsService();
+        DirectionsService.route(
+          {
+            origin: new google.maps.LatLng(43.6521095, -79.4065638),
+            destination: new google.maps.LatLng(43.5514799, -79.5946813),
+            travelMode: google.maps.TravelMode.BICYCLING
+          },
+          (result, status) => {
+            console.log("result: ", result);
+            if (status === google.maps.DirectionsStatus.OK) {
+              this.setState({
+                directions: result,
+                markers: true
+              });
+            } else {
+              console.error(`error fetching directions result`, result, status);
+            }
+          }
+        );
+      });
+    }
+  })
+)(({ tickets, techs, directions, center }) => (
+  <GoogleMap center={center} defaultZoom={12}>
     <MapMarker tickets={tickets} techs={techs} />
+    <DirectionsRenderer directions={directions} />
   </GoogleMap>
 ));
 
