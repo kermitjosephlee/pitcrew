@@ -13,6 +13,7 @@ import Tech from "./views/tech/tech";
 import Register from "./register";
 import Dashboard from "./views/dispatch/dashboard";
 import NavigationBar from "./navigationBar.jsx";
+import { API_HOST_HTTP, API_HOST_WS } from "./config";
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends Component {
 
   newTicket(data) {
     $.ajax({
-      url: "http://localhost:8080/newTicket",
+      url: `${API_HOST_HTTP}/newTicket`,
       type: "POST",
       data
     });

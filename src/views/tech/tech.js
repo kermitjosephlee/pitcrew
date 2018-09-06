@@ -9,6 +9,7 @@ import {
 import { compose, withProps, lifecycle } from "recompose";
 import { Redirect } from "react-router-dom";
 import $ from "jquery";
+import { API_HOST_HTTP, API_HOST_WS } from "../../config.js";
 
 class Tech extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Tech extends Component {
   componentDidMount() {
     this.setState({ tech: JSON.parse(localStorage.getItem("user")) });
 
-    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket = new WebSocket(`${API_HOST_WS}`);
 
     this.socket.onopen = event => {
       let tech_id_message = {
@@ -52,7 +53,7 @@ class Tech extends Component {
 
   ticketCompleted = () => {
     $.ajax({
-      url: "http://localhost:8080/completeTicket",
+      url: `${API_HOST_HTTP}/completeTicket`,
       type: "POST",
       data: { ticket_id: this.state.ticket_id }
     });

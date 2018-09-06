@@ -7,6 +7,7 @@ import {
   FormControl
 } from "react-bootstrap";
 import $ from "jquery";
+import { API_HOST_HTTP, API_HOST_WS } from "../../config.js";
 
 class DispatchActiveTechs extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class DispatchActiveTechs extends Component {
   }
 
   componentDidMount() {
-    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket = new WebSocket(`${API_HOST_WS}`);
 
     this.socket.onopen = event => {
       console.log("Connected to server");
