@@ -36,6 +36,13 @@ module.exports = {
         password: '123456',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        RideId: 1,
+        username: 'Joe',
+        password: '123456',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },
