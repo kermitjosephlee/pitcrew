@@ -6,6 +6,8 @@ import icon3 from "./images/biking.png";
 import icon4 from "./images/map.jpg";
 import icon5 from "./images/tech.png";
 import face1 from "./images/joe.jpeg";
+import face2 from "./images/Taha.jpeg";
+import face3 from "./images/Michael.jpg";
 
 const Main = () => (
   <div class="wrapper">
@@ -116,15 +118,30 @@ const Main = () => (
         <div>
           <div class="box1">
             <h3>Taha Elardi</h3>
-            <img class="image" src={icon2} />
-            <p>Description!</p>
+            <img class="image" src={face2} />
+            <p>
+              A junior Full-Stack Web Developer with 5 years of experience in
+              engineering in various industries including oil and gas,
+              construction and telecom. Along my career, programming became a
+              discerning passion on a personal level that realized my enthusiasm
+              for problem solving and design. Ultimately it motivated me to
+              pursue a career in full-stack development. I'm driven by applied
+              mathematics in software, be it machine learning or video game
+              development.
+            </p>
           </div>
         </div>
         <div>
           <div class="box1">
             <h3>Michael Surya</h3>
-            <img class="image" src={icon3} />
-            <p>Description!</p>
+            <img class="image" src={face3} />
+            <p>
+              Jr. Web Developer with a degree in IT Management. Interested in
+              leveraging both development and management side of projects to
+              deliver amazing products. Passionate about learning the
+              ins-and-outs of languages to develop clean, modular codes and
+              creating user friendly UI.
+            </p>
           </div>
         </div>
       </section>

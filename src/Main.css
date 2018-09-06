@@ -19,7 +19,7 @@ html {
 .box {
   width: 29vw;
   box-shadow: 0px 1px 10px black;
-  height: 55vh;
+  height: 60vh;
   margin-top: 10vh;
   margin-right: 1vw;
   margin-left: 1vw;
@@ -82,6 +82,7 @@ html {
   border-radius: 10px;
   background-color: white;
   color: black;
+  overflow: scroll;
 }
 
 .team {
@@ -186,15 +187,16 @@ h2 {
 }
 
 /* The styling for the static div. */
-.static {}
+.static {
+}
 
 /* Sets the actual background images to adorable kitties. This part is crucial.*/
 .bg1::after {
-  background-image: url('./images/top-main.jpg');
+  background-image: url("./images/top-main.jpg");
 }
 
 .bg2::after {
-  background-image: url('./images/bike-anatomy.jpg');
+  background-image: url("./images/bike-anatomy.jpg");
   height: 100vh;
 }
 
@@ -204,7 +206,7 @@ h2 {
 }
 
 .bg-rider {
-  background-image: url('./images/riderBack.png');
+  background-image: url("./images/riderBack.png");
   height: 100vh;
   margin-top: -3vw;
 }
