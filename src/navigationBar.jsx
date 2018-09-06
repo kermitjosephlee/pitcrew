@@ -1,6 +1,6 @@
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import logo from "./images/logo.png";
 
 class NavigationBar extends Component {
   signOut() {
@@ -10,22 +10,23 @@ class NavigationBar extends Component {
   }
   render() {
     return (
-      <Navbar inverse collapseOnSelect style={{ marginBottom: "0px" }}>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <span>
-              <img src={logo} className="App-logo" alt="logo" />
-            </span>
-            <span>
-              <a href="/"> pitCrew</a>
-            </span>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
+      <Navbar
+        style={{
+          marginBottom: "0px",
+          borderRadius: "0px",
+          staticTop: "true"
+        }}
+      >
+        <Navbar.Brand>
+          <a href="/">
+            <img className="App-logo" src={logo} alt="logo" />
+          </a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav pullRight>
             {!localStorage.getItem("user") && (
-              <NavItem eventKey={1} href="/login">
+              <NavItem eventKey={1} href="/login" class="btn">
                 login
               </NavItem>
             )}
