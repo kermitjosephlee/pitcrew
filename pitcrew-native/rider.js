@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   modalViewScreen:{
     alignItems: "center",
     justifyContent: "center",
-    height: "50%",
+    height: "75%",
     flexDirection: "column",
   },
   modalViewScreenMech:{

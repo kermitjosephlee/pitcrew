@@ -11,7 +11,7 @@ import {
 import {MapView} from "expo";
 import GetLocation from "./getLocation"
 import RiderMap from "./riderMap"
-import {API_HOST} from './config'
+import {API_HOST_HTTP} from './config'
 
 //**********************************************************************
 
@@ -44,7 +44,7 @@ export default class RiderSummary extends Component {
   }
 
   sendPostRequest = () => {
-    fetch(`${API_HOST}/newTicket`, {
+    fetch(`${API_HOST_HTTP}/newTicket`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
