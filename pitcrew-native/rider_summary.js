@@ -60,8 +60,9 @@ export default class RiderSummary extends Component {
         startTime: new Date(),
         status: "pending"
       })
-    });
-    this.props.navigation.navigate("RiderReceipt");
+    })
+    .then ( () => this.props.navigation.navigate("RiderReceipt"))
+    .catch (err => console.log(err))
   }
 
   constructor(props) {
