@@ -111,11 +111,6 @@ class Dashboard extends Component {
     }, loopInterval);
   };
 
-  _handleCenterChanged() {
-    const center = this.refs.map.getCenter();
-    this.setState({ center });
-  }
-
   componentDidMount() {
     this._reloadTickets();
 
@@ -142,11 +137,7 @@ class Dashboard extends Component {
         <Grid id="menu" borderColor="green" fluid>
           <Row>
             <Col xs={12} md={8} xl={8}>
-              <Map
-                tickets={this.state.tickets}
-                techs={this.state.techs}
-                handleCenterChanged={this._handleCenterChanged.bind(this)}
-              />
+              <Map tickets={this.state.tickets} techs={this.state.techs} />
             </Col>
             <Col
               style={{
@@ -219,9 +210,9 @@ const Map = compose(
       });
     }
   })
-)(({ tickets, techs, directions, center, handleCenterChanged }) => (
+)(({ tickets, techs, directions, center }) => (
   <GoogleMap center={center} defaultZoom={12}>
-    <MapMarker tickets={tickets} techs={techs} ref="map" />
+    <MapMarker tickets={tickets} techs={techs} />
     <DirectionsRenderer directions={directions} />
   </GoogleMap>
 ));

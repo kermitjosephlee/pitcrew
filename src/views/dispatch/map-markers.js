@@ -8,9 +8,13 @@ import {
 } from "react-google-maps";
 
 class MapMarker extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeMarker: null
+    };
+  }
 
   handleToggleOpen = id => {
     console.log("tag id:", id);
@@ -30,7 +34,15 @@ class MapMarker extends Component {
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
             }}
             position={{ lat: ticket.lat, lng: ticket.lng }}
-          />
+          >
+            {this.state.activeMarker === ticket.id && (
+              <InfoWindow>
+                <h4>
+                  {ticket.rider} :: {ticket.description}
+                </h4>
+              </InfoWindow>
+            )}
+          </Marker>
         );
       if (ticket.status === "pending")
         return (
@@ -41,7 +53,15 @@ class MapMarker extends Component {
               url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
             }}
             position={{ lat: ticket.lat, lng: ticket.lng }}
-          />
+          >
+            {this.state.activeMarker === ticket.id && (
+              <InfoWindow>
+                <h4>
+                  {ticket.rider} :: {ticket.description}
+                </h4>
+              </InfoWindow>
+            )}
+          </Marker>
         );
     });
 
