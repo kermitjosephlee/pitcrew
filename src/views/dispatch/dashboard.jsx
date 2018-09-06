@@ -24,7 +24,7 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-//       tickets: [
+      tickets: [
 //         {
 //           id: 1,
 //           rider: "Bob",
