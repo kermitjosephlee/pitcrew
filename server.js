@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const morgan = require('morgan')
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
@@ -13,7 +14,13 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+
+app.use(
+  bodyParser.json()
+)
+
+app.use(morgan('dev'))
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -22,10 +29,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+
 //****************************************
 
 let techs = [];
-
 let tickets = [];
 
 //****************************************
@@ -40,12 +47,13 @@ app.post("/login", (req, res) => {
   const data = req.body;
   db.checkUser(data)
     .then(query => {
-      console.log(`USER EXISTS`);
+      console.log(`USER EXISTS`, data);
       data.availability = true;
       data.id = query.id;
       techs.push(data);
+      console.log('TECHS >>', techs)
       console.log("tech list", techs);
-      res.send(data);
+      res.json(data);
     })
     .catch(error => {
       console.log(`ERROR ${error}`);
@@ -78,6 +86,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/newTicket", (req, res) => {
+  let postName = req.method;
   let data = req.body;
   console.log("NEW TICKET", data);
   db.openTicket(data);
@@ -144,7 +153,7 @@ const server = express()
   // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static("public"))
   .listen(_PORT, "0.0.0.0", "localhost", () =>
-    console.log(`Listening on ${_PORT}`)
+    console.log(`WebSockets Listening on ${_PORT}`)
   );
 
 // Create the WebSockets server
@@ -165,11 +174,11 @@ wss.on("connection", ws => {
 
   ws.on("message", function incoming(data) {
     message = JSON.parse(data);
-    console.log(message);
+
 
     switch (message.type) {
       case "id":
-        console.log(`... id: ${message.id} is connected`);
+
         clients[message.id] = ws;
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;

@@ -14,6 +14,8 @@ import DispatchTicket from "./dispatch-tickets";
 import { Redirect } from "react-router-dom";
 import "./dashboard.css";
 
+let loopInterval = 1000;
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -22,27 +24,27 @@ class Dashboard extends Component {
       activeMarker: null,
       myPosition: undefined,
       // dummie positions for testing
-      tickets: [
-        {
-          id: 1,
-          rider: "Bob",
-          lat: 43.639701,
-          lng: -79.459055,
-          type: "mechanic",
-          startTime: "2018-08-30T16:10:28.638Z",
-          description: "A",
-          status: "active"
-        },
-        {
-          id: 2,
-          rider: "Sally",
-          lat: 43.6476611,
-          lng: -79.459055,
-          type: "mechanic",
-          startTime: "2018-08-30T16:10:28.638Z",
-          description: "B",
-          status: "pending"
-        }
+//       tickets: [
+//         {
+//           id: 1,
+//           rider: "Bob",
+//           lat: 43.639701,
+//           lng: -79.459055,
+//           type: "mechanic",
+//           startTime: "2018-08-30T16:10:28.638Z",
+//           description: "A",
+//           status: "active"
+//         },
+//         {
+//           id: 2,
+//           rider: "Sally",
+//           lat: 43.6476611,
+//           lng: -79.459055,
+//           type: "mechanic",
+//           startTime: "2018-08-30T16:10:28.638Z",
+//           description: "B",
+//           status: "pending"
+//         }
       ],
       techs: [
         // {
@@ -105,7 +107,7 @@ class Dashboard extends Component {
     setInterval(() => {
       this._fetchTickets();
       this._fetchAvailableTechs();
-    }, 2000);
+    }, loopInterval);
   };
 
   componentDidMount() {
