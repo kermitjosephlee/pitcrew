@@ -25,6 +25,7 @@ class MapMarker extends Component {
 
   render() {
     const mapMarkers = this.props.tickets.map(ticket => {
+      console.log("TICKES", this.props.tickets);
       if (ticket.status === "active")
         return (
           <Marker
@@ -66,19 +67,18 @@ class MapMarker extends Component {
     });
 
     const mapTechs = this.props.techs.map(tech => {
-      if (tech.specialty === "mechanic" && tech.availability)
-        return (
-          <Marker
-            key={tech.id}
-            onClick={() => this.handleToggleOpen(tech.id)}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-            }}
-            position={{ lat: tech.lat, lng: tech.lng }}
-          />
-        );
+      return (
+        <Marker
+          key={tech.id}
+          onClick={() => this.handleToggleOpen(tech.id)}
+          icon={{
+            url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+          }}
+          position={{ lat: tech.lat, lng: tech.lng }}
+        />
+      );
 
-      if (tech.specialty === "medical" && tech.availability)
+      if (tech.specialty == "medical")
         return (
           <Marker
             key={tech.id}
@@ -90,7 +90,7 @@ class MapMarker extends Component {
           />
         );
 
-      if (tech.specialty === "sweep" && tech.availability)
+      if (tech.specialty == "sweep")
         return (
           <Marker
             key={tech.id}

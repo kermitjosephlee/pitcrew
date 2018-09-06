@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const morgan = require('morgan')
+const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
@@ -14,13 +14,10 @@ app.use(
   })
 );
 
+app.use(bodyParser.json());
 
-app.use(
-  bodyParser.json()
-)
-
-app.use(morgan('dev'))
-app.use(function (req, res, next) {
+app.use(morgan("dev"));
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -28,7 +25,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
 
 //****************************************
 
@@ -51,7 +47,7 @@ app.post("/login", (req, res) => {
       data.availability = true;
       data.id = query.id;
       techs.push(data);
-      console.log('TECHS >>', techs)
+      console.log("TECHS >>", techs);
       console.log("tech list", techs);
       res.json(data);
     })
@@ -175,10 +171,8 @@ wss.on("connection", ws => {
   ws.on("message", function incoming(data) {
     message = JSON.parse(data);
 
-
     switch (message.type) {
       case "id":
-
         clients[message.id] = ws;
         clients[message.id].send(JSON.stringify("TECH IS CONNECTED..."));
         break;
