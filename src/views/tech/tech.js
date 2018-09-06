@@ -40,7 +40,11 @@ class Tech extends Component {
         console.log("receiving from WSS: ...", evt.data);
         const data = JSON.parse(evt.data);
         if (data.type == "notification") {
-          this.setState({ assignedTicket: true, ticket_id: data.ticket_id });
+          this.setState({
+            assignedTicket: true,
+            ticket_id: data.ticket_id,
+            ticket: data.ticket
+          });
         }
       });
     };
@@ -77,6 +81,7 @@ class Tech extends Component {
           <TechMap
             center={this.state.center}
             assignedTicket={this.state.assignedTicket}
+            ticket={this.state.ticket}
           />
           <button onClick={this.ticketCompleted}>Ticket Completed</button>
         </div>
@@ -137,7 +142,10 @@ const TechMap = compose(
                 position.coords.latitude,
                 position.coords.longitude
               ),
-              destination: new google.maps.LatLng(43.6543175, -79.4246381),
+              destination: new google.maps.LatLng(
+                this.props.ticket.lat,
+                this.props.ticket.lng
+              ),
               travelMode: google.maps.TravelMode.BICYCLING
             },
             (result, status) => {
