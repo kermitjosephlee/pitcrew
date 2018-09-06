@@ -51,7 +51,9 @@ class Rider extends Component {
   };
 
   handleShow = () => {
-    this.setState({ show: true });
+    this.setState({
+      show: true
+    });
   };
 
   handleChangeDescription = e => {
@@ -124,40 +126,42 @@ class Rider extends Component {
 
     if (loading)
       return (
-        <Modal
-          show={this.state.show}
-          onHide={this.handleClose}
-          className="sweet-loading"
-        >
-          <Modal.Header closeButton />
-          <Modal.Body>
-            <ScaleLoader
-              className={override}
-              sizeUnit={"px"}
-              size={250}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
-          </Modal.Body>
-        </Modal>
+        <div class="bg-rider">
+          <Modal
+            show={this.state.show}
+            onHide={this.handleClose}
+            className="sweet-loading"
+          >
+            <Modal.Header closeButton />
+            <Modal.Body>
+              <ScaleLoader
+                className={override}
+                sizeUnit={"px"}
+                size={250}
+                color={"#123abc"}
+                loading={this.state.loading}
+              />{" "}
+            </Modal.Body>{" "}
+          </Modal>{" "}
+        </div>
       );
     if (assist) {
       return <RiderAssist show={this.state.show} onHide={this.handleClose} />;
     }
     return (
-      <div>
-        <h2> RIDER RIDER </h2>
+      <div class="bg-rider">
+        <h2 className="rider-title">RIDER</h2>
         <Button bsStyle="danger" bsSize="large" onClick={this.handleShow}>
-          Request Assistance
-        </Button>
+          Request Assistance{" "}
+        </Button>{" "}
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>How Can We Help You?</Modal.Title>
-          </Modal.Header>
+            <Modal.Title> How Can We Help You ? </Modal.Title>{" "}
+          </Modal.Header>{" "}
           <Modal.Body>
             <form>
               <FormGroup>
-                <ControlLabel>Name</ControlLabel>
+                <ControlLabel> Name </ControlLabel>{" "}
                 <FormControl
                   id="formControlsText"
                   type="text"
@@ -165,8 +169,7 @@ class Rider extends Component {
                   placeholder="Name"
                   onChange={this.handleChangeName}
                 />
-
-                <ControlLabel>Contact</ControlLabel>
+                <ControlLabel> Contact </ControlLabel>{" "}
                 <FormControl
                   id="formControlsText"
                   type="text"
@@ -174,32 +177,30 @@ class Rider extends Component {
                   placeholder="Contact Number"
                   onChange={this.handleChangeContact}
                 />
-
-                <ControlLabel>Select</ControlLabel>
+                <ControlLabel> Select </ControlLabel>{" "}
                 <FormControl
                   componentClass="select"
                   onChange={this.handleSelect}
                 >
-                  <option value="">Select...</option>
-                  <option value="mechanical">Mechanical</option>
-                  <option value="medical">Medical</option>
-                  <option value="sweep">Sweep</option>
+                  <option value=""> Select... </option>{" "}
+                  <option value="mechanical"> Mechanical </option>{" "}
+                  <option value="medical"> Medical </option>{" "}
+                  <option value="sweep"> Sweep </option>{" "}
                 </FormControl>
-
-                <ControlLabel>Description</ControlLabel>
+                <ControlLabel> Description </ControlLabel>{" "}
                 <FormControl
                   componentClass="textarea"
                   type="text"
                   placeholder="Description"
                   onChange={this.handleChangeDescription}
-                />
-              </FormGroup>
-            </form>
-          </Modal.Body>
+                />{" "}
+              </FormGroup>{" "}
+            </form>{" "}
+          </Modal.Body>{" "}
           <Modal.Footer>
-            <Button onClick={this.requestHelp}>Submit</Button>
-          </Modal.Footer>
-        </Modal>
+            <Button onClick={this.requestHelp}> Submit </Button>{" "}
+          </Modal.Footer>{" "}
+        </Modal>{" "}
       </div>
     );
   }

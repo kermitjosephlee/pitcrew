@@ -26,20 +26,30 @@ class NavigationBar extends Component {
         <Navbar.Collapse>
           <Nav pullRight>
             {!localStorage.getItem("user") && (
-              <NavItem eventKey={1} href="/login" class="btn">
+              <NavItem
+                eventKey={1}
+                href="/login"
+                class="btn"
+                style={{ fontColor: "white" }}
+              >
                 login
               </NavItem>
             )}
             {!localStorage.getItem("user") && (
-              <NavItem eventKey={2} href="/register">
+              <NavItem eventKey={2} href="/register" class="btn1">
                 register
               </NavItem>
             )}
-            <NavItem eventKey={3} href="/rider">
+            <NavItem eventKey={3} href="/rider" class="btn1">
               rider
             </NavItem>
             {localStorage.getItem("user") && (
-              <NavItem eventKey={4} href="/" onClick={this.signOut}>
+              <NavItem
+                eventKey={4}
+                href="/"
+                onClick={this.signOut}
+                class="btn1"
+              >
                 logout
               </NavItem>
             )}
