@@ -156,9 +156,6 @@ const TechMap = compose(
           );
         }
       });
-    },
-    shouldUpdate() {
-      console.log("ShouldUpdate");
     }
   })
 )(({ directions, center, assignedTicket }) => (
