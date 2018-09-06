@@ -10,9 +10,7 @@ const RiderAssist = props => (
 
       <Modal.Body>Help is on the Way!</Modal.Body>
 
-      <Modal.Footer>
-        <Button bsStyle="danger">Cancel</Button>
-      </Modal.Footer>
+      <Modal.Footer />
     </Modal>
   </div>
 );
