@@ -38,7 +38,6 @@ localhost:3000
 ```
 
 ## Stack and Frameworks
-(all made with the latest versions as of August 2018)
 
 * React             (16.3.1)
 * React Router      (4.3.1)
