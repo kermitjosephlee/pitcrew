@@ -37,6 +37,18 @@ nodemon server.js
 localhost:3000
 ```
 
+## Stack and Frameworks
+(all made with the latest versions as of August 2018)
+
+* React
+* React Router
+* React Native
+* Expo
+* Express
+* Postgres
+* Sequelize
+* Bootstrap
+
 ## Credits
 
 * [Kermit Joseph Lee](www.github.com/kermitjosephlee)
