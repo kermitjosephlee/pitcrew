@@ -9,7 +9,7 @@ Inspired by volunteering as a bike technician on charity bike rides, charity rid
 
 ## How It Works
 
-PitCrew starts with a rider looking for help. The rider gives their name and mobile number. PitCrew then queries the rider for the type of help needed: mechanical help (ie. flat tire), medical help (ie. scrapes), and sweep (ie. too tired to continue). PitCrew will then take this information along with their geolocation and send that to a central dispatch./ 
+PitCrew starts with a rider looking for help. The rider gives their name and mobile number. PitCrew then queries the rider for the type of help needed: mechanical help (ie. flat tire), medical help (ie. scrapes), and sweep (ie. too tired to continue). PitCrew will then take this information along with their geolocation and send that to a central dispatch. The dashboard dispatch sees has a map that shows the position of all the registered and logged-in technician along with all the technicians occupied on active tickets and riders looking for help. Dispatch is able to assign available technicians to pending tickets. Technicians will then be given a map that shows the fastest route to the rider. After arriving, the technician then completes the ticket and becomes available for another ticket.
 
 ## Before Getting Started
 
