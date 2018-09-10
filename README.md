@@ -9,7 +9,7 @@ Inspired by volunteering as a bike technician on charity bike rides, charity rid
 
 ## Before Getting Started
 
-To access the mobile app portions of the project, download [Expo] (expo.io)
+To access the mobile app portions of the project, download [Expo](www.expo.io)
 
 ## Getting Started
 
@@ -35,10 +35,10 @@ localhost:3000
 
 ## Credits
 
-[Kermit Joseph Lee] (github.com/kermitjosephlee)
-[Taha Elhardi] (github.com/elaradi23)
-[Mike Surya] (github.com/mikeyuchima)
+* [Kermit Joseph Lee](www.github.com/kermitjosephlee)
+* [Taha Elhardi](www.github.com/elaradi23)
+* [Mike Surya](www.github.com/mikeyuchima)
 
-Special Thanks to [Lighthouse Labs] (www.lighthouselabs.ca)
+Special Thanks to [Lighthouse Labs](www.lighthouselabs.ca)
 
 Proudly made in Toronto.
