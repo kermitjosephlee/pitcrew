@@ -40,14 +40,15 @@ localhost:3000
 ## Stack and Frameworks
 (all made with the latest versions as of August 2018)
 
-* React
-* React Router
-* React Native
-* Expo
-* Express
-* Postgres
-* Sequelize
-* Bootstrap
+* React             (16.3.1)
+* React Router      (4.3.1)
+* React Native      (0.56)
+* Expo              (29.0.0)
+* Express           (4.16.3)
+* Postgres          (7.4.3)
+* Sequelize         (4.38.0)
+* Bootstrap         (0.32.3)
+* react-google-maps (9.4.5)
 
 ## Credits
 
