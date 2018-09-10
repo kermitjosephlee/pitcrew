@@ -56,6 +56,6 @@ localhost:3000
 * [Taha Elhardi](www.github.com/elaradi23)
 * [Mike Surya](www.github.com/mikeyuchima)
 
-Special Thanks to Families & Loved Ones and to [Lighthouse Labs](www.lighthouselabs.ca)
+Special Thanks to our families & loved ones. To the Caboose Club and to [Lighthouse Labs](www.lighthouselabs.ca).
 
 Proudly made in Toronto.
