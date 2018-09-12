@@ -1,3 +1,6 @@
+![PitCrew Logo](pitcrew/public/PitCrew_masthead.jpg)
+
+
 # PitCrew
 
 PitCrew is designed to help you call for help to the people who can help you.
