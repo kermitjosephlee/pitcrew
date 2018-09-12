@@ -51,6 +51,10 @@ export default class Rider extends Component {
    _selectSweep = () =>
    this.setState({type_of_help: "sweep", isModalVisible: !this.state.isModalVisible})
 
+   selectType = (type_of_help) => {
+     this.setState({type_of_help, isModalVisible: !this.state.isModalVisible})
+   }
+
    submit = () => {
      this.props.navigation.navigate("RiderSummary", {
        name: this.state.name,
@@ -114,13 +118,13 @@ export default class Rider extends Component {
           <Modal style={styles.modalScreen} isVisible={this.state.isModalVisible} backdropColor={'white'} onBackdropPress={() => this.setState({isVisible: false})}>
             <View style={styles.modalViewScreen}>
               <Text style={styles.textBox}>Types of Help</Text>
-                <TouchableHighlight style={styles.modalViewScreenMech} onPress={this._selectMechanic}>
+                <TouchableHighlight style={styles.modalViewScreenMech} onPress={this.selectType.bind(this, "mechanical")}>
                   <Text style={styles.textBox}>Bike Mechanic</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.modalViewScreenMedic} onPress={this._selectMedic}>
+                <TouchableHighlight style={styles.modalViewScreenMedic} onPress={this.selectType.bind(this, "medical")}>
                   <Text style={styles.textBox}>First Aid Medic</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.modalViewScreenSweep} onPress={this._selectSweep}>
+                <TouchableHighlight style={styles.modalViewScreenSweep} onPress={this.selectType.bind(this, "sweep")}>
                   <Text style={styles.textBox}>Sweep Vehicle</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.modalViewScreenDone} onPress={this._toggleModal}>
