@@ -43,12 +43,9 @@ app.post("/login", (req, res) => {
   const data = req.body;
   db.checkUser(data)
     .then(query => {
-      console.log(`USER EXISTS`, data);
       data.availability = true;
       data.id = query.id;
       techs.push(data);
-      console.log("TECHS >>", techs);
-      console.log("tech list", techs);
       res.json(data);
     })
     .catch(error => {
@@ -60,8 +57,6 @@ app.get("/fetchAvailableTechs", (req, res) => {
   res.send({
     techs
   });
-  console.log("---------------------------------");
-  console.log("Techs available: ", techs);
 });
 
 app.post("/register", (req, res) => {
@@ -84,7 +79,6 @@ app.post("/register", (req, res) => {
 app.post("/newTicket", (req, res) => {
   let postName = req.method;
   let data = req.body;
-  console.log("NEW TICKET", data);
   db.openTicket(data);
   tickets.push(data);
   tickets.push({
@@ -106,7 +100,6 @@ app.get("/fetchTickets", (req, res) => {
       tickets[ticket].lat = parseFloat(tickets[ticket].lat);
       tickets[ticket].lng = parseFloat(tickets[ticket].lng);
     }
-    console.log(`TICKET DATA IN SERVER`, tickets);
   });
   res.send({
     tickets
@@ -119,12 +112,10 @@ app.post("/completeTicket", (req, res) => {
     return ticket.id == data.ticket_id;
   });
   ticket_to_be_completed.status = "completed";
-  console.log("Completed ticket >>", ticket_to_be_completed);
   let tempData = {
     id: parseInt(data.ticket_id),
     status: "completed"
   };
-  console.log(tempData);
   db.updateTicket(tempData);
 });
 
@@ -178,7 +169,6 @@ wss.on("connection", ws => {
         break;
       case "dispatch":
         // const data = req.body;
-        console.log("id >>> ", message);
         var tech = techs.find(function(tech) {
           return tech.id == message.id;
         });
