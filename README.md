@@ -1,4 +1,4 @@
-![PitCrew Logo](/public/PitCrew_masthead.jpg)
+![PitCrew Logo](pitcrew/public/PitCrew_masthead.jpg)
 
 
 # PitCrew
