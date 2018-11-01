@@ -3,8 +3,6 @@ import {
   withGoogleMap,
   GoogleMap,
   withScriptjs,
-  Marker,
-  InfoWindow,
   DirectionsRenderer
 } from "react-google-maps";
 import MapMarker from "./map-markers.js";

@@ -14,7 +14,6 @@ import RiderSummary from "./rider_summary";
 import RiderReceipt from "./rider_receipt";
 import Tech from "./tech";
 import TechIdle from "./tech_idle";
-import TechActive from "./tech_active";
 import RiderMap from "./riderMap";
 import TechMap from "./techMap";
 
@@ -39,9 +38,6 @@ const NavigationApp = createStackNavigator({
   TechIdle: {
     screen: TechIdle
   },
-  TechActive: {
-    screen: TechActive
-  }
 });
 
 export default class App extends Component {
